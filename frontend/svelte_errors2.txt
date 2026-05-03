@@ -1,0 +1,1287 @@
+
+> svelte@0.0.1 check
+> svelte-kit sync && svelte-check --tsconfig ./jsconfig.json
+
+Loading svelte-check in workspace: /media/piksel/Piksel M.2/v1/univote/frontend
+Getting Svelte diagnostics...
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/api.js:121:21
+Error: JSDoc '@param' tag has name 'voting_pin', but there is no parameter with that name. 
+	 * @param {Array<{candidate_id: string, position: string}>} votes
+	 * @param {string} voting_pin
+	 * @param {string} session_passcode
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/api.js:263:18
+Error: Parameter 'id' implicitly has an 'any' type. 
+	createAdviser: (payload) => request('/api/admin/advisers', json(payload)),
+	updateAdviser: (id, payload) => request(`/api/admin/advisers/${id}`, { ...json(payload), method: 'PUT' }),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/api.js:263:22
+Error: Parameter 'payload' implicitly has an 'any' type. 
+	createAdviser: (payload) => request('/api/admin/advisers', json(payload)),
+	updateAdviser: (id, payload) => request(`/api/admin/advisers/${id}`, { ...json(payload), method: 'PUT' }),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/api.js:287:21
+Error: Parameter 'payload' implicitly has an 'any' type. 
+	getDepartments: () => request('/api/admin/departments'),
+	createDepartment: (payload) => request('/api/admin/departments', json(payload)),
+	updateDepartment: (id, payload) => request(`/api/admin/departments/${id}`, { ...json(payload), method: 'PUT' }),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/api.js:288:21
+Error: Parameter 'id' implicitly has an 'any' type. 
+	createDepartment: (payload) => request('/api/admin/departments', json(payload)),
+	updateDepartment: (id, payload) => request(`/api/admin/departments/${id}`, { ...json(payload), method: 'PUT' }),
+	deleteDepartment: (id) => request(`/api/admin/departments/${id}`, { method: 'DELETE' }),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/api.js:288:25
+Error: Parameter 'payload' implicitly has an 'any' type. 
+	createDepartment: (payload) => request('/api/admin/departments', json(payload)),
+	updateDepartment: (id, payload) => request(`/api/admin/departments/${id}`, { ...json(payload), method: 'PUT' }),
+	deleteDepartment: (id) => request(`/api/admin/departments/${id}`, { method: 'DELETE' }),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/api.js:289:21
+Error: Parameter 'id' implicitly has an 'any' type. 
+	updateDepartment: (id, payload) => request(`/api/admin/departments/${id}`, { ...json(payload), method: 'PUT' }),
+	deleteDepartment: (id) => request(`/api/admin/departments/${id}`, { method: 'DELETE' }),
+	resetStaffPassword: (userId) => request(`/api/admin/staff/${userId}/reset-password`, { method: 'POST' }),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/api.js:290:23
+Error: Parameter 'userId' implicitly has an 'any' type. 
+	deleteDepartment: (id) => request(`/api/admin/departments/${id}`, { method: 'DELETE' }),
+	resetStaffPassword: (userId) => request(`/api/admin/staff/${userId}/reset-password`, { method: 'POST' }),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/api.js:298:20
+Error: Parameter 'payload' implicitly has an 'any' type. 
+	},
+	createDeptAdmin: (payload) => request('/api/admin/dept-admins', json(payload)),
+	updateDeptAdmin: (id, payload) => request(`/api/admin/dept-admins/${id}`, { ...json(payload), method: 'PUT' }),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/api.js:299:20
+Error: Parameter 'id' implicitly has an 'any' type. 
+	createDeptAdmin: (payload) => request('/api/admin/dept-admins', json(payload)),
+	updateDeptAdmin: (id, payload) => request(`/api/admin/dept-admins/${id}`, { ...json(payload), method: 'PUT' }),
+	deleteDeptAdmin: (id) => request(`/api/admin/dept-admins/${id}`, { method: 'DELETE' }),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/api.js:299:24
+Error: Parameter 'payload' implicitly has an 'any' type. 
+	createDeptAdmin: (payload) => request('/api/admin/dept-admins', json(payload)),
+	updateDeptAdmin: (id, payload) => request(`/api/admin/dept-admins/${id}`, { ...json(payload), method: 'PUT' }),
+	deleteDeptAdmin: (id) => request(`/api/admin/dept-admins/${id}`, { method: 'DELETE' }),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/api.js:300:20
+Error: Parameter 'id' implicitly has an 'any' type. 
+	updateDeptAdmin: (id, payload) => request(`/api/admin/dept-admins/${id}`, { ...json(payload), method: 'PUT' }),
+	deleteDeptAdmin: (id) => request(`/api/admin/dept-admins/${id}`, { method: 'DELETE' }),
+	importDeptAdmins: (formData) => request('/api/admin/dept-admins/import', { method: 'POST', body: formData }),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/api.js:301:21
+Error: Parameter 'formData' implicitly has an 'any' type. 
+	deleteDeptAdmin: (id) => request(`/api/admin/dept-admins/${id}`, { method: 'DELETE' }),
+	importDeptAdmins: (formData) => request('/api/admin/dept-admins/import', { method: 'POST', body: formData }),
+	downloadDeptAdminTemplate: () => `${BASE}/api/admin/dept-admins/import-template`
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/api.js:321:39
+Error: Type 'null' is not assignable to type 'string | undefined'. 
+	 */
+	createPartylist: (election_id, name, logo_url = null) =>
+		request(`/api/adviser/partylists?election_id=${election_id}`, json({ name, logo_url })),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/api.js:329:40
+Error: Type 'null' is not assignable to type 'string | undefined'. 
+	 */
+	updatePartylist: (partylist_id, name, logo_url = null) =>
+		request(`/api/adviser/partylists/${partylist_id}`, { ...json({ name, logo_url }), method: 'PUT' }),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/utils.js:11:24
+Error: Property 'first_name' does not exist on type 'Object'. 
+    
+    const fn = student.first_name || '';
+    const ln = student.last_name || '';
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/utils.js:12:24
+Error: Property 'last_name' does not exist on type 'Object'. 
+    const fn = student.first_name || '';
+    const ln = student.last_name || '';
+    const mi = student.middle_initial || '';
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/utils.js:13:24
+Error: Property 'middle_initial' does not exist on type 'Object'. 
+    const ln = student.last_name || '';
+    const mi = student.middle_initial || '';
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/stores/data.js:25:18
+Error: Parameter 'data' implicitly has an 'any' type. 
+		subscribe,
+		setElections: (data) => update(s => ({ ...s, elections: data, lastUpdated: new Date() })),
+		setDepartments: (data) => update(s => ({ ...s, departments: data, lastUpdated: new Date() })),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/stores/data.js:25:65
+Error: Type 'Date' is not assignable to type 'null'. 
+		subscribe,
+		setElections: (data) => update(s => ({ ...s, elections: data, lastUpdated: new Date() })),
+		setDepartments: (data) => update(s => ({ ...s, departments: data, lastUpdated: new Date() })),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/stores/data.js:26:20
+Error: Parameter 'data' implicitly has an 'any' type. 
+		setElections: (data) => update(s => ({ ...s, elections: data, lastUpdated: new Date() })),
+		setDepartments: (data) => update(s => ({ ...s, departments: data, lastUpdated: new Date() })),
+		setAdvisers: (data) => update(s => ({ ...s, advisers: data, lastUpdated: new Date() })),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/stores/data.js:26:69
+Error: Type 'Date' is not assignable to type 'null'. 
+		setElections: (data) => update(s => ({ ...s, elections: data, lastUpdated: new Date() })),
+		setDepartments: (data) => update(s => ({ ...s, departments: data, lastUpdated: new Date() })),
+		setAdvisers: (data) => update(s => ({ ...s, advisers: data, lastUpdated: new Date() })),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/stores/data.js:27:17
+Error: Parameter 'data' implicitly has an 'any' type. 
+		setDepartments: (data) => update(s => ({ ...s, departments: data, lastUpdated: new Date() })),
+		setAdvisers: (data) => update(s => ({ ...s, advisers: data, lastUpdated: new Date() })),
+		setVoters: (data) => update(s => ({ ...s, voters: data, lastUpdated: new Date() })),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/stores/data.js:27:63
+Error: Type 'Date' is not assignable to type 'null'. 
+		setDepartments: (data) => update(s => ({ ...s, departments: data, lastUpdated: new Date() })),
+		setAdvisers: (data) => update(s => ({ ...s, advisers: data, lastUpdated: new Date() })),
+		setVoters: (data) => update(s => ({ ...s, voters: data, lastUpdated: new Date() })),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/stores/data.js:28:15
+Error: Parameter 'data' implicitly has an 'any' type. 
+		setAdvisers: (data) => update(s => ({ ...s, advisers: data, lastUpdated: new Date() })),
+		setVoters: (data) => update(s => ({ ...s, voters: data, lastUpdated: new Date() })),
+		clear: () => set(initialState)
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/stores/data.js:28:59
+Error: Type 'Date' is not assignable to type 'null'. 
+		setAdvisers: (data) => update(s => ({ ...s, advisers: data, lastUpdated: new Date() })),
+		setVoters: (data) => update(s => ({ ...s, voters: data, lastUpdated: new Date() })),
+		clear: () => set(initialState)
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/ConfirmModal.svelte:34:5
+Error: Argument of type '"close"' is not assignable to parameter of type 'never'. (js)
+	class="univote-modal"
+	on:close={onCancel}
+	outsideclose
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/ConfirmModal.svelte:37:2
+Error: '$$_ladoM0.$$slot_def' is of type 'unknown'. (js)
+>
+	<svelte:fragment slot="header">
+		<div class="modal-header-content">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/ConfirmModal.svelte:48:2
+Error: '$$_ladoM0.$$slot_def' is of type 'unknown'. (js)
+
+	<svelte:fragment slot="footer">
+		<div class="modal-actions">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/Notification.svelte:37:3
+Error: Type 'string' is not assignable to type '"primary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+	<Toast
+		color={cfg.color}
+		bind:open
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/Notification.svelte:38:3
+Error: Cannot use 'bind:' with this property. It is declared as non-bindable inside the component.
+To mark a property as bindable: 'let { open = $bindable() } = $props()' (js)
+		color={cfg.color}
+		bind:open
+		on:close={() => (dismissed = true)}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/Notification.svelte:39:6
+Error: Argument of type '"close"' is not assignable to parameter of type 'never'. (js)
+		bind:open
+		on:close={() => (dismissed = true)}
+		class="univote-toast"
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/Notification.svelte:44:3
+Error: '$$_tsaoT0.$$slot_def' is of type 'unknown'. (js)
+	>
+		<svelte:fragment slot="icon">
+			<Icon size="sm" />
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/PageProgressBar.svelte:8:7
+Error: Cannot use 'navigating' as a store. 'navigating' needs to be an object with a subscribe method on it.
+
+No overload matches this call.
+  Overload 1 of 2, '(store: SvelteStore<any>): any', gave the following error.
+    Argument of type 'Navigation | { from: null; to: null; type: null; willUnload: null; delta: null; complete: null; }' is not assignable to parameter of type 'SvelteStore<any>'.
+      Property 'subscribe' is missing in type 'NavigationGoto' but required in type 'SvelteStore<any>'.
+  Overload 2 of 2, '(store: SvelteStore<any> | null | undefined): any', gave the following error.
+    Argument of type 'Navigation | { from: null; to: null; type: null; willUnload: null; delta: null; complete: null; }' is not assignable to parameter of type 'SvelteStore<any> | null | undefined'.
+      Property 'subscribe' is missing in type 'NavigationGoto' but required in type 'SvelteStore<any>'. (js)
+	$effect(() => {
+		if ($navigating) {
+			progress = 30;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/Sidebar.svelte:124:35
+Error: Parameter 'e' implicitly has an 'any' type. (js)
+
+	async function handlePhotoUpload(e) {
+		const file = e.target.files[0];
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/Sidebar.svelte:137:20
+Error: 'event.target' is possibly 'null'. (js)
+			reader.onload = async (event) => {
+				const base64 = event.target.result;
+				if (role === 'student') {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/Sidebar.svelte:139:42
+Error: Argument of type 'string | ArrayBuffer | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'. (js)
+				if (role === 'student') {
+					await studentApi.uploadProfilePhoto(base64);
+					voterSession.update(s => ({ ...s, student: { ...s.student, photo_url: base64 } }));
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/Sidebar.svelte:140:31
+Error: Type '{ student: any; id?: string | undefined; student_id?: string | undefined; first_name?: string | undefined; last_name?: string | undefined; middle_initial?: string | undefined; full_name?: string | undefined; ... 4 more ...; elections?: { ...; }[] | undefined; }' is not assignable to type 'StudentSession'.
+  Types of property 'id' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'. (js)
+					await studentApi.uploadProfilePhoto(base64);
+					voterSession.update(s => ({ ...s, student: { ...s.student, photo_url: base64 } }));
+				} else {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/Sidebar.svelte:140:54
+Error: 's' is possibly 'null'. (js)
+					await studentApi.uploadProfilePhoto(base64);
+					voterSession.update(s => ({ ...s, student: { ...s.student, photo_url: base64 } }));
+				} else {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/Sidebar.svelte:140:56
+Error: Property 'student' does not exist on type 'StudentSession'. (js)
+					await studentApi.uploadProfilePhoto(base64);
+					voterSession.update(s => ({ ...s, student: { ...s.student, photo_url: base64 } }));
+				} else {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/Sidebar.svelte:143:39
+Error: Type 'string | ArrayBuffer | null' is not assignable to type 'string | undefined'.
+  Type 'null' is not assignable to type 'string | undefined'. (js)
+					await auth.updateProfile({ photo_url: base64 });
+					authSession.update(s => ({ ...s, photo_url: base64 }));
+				}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/Sidebar.svelte:198:7
+Error: Object literal may only specify known properties, and '"rounded"' does not exist in type 'AvatarProps'. (js)
+						src={student_info?.photo_url} 
+						rounded 
+						size={collapsed ? "sm" : "md"}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/Sidebar.svelte:206:26
+Error: Type '"white"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+						<div class="absolute inset-0 bg-white/80 dark:bg-black/60 rounded-full flex items-center justify-center">
+							<Spinner size="4" color="white" />
+						</div>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/Sidebar.svelte:335:41
+Error: Object literal may only specify known properties, and '"rounded"' does not exist in type 'AvatarProps'. (js)
+		</div>
+		<Avatar src={student_info?.photo_url} rounded size="sm" border class="border-white/10 shadow-lg">
+			{initials}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/StudentSidebar.svelte:309:3
+Warn: Unused CSS selector ".brand-tagline"
+https://svelte.dev/e/css_unused_selector (svelte)
+		}
+		.brand-tagline {
+			font-size: 0.6rem;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/StudentSidebar.svelte:78:35
+Error: Parameter 'e' implicitly has an 'any' type. (js)
+
+	async function handlePhotoUpload(e) {
+		const file = e.target.files[0];
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/StudentSidebar.svelte:91:20
+Error: 'event.target' is possibly 'null'. (js)
+			reader.onload = async (event) => {
+				const base64 = event.target.result;
+				await studentApi.uploadProfilePhoto(base64);
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/StudentSidebar.svelte:92:41
+Error: Argument of type 'string | ArrayBuffer | null' is not assignable to parameter of type 'string'.
+  Type 'null' is not assignable to type 'string'. (js)
+				const base64 = event.target.result;
+				await studentApi.uploadProfilePhoto(base64);
+				voterSession.update(s => ({ ...s, photo_url: base64 }));
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/StudentSidebar.svelte:93:39
+Error: Type 'string | ArrayBuffer | null' is not assignable to type 'string | undefined'.
+  Type 'null' is not assignable to type 'string | undefined'. (js)
+				await studentApi.uploadProfilePhoto(base64);
+				voterSession.update(s => ({ ...s, photo_url: base64 }));
+			};
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/StudentSidebar.svelte:133:8
+Error: Object literal may only specify known properties, and '"initials"' does not exist in type 'AvatarProps'. (js)
+							src={student_info?.photo_url} 
+							initials={initials} 
+							size={collapsed ? "xs" : "md"}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/StudentTopbar.svelte:30:5
+Error: Object literal may only specify known properties, and '"rounded"' does not exist in type 'AvatarProps'. (js)
+				class="topbar-avatar"
+				rounded
+			/>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/StudentTopbar.svelte:33:53
+Error: Object literal may only specify known properties, and '"rounded"' does not exist in type 'AvatarProps'. (js)
+		{:else}
+			<Avatar size="sm" class="topbar-avatar-fallback" rounded>{initials}</Avatar>
+		{/if}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/+layout.svelte:33:11
+Error: Type 'string | undefined' is not assignable to type '"student" | "super_admin" | "dept_admin" | "adviser"'.
+  Type 'undefined' is not assignable to type '"student" | "super_admin" | "dept_admin" | "adviser"'. (js)
+{#if !isChecking}
+	<Sidebar role={$authSession?.role} student_info={$authSession}>
+		<div
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/audit/+page.svelte:50:22
+Error: Parameter 'key' implicitly has an 'any' type. (js)
+
+	function toggleSort(key) {
+		if (sortKey === key) {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:36:6
+Error: Variable 'departments' implicitly has an 'any[]' type. (js)
+
+	let departments = $state([]);
+	let isLoading = $state(true);
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:79:26
+Error: Type 'string' is not assignable to type '"error" | "info" | "success"'. (js)
+	function notify(text = '', type = 'info') {
+		notification = { text, type };
+		setTimeout(() => (notification = { text: '', type: 'info' }), 3500);
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:83:30
+Error: Parameter 'e' implicitly has an 'any' type. (js)
+
+	async function handleSubmit(e) {
+		e.preventDefault();
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:89:49
+Error: Property 'id' does not exist on type 'never'. (js)
+			if (editingDept) {
+				await adminApi.updateDepartment(editingDept.id, newDept);
+				notify('Department updated', 'success');
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:98:11
+Error: 'err' is of type 'unknown'. (js)
+		} catch (err) {
+			notify(err.message ?? 'Failed to save department', 'error');
+		} finally {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:104:21
+Error: Parameter 'dept' implicitly has an 'any' type. (js)
+
+	function startEdit(dept) {
+		editingDept = dept;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:116:24
+Error: Parameter 'dept' implicitly has an 'any' type. (js)
+
+	function promptDelete(dept) {
+		confirmState = {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:133:13
+Error: 'err' is of type 'unknown'. (js)
+					dataCache.setDepartments(departments);
+					notify(err.message ?? 'Failed to delete department', 'error');
+				} finally {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:155:12
+Error: Type '"none"' is not assignable to type '"light" | "dark" | "primary" | "alternative" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | ... 5 more ... | undefined'. (js)
+		<div class="flex items-center gap-3">
+			<Button color="none" class="bg-indigo-50/50 dark:bg-white/5 border border-indigo-200 dark:border-white/10 text-indigo-900/80 dark:text-white/60 hover:text-indigo-950 dark:text-white hover:bg-indigo-100/50 dark:bg-white/10 px-4 py-2 rounded-xl transition-all font-bold text-[10px] tracking-widest uppercase" onclick={loadDepartments}>
+				<RefreshOutline size="xs" class="mr-2" />
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:174:10
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+		<div transition:slide={{ duration: 400 }}>
+			<Card size="none" class="w-full max-w-full bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 p-8 rounded-[2rem] border relative overflow-hidden shadow-2xl">
+				<div class="absolute top-0 right-0 p-6 opacity-5">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:207:9
+Error: Cannot find name 'Label'. (js)
+						<div class="relative group h-full">
+							<Label for="dept-desc" class="text-[10px] font-black text-indigo-900/60 dark:text-white/40 uppercase tracking-widest mb-3 block">Structural Overview</Label>
+							<Textarea id="dept-desc" bind:value={newDept.description} rows={5} placeholder="Brief description of the department's role..." class="bg-indigo-50/50 dark:bg-white/5 border-none text-indigo-950 dark:text-white focus:border-primary-400 rounded-2xl resize-none" />
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:207:158
+Error: Cannot find name 'Label'. (js)
+						<div class="relative group h-full">
+							<Label for="dept-desc" class="text-[10px] font-black text-indigo-900/60 dark:text-white/40 uppercase tracking-widest mb-3 block">Structural Overview</Label>
+							<Textarea id="dept-desc" bind:value={newDept.description} rows={5} placeholder="Brief description of the department's role..." class="bg-indigo-50/50 dark:bg-white/5 border-none text-indigo-950 dark:text-white focus:border-primary-400 rounded-2xl resize-none" />
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:216:27
+Error: Type '"current"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+							{#if isSaving}
+								<Spinner size="4" color="current" />
+								PROCESS...
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:220:10
+Error: Cannot find name 'CheckCircleOutline'. (js)
+								{editingDept ? 'Update Account' : 'EXECUTE REGISTRATION'}
+								<CheckCircleOutline size="sm" />
+							{/if}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:230:8
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+	<!-- Data Registry Table -->
+	<Card size="none" class="w-full max-w-full bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 rounded-[2rem] border overflow-hidden shadow-2xl relative">
+		<header class="p-8 border-b border-indigo-100 dark:border-white/5 flex items-center justify-between bg-indigo-50/30 dark:bg-white/[0.02]">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:241:13
+Error: Type '"none"' is not assignable to type '"light" | "dark" | "primary" | "alternative" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | ... 5 more ... | undefined'. (js)
+				</div>
+				<Button color="none" class="p-2 bg-indigo-50/50 dark:bg-white/5 border border-indigo-200 dark:border-white/10 text-indigo-900/60 dark:text-white/40 hover:text-indigo-950 dark:text-white rounded-xl transition-all">
+					<FilterOutline size="xs" />
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/dept-admins/+page.svelte:83:49
+Error: Argument of type 'string | null' is not assignable to parameter of type 'null | undefined'.
+  Type 'string' is not assignable to type 'null | undefined'. (js)
+		try {
+			const res = await adminApi.getDeptAdmins(15, token);
+			deptAdmins = res.data ?? [];
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/dept-admins/+page.svelte:274:9
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+	<div class="dash flex items-center justify-center min-h-[60vh]">
+		<Card size="none" class="w-full max-w-full bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 p-12 rounded-[2.5rem] text-center border max-w-md">
+			<div class="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 mx-auto mb-6">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/dept-admins/+page.svelte:298:12
+Error: Type '"none"' is not assignable to type '"light" | "dark" | "primary" | "alternative" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | ... 5 more ... | undefined'. (js)
+			</div>
+			<Button color="none" class="bg-indigo-50/50 dark:bg-white/5 border border-indigo-200 dark:border-white/10 text-indigo-900/80 dark:text-white/60 hover:text-indigo-950 dark:text-white hover:bg-indigo-100/50 dark:bg-white/10 px-4 py-2 rounded-xl transition-all font-bold text-[10px] tracking-widest uppercase shadow-xl" onclick={() => loadDeptAdmins()}>
+				<RefreshOutline size="xs" class="mr-2" />
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/dept-admins/+page.svelte:302:12
+Error: Type '"none"' is not assignable to type '"light" | "dark" | "primary" | "alternative" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | ... 5 more ... | undefined'. (js)
+			</Button>
+			<Button color="none" class="bg-indigo-50/50 dark:bg-white/5 border border-indigo-200 dark:border-white/10 text-indigo-900/80 dark:text-white/60 hover:text-indigo-950 dark:text-white hover:bg-indigo-100/50 dark:bg-white/10 px-4 py-2 rounded-xl transition-all font-bold text-[10px] tracking-widest uppercase shadow-xl" onclick={() => { showImport = !showImport; resetForm(); }}>
+				<CloudArrowUpOutline size="xs" class="mr-2" />
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/dept-admins/+page.svelte:321:10
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+		<div transition:slide={{ duration: 400 }}>
+			<Card size="none" class="w-full max-w-full bg-indigo-500/5 backdrop-blur-3xl border-indigo-500/10 p-8 rounded-[2rem] border relative overflow-hidden shadow-2xl">
+				<div class="absolute top-0 right-0 p-6 opacity-5 text-indigo-400">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/dept-admins/+page.svelte:338:27
+Error: Type '"current"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+							{#if isImporting}
+								<Spinner size="4" color="current" />
+								INGESTING...
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/dept-admins/+page.svelte:360:16
+Error: Type '"none"' is not assignable to type '"light" | "dark" | "primary" | "alternative" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | ... 5 more ... | undefined'. (js)
+							</Badge>
+							<Button color="none" class="text-[10px] font-black text-primary-400 hover:text-primary-300 uppercase tracking-widest" onclick={() => {
+								const list = importResults.map(r => `Name: ${r.full_name}\nID: ${r.employee_id}\nPassword: ${r.default_password}\nDept: ${r.department}`).join('\n\n---\n\n');
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/dept-admins/+page.svelte:399:10
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+		<div transition:slide={{ duration: 400 }}>
+			<Card size="none" class="w-full max-w-full bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 p-10 rounded-[2.5rem] border relative overflow-hidden shadow-2xl">
+				<div class="absolute top-0 right-0 p-8 opacity-5">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/dept-admins/+page.svelte:495:27
+Error: Type '"current"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+							{#if isSaving}
+								<Spinner size="4" color="current" />
+								SYNCING...
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/dept-admins/+page.svelte:509:8
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+	<!-- Data Registry Table -->
+	<Card size="none" class="w-full max-w-full bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 rounded-[2.5rem] border overflow-hidden shadow-2xl relative">
+		<header class="p-8 border-b border-indigo-100 dark:border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 bg-indigo-50/30 dark:bg-white/[0.02]">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/dept-admins/+page.svelte:547:145
+Error: Object literal may only specify known properties, and '"rounded"' does not exist in type 'AvatarProps'. (js)
+									<div class="flex items-center gap-4">
+										<Avatar src={admin.photo_url} alt={admin.full_name} border class="bg-primary-500/10 border-indigo-200 dark:border-white/10" size="sm" rounded />
+										<div class="flex flex-col">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/profile/+page.svelte:25:35
+Error: Parameter 'e' implicitly has an 'any' type. (js)
+
+	async function handlePhotoUpload(e) {
+		const file = e.target.files[0];
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/profile/+page.svelte:38:20
+Error: 'event.target' is possibly 'null'. (js)
+			reader.onload = async (event) => {
+				const base64 = event.target.result;
+				const res = await auth.updateProfile({ photo_url: base64 });
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/profile/+page.svelte:41:38
+Error: Type 'string | ArrayBuffer | null' is not assignable to type 'string | undefined'.
+  Type 'null' is not assignable to type 'string | undefined'. (js)
+				// Update local session store
+				authSession.update(s => ({ ...s, photo_url: base64 }));
+				notify('Profile photo updated!');
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/profile/+page.svelte:46:11
+Error: 'err' is of type 'unknown'. (js)
+		} catch (err) {
+			notify(err.message, 'error');
+		} finally {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/profile/+page.svelte:55:13
+Error: Type '{ text: string; type: string; }' is not assignable to type '$$ComponentProps'.
+  Types of property 'type' are incompatible.
+    Type 'string' is not assignable to type '"error" | "info" | "success" | "warning" | undefined'. (js)
+
+<Notification {...notification} />
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/profile/+page.svelte:122:37
+Error: Property 'department_name' does not exist on type 'AdminAdviserSession'. (js)
+						<span class="field-label">Jurisdiction</span>
+						<p class="info-val">{session?.department_name || 'System Level (Global)'}</p>
+					</div>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/+layout.svelte:22:10
+Error: Cannot find name 'page'. (js)
+				if (session.must_change_password) {
+					if (page.url.pathname !== '/adviser/change-password') {
+						goto('/adviser/change-password');
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/+layout.svelte:43:7
+Error: '$authSession' is possibly 'null'. (js)
+{#if !isChecking}
+	{#if $authSession.must_change_password}
+		<main class="flex min-h-screen items-center justify-center p-6">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/profile/+page.svelte:36:38
+Error: Parameter 'e' implicitly has an 'any' type. (js)
+
+	async function handleChangePassword(e) {
+		e.preventDefault();
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/profile/+page.svelte:49:11
+Error: 'err' is of type 'unknown'. (js)
+		} catch (err) {
+			notify(err.message || 'Failed to change password', 'error');
+		} finally {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/profile/+page.svelte:55:18
+Error: Parameter 'text' implicitly has an 'any' type. (js)
+
+	function notify(text, type = 'info') {
+		notification = { text, type };
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/profile/+page.svelte:79:9
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+		<!-- Profile Identity Card -->
+		<Card size="none" class="w-full max-w-full bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 p-10 rounded-[2rem] text-center border relative overflow-hidden">
+			<div class="absolute top-0 right-0 p-4 opacity-10">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/profile/+page.svelte:109:95
+Error: Property 'department_name' does not exist on type 'AdminAdviserSession'. (js)
+					<span class="text-[9px] font-black text-indigo-900/40 dark:text-white/20 uppercase tracking-widest">Departmental Link</span>
+					<span class="text-sm font-bold text-indigo-950 dark:text-white tracking-tight">{session?.department_name || 'Assigned Department'}</span>
+				</div>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/profile/+page.svelte:115:9
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+		<!-- Security Management -->
+		<Card size="none" class="w-full max-w-full bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 p-10 rounded-[2rem] border overflow-hidden relative">
+			<div class="absolute top-0 right-0 p-4 opacity-5">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/profile/+page.svelte:148:26
+Error: Type '"current"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+						{#if isChanging}
+							<Spinner size="4" color="current" />
+							SYNCING...
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/profile/+page.svelte:161:40
+Error: Type 'string' is not assignable to type '"error" | "info" | "success" | "warning" | undefined'. (js)
+
+<Notification text={notification.text} type={notification.type} />
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/login/+page.svelte:219:2
+Warn: Unknown at rule @reference (css)
+<style>
+	@reference "../layout.css";
+	/* Custom Floating Label logic handled by peer-focus utility */
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/login/+page.svelte:61:8
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+
+	<Card size="none" class="w-full max-w-5xl bg-[#050a1b]/95 border-white/5 shadow-2xl rounded-[2.5rem] overflow-hidden grid grid-cols-1 lg:grid-cols-[42%_1fr] min-h-[600px] relative z-10 backdrop-blur-3xl">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/login/+page.svelte:182:9
+Error: '$$_trelA6.$$slot_def' is of type 'unknown'. (js)
+							<Alert color="red" class="rounded-2xl border-none bg-red-50 dark:bg-red-900/20 py-4">
+								<ExclamationCircleOutline slot="icon" size="sm" />
+								<span class="text-xs font-bold tracking-tight">{errorMessage}</span>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/login/+page.svelte:194:26
+Error: Type '"current"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+						{#if isSubmitting}
+							<Spinner size="4" color="current" />
+							AUTHENTICATING...
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/register/+page.svelte:218:2
+Warn: Unknown at rule @reference (css)
+<style>
+	@reference "../layout.css";
+	:global(.staff-input-wrap .flowbite-floating-label-input) {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/register/+page.svelte:220:3
+Warn: Unknown at rule @apply (css)
+	:global(.staff-input-wrap .flowbite-floating-label-input) {
+		@apply transition-all duration-500 rounded-2xl px-6;
+	}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/register/+page.svelte:223:3
+Warn: Unknown at rule @apply (css)
+	:global(.dark .staff-input-wrap .flowbite-floating-label-input) {
+		@apply bg-indigo-50/50 dark:bg-white/5 border-indigo-200 dark:border-white/10 text-indigo-950 dark:text-white;
+	}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/register/+page.svelte:226:3
+Warn: Unknown at rule @apply (css)
+	:global(.dark .staff-input-wrap .flowbite-floating-label-input:focus) {
+		@apply border-primary-500 ring-4 ring-primary-500/20 scale-[1.02];
+		box-shadow: 0 0 30px -10px rgba(59,130,246,0.5);
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/register/+page.svelte:230:3
+Warn: Unknown at rule @apply (css)
+	:global(.staff-input-wrap label) {
+		@apply font-black tracking-widest uppercase text-[10px] left-6 text-gray-500;
+	}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/register/+page.svelte:233:3
+Warn: Unknown at rule @apply (css)
+	:global(.dark .staff-input-wrap label) {
+		@apply text-primary-400;
+	}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/register/+page.svelte:55:40
+Error: Argument of type '{ department?: string | undefined; id: string; password: string; first_name: string; last_name: string; middle_initial: string | undefined; role: "dept_admin" | "adviser"; }' is not assignable to parameter of type '{ id: string; password: string; full_name: string; role: string; department?: string | undefined; }'.
+  Property 'full_name' is missing in type '{ department?: string | undefined; id: string; password: string; first_name: string; last_name: string; middle_initial: string | undefined; role: "dept_admin" | "adviser"; }' but required in type '{ id: string; password: string; full_name: string; role: string; department?: string | undefined; }'. (js)
+			};
+			const data = await authApi.register(payload);
+			successMessage = data.message;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/register/+page.svelte:71:8
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+
+	<Card size="none" class="w-full max-w-5xl bg-white/95 dark:bg-gray-900/95 border-indigo-300 dark:border-white/20 shadow-2xl rounded-[2.5rem] overflow-hidden grid lg:grid-cols-[40%_1fr] min-h-[650px] relative z-10">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/register/+page.svelte:174:9
+Error: '$$_trelA6.$$slot_def' is of type 'unknown'. (js)
+							<Alert color="red" class="rounded-2xl border-none bg-red-50 dark:bg-red-900/20 py-4">
+								<ExclamationCircleOutline slot="icon" size="sm" />
+								<span class="text-xs font-bold tracking-tight">{errorMessage}</span>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/register/+page.svelte:183:9
+Error: '$$_trelA6.$$slot_def' is of type 'unknown'. (js)
+							<Alert color="green" class="rounded-2xl border-none bg-green-50 dark:bg-green-900/20 py-4">
+								<CheckCircleOutline slot="icon" size="sm" />
+								<span class="text-xs font-bold tracking-tight">{successMessage}</span>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/register/+page.svelte:195:26
+Error: Type '"current"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+						{#if isSubmitting}
+							<Spinner size="4" color="current" />
+							ESTABLISHING NODE...
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/register/+page.svelte:204:22
+Error: Object literal may only specify known properties, and '"labelClass"' does not exist in type 'HrProps'. (js)
+
+				<Hr class="my-8" labelClass="bg-white dark:bg-gray-900 px-4 text-[10px] font-black tracking-[0.3em] text-gray-300 dark:text-gray-600 uppercase">OR</Hr>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/+layout.svelte:42:19
+Error: Type 'StudentSession | null' is not assignable to type 'never'.
+  Type 'null' is not assignable to type 'never'. (js)
+	{#if showNav}
+		<StudentSidebar student_info={$voterSession} />
+		<StudentTopbar {initials} />
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/+page.svelte:34:42
+Error: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'. (js)
+	let voterName = $derived($voterSession?.full_name || 'Student');
+	let program = $derived(formatDepartment($voterSession?.program) || 'General Program');
+	let yearLevel = $derived($voterSession?.year_level ? `${$voterSession.year_level}th Year` : 'Academic Level');
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/+page.svelte:230:234
+Error: Cannot find name 'goto'. (js)
+									{/if}
+									<button class="text-[var(--text-subtle)] hover:text-[var(--text-main)] font-black text-[10px] uppercase tracking-widest flex items-center gap-2 p-0 transition-colors bg-transparent border-none cursor-pointer" onclick={() => goto(`/student/results?election=${election.id}`)}>
+										Results <ChartPieOutline size="xs" />
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:600:2
+Warn: Unused CSS selector ".animate-scan"
+https://svelte.dev/e/css_unused_selector (svelte)
+	}
+	.animate-scan {
+		animation: scan 8s linear infinite;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:608:2
+Warn: Unused CSS selector ".animate-shimmer"
+https://svelte.dev/e/css_unused_selector (svelte)
+	}
+	.animate-shimmer {
+		animation: shimmer 2s infinite;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:621:2
+Warn: Unused CSS selector ".access-restricted-card"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+	.access-restricted-card {
+		max-width: 100%;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:627:2
+Warn: Unused CSS selector ".access-restricted-card .access-restricted-panel"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+	.access-restricted-card .access-restricted-panel {
+		display: grid;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:634:2
+Warn: Unused CSS selector ".access-restricted-card .status-panel"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+	.access-restricted-card .status-panel,
+	.access-restricted-card .entry-panel {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:635:2
+Warn: Unused CSS selector ".access-restricted-card .entry-panel"
+https://svelte.dev/e/css_unused_selector (svelte)
+	.access-restricted-card .status-panel,
+	.access-restricted-card .entry-panel {
+		border-radius: 2rem;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:642:2
+Warn: Unused CSS selector ".access-restricted-card .status-panel"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+	.access-restricted-card .status-panel {
+		text-align: center;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:646:2
+Warn: Unused CSS selector ".access-restricted-card .icon-box"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+	.access-restricted-card .icon-box {
+		width: 4.5rem;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:656:2
+Warn: Unused CSS selector ".access-restricted-card h2"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+	.access-restricted-card h2 {
+		font-size: clamp(1.8rem, 5vw, 2.75rem);
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:661:2
+Warn: Unused CSS selector ".access-restricted-card .help-text"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+	.access-restricted-card .help-text {
+		font-size: clamp(0.75rem, 1.1vw, 0.95rem);
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:667:2
+Warn: Unused CSS selector ".access-restricted-card .entry-header"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+	.access-restricted-card .entry-header {
+		align-items: flex-start;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:671:2
+Warn: Unused CSS selector ".access-restricted-card .pin-grid"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+	.access-restricted-card .pin-grid {
+		grid-template-columns: repeat(6, minmax(0, 1fr));
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:676:2
+Warn: Unused CSS selector ".access-restricted-card .pin-cell"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+	.access-restricted-card .pin-cell {
+		display: flex;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:682:2
+Warn: Unused CSS selector ".access-restricted-card .pin-input"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+	.access-restricted-card .pin-input {
+		width: 100%;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:696:2
+Warn: Unused CSS selector ".access-restricted-card .pin-input:focus"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+	.access-restricted-card .pin-input:focus {
+		border-color: var(--brand-primary);
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:701:2
+Warn: Unused CSS selector ".access-restricted-card .pin-bar"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+	.access-restricted-card .pin-bar {
+		height: 0.35rem;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:708:2
+Warn: Unused CSS selector ".access-restricted-card .pin-active"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+	.access-restricted-card .pin-active {
+		background: rgba(37,99,235,0.9);
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:712:2
+Warn: Unused CSS selector ".access-restricted-card .error-message"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+	.access-restricted-card .error-message {
+		margin-top: 0.5rem;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:716:2
+Warn: Unused CSS selector ".access-restricted-card .action-button"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+	.access-restricted-card .action-button {
+		font-size: 0.95rem;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:722:2
+Warn: Unused CSS selector ".access-restricted-card .toggle-visibility"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+	.access-restricted-card .toggle-visibility {
+		padding: 0.4rem;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:728:3
+Warn: Unused CSS selector ".access-restricted-card .access-restricted-panel"
+https://svelte.dev/e/css_unused_selector (svelte)
+	@media (max-width: 768px) {
+		.access-restricted-card .access-restricted-panel {
+			padding: 0.75rem;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:733:3
+Warn: Unused CSS selector ".access-restricted-card .status-panel"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+		.access-restricted-card .status-panel,
+		.access-restricted-card .entry-panel {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:734:3
+Warn: Unused CSS selector ".access-restricted-card .entry-panel"
+https://svelte.dev/e/css_unused_selector (svelte)
+		.access-restricted-card .status-panel,
+		.access-restricted-card .entry-panel {
+			padding: 1rem;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:738:3
+Warn: Unused CSS selector ".access-restricted-card .pin-grid"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+		.access-restricted-card .pin-grid {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:742:3
+Warn: Unused CSS selector ".access-restricted-card .pin-input"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+		.access-restricted-card .pin-input {
+			font-size: 1.75rem;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:749:3
+Warn: Unused CSS selector ".access-restricted-card .pin-grid"
+https://svelte.dev/e/css_unused_selector (svelte)
+	@media (max-width: 480px) {
+		.access-restricted-card .pin-grid {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:754:3
+Warn: Unused CSS selector ".access-restricted-card .pin-input"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+		.access-restricted-card .pin-input {
+			font-size: 1.5rem;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:759:3
+Warn: Unused CSS selector ".access-restricted-card .action-button"
+https://svelte.dev/e/css_unused_selector (svelte)
+
+		.access-restricted-card .action-button {
+			font-size: 0.85rem;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:71:27
+Error: Parameter 'position' implicitly has an 'any' type. (js)
+
+	function selectCandidate(position, candidateId) {
+		selectedVotes[position] = candidateId;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:71:37
+Error: Parameter 'candidateId' implicitly has an 'any' type. (js)
+
+	function selectCandidate(position, candidateId) {
+		selectedVotes[position] = candidateId;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:133:18
+Error: Parameter 'c' implicitly has an 'any' type. (js)
+			const grouped = {};
+			data.forEach((c) => {
+				if (!grouped[c.position]) grouped[c.position] = [];
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:134:10
+Error: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{}'. (js)
+			data.forEach((c) => {
+				if (!grouped[c.position]) grouped[c.position] = [];
+				grouped[c.position].push({
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:134:31
+Error: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{}'. (js)
+			data.forEach((c) => {
+				if (!grouped[c.position]) grouped[c.position] = [];
+				grouped[c.position].push({
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:135:5
+Error: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{}'. (js)
+				if (!grouped[c.position]) grouped[c.position] = [];
+				grouped[c.position].push({
+					id: c.id,
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:141:4
+Error: Type '{}' is not assignable to type 'Record<string, any[]>'.
+  Index signature for type 'string' is missing in type '{}'. (js)
+			});
+			candidatesGrouped = grouped;
+			const initialVotes = {};
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:144:5
+Error: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{}'.
+  No index signature with a parameter of type 'string' was found on type '{}'. (js)
+			Object.keys(grouped).forEach((pos) => { 
+				initialVotes[pos] = null; 
+			});
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:146:4
+Error: Type '{}' is not assignable to type 'Record<string, string | null>'.
+  Index signature for type 'string' is missing in type '{}'. (js)
+			});
+			selectedVotes = initialVotes;
+		}).catch((err) => {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:164:19
+Error: 'err' is of type 'unknown'. (js)
+		} catch (err) { 
+			errorMessage = err.message || 'INVALID PIN'; 
+		} finally {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:180:100
+Error: Argument of type '{ candidate_id: string | null; position: string; }[]' is not assignable to parameter of type '{ candidate_id: string; position: string; }[]'.
+  Type '{ candidate_id: string | null; position: string; }' is not assignable to type '{ candidate_id: string; position: string; }'.
+    Types of property 'candidate_id' are incompatible.
+      Type 'string | null' is not assignable to type 'string'.
+        Type 'null' is not assignable to type 'string'. (js)
+		try {
+			const resp = await studentApi.vote(session.student_id ?? '', electionId, passcodeId, adviserId, votes, sessionPasscode);
+			if (resp && resp.receipt_id) receiptId = resp.receipt_id;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:186:19
+Error: 'err' is of type 'unknown'. (js)
+		} catch (err) { 
+			errorMessage = err.message || 'Voting failed.'; 
+		} finally {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:208:14
+Error: Type '"none"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+						<span class="text-[var(--brand-primary)]">Ballot</span>
+						<Badge color="none" class="bg-emerald-500/10 text-emerald-500 border-none px-2 py-0.5 text-[8px] font-black uppercase tracking-widest">Active</Badge>
+					</h1>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:242:11
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+			<div class="flex-1 flex items-center justify-center" in:scale={{ duration: 800, start: 0.95 }}>
+				<Card size="none" class="w-full max-w-xl bg-[var(--bg-card)]/40 backdrop-blur-3xl border border-[var(--border-main)] p-16 rounded-[4rem] text-center shadow-2xl relative overflow-hidden border-t-8 border-t-emerald-500">
+					<div class="absolute -top-24 -right-24 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl"></div>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:261:15
+Error: Type '"none"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+							</div>
+							<Badge color="none" class="bg-emerald-500/10 text-emerald-500 border-none text-[8px] font-black">Official</Badge>
+						</div>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:269:15
+Error: Type '"none"' is not assignable to type '"light" | "dark" | "primary" | "alternative" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | ... 5 more ... | undefined'. (js)
+					<div class="grid grid-cols-2 gap-6">
+						<Button color="none" class="py-6 rounded-3xl font-black text-[11px] tracking-widest uppercase bg-[var(--bg-elevated)] border border-[var(--border-main)] text-[var(--text-main)] hover:bg-[var(--bg-hover)] transition-all shadow-xl" onclick={async () => { await goto('/student'); await invalidateAll(); }}>
+							Dashboard
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:280:11
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+			<div class="flex-1 flex flex-col items-center justify-start pt-12 pb-4" in:fade={{ duration: 1000 }}>
+				<Card size="none" class="access-restricted-card w-full max-w-2xl bg-[var(--bg-card)]/30 backdrop-blur-3xl border border-[var(--border-main)] rounded-[3rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.4)] relative overflow-hidden group">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:321:25
+Error: 'e.target' is possibly 'null'. (js)
+											oninput={(e) => {
+												const val = e.target.value.replace(/[^0-9]/g, '');
+												if (val) {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:321:34
+Error: Property 'value' does not exist on type 'EventTarget'. (js)
+											oninput={(e) => {
+												const val = e.target.value.replace(/[^0-9]/g, '');
+												if (val) {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:327:25
+Error: 'e.target' is possibly 'null'. (js)
+													adviserPin = pinArr.join('');
+													if (i < 5) e.target.closest('.pin-grid').querySelectorAll('input')[i + 1].focus();
+												}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:327:34
+Error: Property 'closest' does not exist on type 'EventTarget'. (js)
+													adviserPin = pinArr.join('');
+													if (i < 5) e.target.closest('.pin-grid').querySelectorAll('input')[i + 1].focus();
+												}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:332:14
+Error: 'e.target' is possibly 'null'. (js)
+												if (e.key === 'Backspace' && !adviserPin[i] && i > 0) {
+													e.target.closest('.pin-grid').querySelectorAll('input')[i - 1].focus();
+												} else if (e.key === 'Backspace') {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:332:23
+Error: Property 'closest' does not exist on type 'EventTarget'. (js)
+												if (e.key === 'Backspace' && !adviserPin[i] && i > 0) {
+													e.target.closest('.pin-grid').querySelectorAll('input')[i - 1].focus();
+												} else if (e.key === 'Backspace') {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:355:9
+Error: Type '"none"' is not assignable to type '"light" | "dark" | "primary" | "alternative" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | ... 5 more ... | undefined'. (js)
+							<Button
+								color="none"
+								class="action-button w-full rounded-[1.25rem] py-3.5 font-black tracking-[0.25em] uppercase transition-all disabled:grayscale disabled:opacity-40"
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:438:50
+Error: Property 'style' does not exist on type 'EventTarget & Element'. (js)
+															class="w-full h-full object-cover rounded-2xl {selectedVotes[position] === cand.id ? '' : 'grayscale-[0.4] group-hover/cand:grayscale-0'} transition-all duration-700" 
+															onerror={(e) => { e.currentTarget.style.display='none'; e.currentTarget.nextElementSibling.style.display='flex'; }} 
+														/>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:438:72
+Error: 'e.currentTarget.nextElementSibling' is possibly 'null'. (js)
+															class="w-full h-full object-cover rounded-2xl {selectedVotes[position] === cand.id ? '' : 'grayscale-[0.4] group-hover/cand:grayscale-0'} transition-all duration-700" 
+															onerror={(e) => { e.currentTarget.style.display='none'; e.currentTarget.nextElementSibling.style.display='flex'; }} 
+														/>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:438:107
+Error: Property 'style' does not exist on type 'Element'. (js)
+															class="w-full h-full object-cover rounded-2xl {selectedVotes[position] === cand.id ? '' : 'grayscale-[0.4] group-hover/cand:grayscale-0'} transition-all duration-700" 
+															onerror={(e) => { e.currentTarget.style.display='none'; e.currentTarget.nextElementSibling.style.display='flex'; }} 
+														/>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:450:21
+Error: Type '"none"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+													<h5 class="text-xl font-black tracking-tighter uppercase leading-none mb-2 line-clamp-2 group-hover/cand:text-[var(--brand-primary)] transition-colors">{cand.name}</h5>
+													<Badge color="none" class="bg-[var(--bg-elevated)] text-[var(--text-subtle)] border border-[var(--border-main)] text-[8px] font-black px-2 py-0.5 uppercase tracking-widest">{cand.party}</Badge>
+												</div>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:483:8
+Error: Type '"none"' is not assignable to type '"light" | "dark" | "primary" | "alternative" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | ... 5 more ... | undefined'. (js)
+						<Button 
+							color="none" 
+							class="px-10 py-5 rounded-[1.5rem] font-black text-[12px] tracking-[0.2em] uppercase transition-all active:scale-95 flex items-center gap-3 bg-[var(--brand-primary)] text-white hover:bg-[var(--brand-primary-h)] shadow-2xl shadow-blue-500/40 border-b-6 border-blue-900 disabled:grayscale disabled:opacity-40"
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:500:11
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+			<div in:scale={{ duration: 600, start: 0.9 }}>
+				<Card size="none" class="w-full max-w-2xl bg-[var(--bg-card)]/50 border-2 border-[var(--border-main)] p-8 md:p-16 rounded-[3rem] md:rounded-[5rem] shadow-[0_100px_150px_-30px_rgba(0,0,0,0.7)] relative overflow-hidden group">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:561:19
+Error: Type '"3"' is not assignable to type '"4" | "5" | "6" | "8" | "10" | "12" | "16" | undefined'. (js)
+								{#if isSubmitting}
+									<Spinner size="3" color="current" /> Processing...
+								{:else}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:561:28
+Error: Type '"current"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+								{#if isSubmitting}
+									<Spinner size="3" color="current" /> Processing...
+								{:else}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/profile/+page.svelte:23:12
+Error: Property 'full_name' does not exist on type '{}'. (js)
+	let initials = $derived(
+		(student.full_name || '?')
+			.split(' ')
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/profile/+page.svelte:26:10
+Error: Parameter 'w' implicitly has an 'any' type. (js)
+			.slice(0, 2)
+			.map((w) => w[0]?.toUpperCase())
+			.join('')
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/profile/+page.svelte:53:21
+Error: Property 'photo_url' does not exist on type '{}'. (js)
+						<div class="w-32 h-32 rounded-[2rem] bg-[var(--bg-elevated)] border-4 border-[var(--bg-card)] overflow-hidden relative group/photo">
+							{#if student.photo_url}
+								<img src={student.photo_url} alt={student.full_name} class="w-full h-full object-cover transition-transform duration-700 group-hover/photo:scale-110" />
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/profile/+page.svelte:54:27
+Error: Property 'photo_url' does not exist on type '{}'. (js)
+							{#if student.photo_url}
+								<img src={student.photo_url} alt={student.full_name} class="w-full h-full object-cover transition-transform duration-700 group-hover/photo:scale-110" />
+							{:else}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/profile/+page.svelte:54:51
+Error: Property 'full_name' does not exist on type '{}'. (js)
+							{#if student.photo_url}
+								<img src={student.photo_url} alt={student.full_name} class="w-full h-full object-cover transition-transform duration-700 group-hover/photo:scale-110" />
+							{:else}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/profile/+page.svelte:65:126
+Error: Property 'full_name' does not exist on type '{}'. (js)
+						<div>
+							<h2 class="text-4xl font-black text-[var(--text-main)] tracking-tighter uppercase italic leading-tight mb-2">{student.full_name}</h2>
+							<div class="flex items-center gap-3">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/profile/+page.svelte:67:16
+Error: Type '"none"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+							<div class="flex items-center gap-3">
+								<Badge color="none" class="bg-emerald-500/10 text-emerald-600 border-none font-black text-[9px] px-3 py-1 uppercase tracking-widest rounded-lg">Verified Student</Badge>
+							</div>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/profile/+page.svelte:72:103
+Error: Property 'email' does not exist on type '{}'. (js)
+							<p class="text-[10px] font-black text-[var(--text-subtle)] uppercase tracking-widest opacity-50 mb-1">Email Address</p>
+							<p class="text-lg font-black text-[var(--text-main)] uppercase tracking-tight italic">{student.email || 'N/A'}</p>
+						</div>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/profile/+page.svelte:87:128
+Error: Property 'program' does not exist on type '{}'. (js)
+							</div>
+							<p class="text-2xl font-black text-[var(--text-main)] uppercase tracking-tight leading-tight">{formatDepartment(student.program || 'BSIT')}</p>
+							<div class="pt-4 flex gap-2">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/profile/+page.svelte:89:16
+Error: Type '"none"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+							<div class="pt-4 flex gap-2">
+								<Badge color="none" class="bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] border-none font-black text-[9px] px-3 py-1 uppercase tracking-widest rounded-lg">Full-Time</Badge>
+								<Badge color="none" class="bg-emerald-500/10 text-emerald-600 border-none font-black text-[9px] px-3 py-1 uppercase tracking-widest rounded-lg">Regular</Badge>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/profile/+page.svelte:90:16
+Error: Type '"none"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+								<Badge color="none" class="bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] border-none font-black text-[9px] px-3 py-1 uppercase tracking-widest rounded-lg">Full-Time</Badge>
+								<Badge color="none" class="bg-emerald-500/10 text-emerald-600 border-none font-black text-[9px] px-3 py-1 uppercase tracking-widest rounded-lg">Regular</Badge>
+							</div>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/profile/+page.svelte:99:99
+Error: Property 'year_level' does not exist on type '{}'. (js)
+							</div>
+							<p class="text-4xl font-black text-[var(--text-main)] uppercase tracking-tighter">{student.year_level || 'N/A'}<span class="text-base text-[var(--text-subtle)] ml-2">Year</span></p>
+							<p class="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest opacity-60">Registered Student</p>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/results/+page.svelte:70:29
+Error: Parameter 'targetId' implicitly has an 'any' type. (js)
+
+	async function loadResults(targetId) {
+		if (!targetId) return;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/results/+page.svelte:91:32
+Error: Parameter 'e' implicitly has an 'any' type. (js)
+
+	function handleElectionChange(e) {
+		const newId = e.target.value;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/results/+page.svelte:97:30
+Error: Parameter 'position' implicitly has an 'any' type. (js)
+
+	function getPositionResults(position) {
+		const posVotes = results[position] || {};
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/results/+page.svelte:129:12
+Error: Type '"none"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+				</div>
+				<Badge color="none" class="bg-[var(--bg-card)]/30 border border-[var(--border-main)] rounded-lg px-3 py-1 font-black text-[9px] uppercase tracking-widest text-[var(--text-subtle)]">
+					Last Sync: {currentTime}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/results/+page.svelte:159:5
+Error: Type '"none"' is not assignable to type '"light" | "dark" | "primary" | "alternative" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | ... 5 more ... | undefined'. (js)
+			<Button 
+				color="none" 
+				class="w-full md:w-auto group relative overflow-hidden bg-gradient-to-br from-[var(--brand-primary)] to-indigo-600 text-white px-8 py-4 rounded-[1.5rem] transition-all duration-300 font-black text-[10px] tracking-[0.3em] uppercase shadow-[0_10px_30px_-10px_rgba(37,99,235,0.5)] hover:shadow-[0_15px_40px_-10px_rgba(37,99,235,0.7)] hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-3"
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/results/+page.svelte:219:18
+Error: Type '"none"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+									{#if entries.length === 1}
+										<Badge color="none" class="bg-amber-500/10 text-amber-600 border border-amber-500/20 font-black px-4 py-1 uppercase tracking-widest text-[9px] rounded-lg">Unopposed</Badge>
+									{/if}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/results/+page.svelte:283:11
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+			<div class="flex-1 flex items-center justify-center py-24" in:scale>
+				<Card size="none" class="w-full max-w-2xl bg-[var(--bg-card)]/20 backdrop-blur-3xl border-[var(--border-main)] p-16 rounded-[4rem] text-center shadow-2xl relative overflow-hidden">
+					<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500/0 via-amber-500 to-amber-500/0"></div>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/validate/+page.svelte:220:2
+Warn: Unknown at rule @reference (css)
+<style>
+	@reference "../../layout.css";
+	/* Custom Floating Label logic handled by peer-focus utility */
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/validate/+page.svelte:76:8
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+
+	<Card size="none" class="w-full max-w-5xl bg-[#050a1b] border-white/5 shadow-2xl rounded-[2.5rem] overflow-hidden grid grid-cols-1 lg:grid-cols-[42%_1fr] min-h-[600px] relative z-10">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/validate/+page.svelte:128:12
+Error: Type '"none"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+			<div class="flex items-center gap-3 relative z-10">
+				<Badge color="none" rounded class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-2 px-4 py-1.5 shadow-lg shadow-emerald-500/5">
+					<span class="relative flex h-2 w-2">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/validate/+page.svelte:176:9
+Error: '$$_trelA6.$$slot_def' is of type 'unknown'. (js)
+							<Alert color="red" class="rounded-2xl border-none bg-red-500/10 text-red-400 py-4 shadow-2xl shadow-red-500/5">
+								<ExclamationCircleOutline slot="icon" size="sm" />
+								<div class="flex items-center justify-between w-full">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/validate/+page.svelte:189:7
+Error: Type '"none"' is not assignable to type '"light" | "dark" | "primary" | "alternative" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | ... 5 more ... | undefined'. (js)
+						type="submit"
+						color="none"
+						disabled={isChecking || !studentId || retrySeconds > 0}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/validate/+page.svelte:194:26
+Error: Type '"current"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+						{#if isChecking}
+							<Spinner size="4" color="current" />
+							VALIDATING...
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/super-admin/setup/+page.svelte:80:5
+Error: Object literal may only specify known properties, and 'first_name' does not exist in type '{ id_number: string; full_name: string; password: string; }'. (js)
+				id_number: idNumber,
+				first_name: firstName,
+				last_name: lastName,
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/super-admin/setup/+page.svelte:108:8
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+
+	<Card size="none" class="w-full max-w-4xl bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 shadow-2xl rounded-[2.5rem] overflow-hidden relative z-10 border flex flex-col md:flex-row min-h-[650px]">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/super-admin/setup/+page.svelte:180:9
+Error: '$$_trelA5.$$slot_def' is of type 'unknown'. (js)
+							<Alert color="red" class="mb-8 rounded-2xl border-none bg-red-500/10 text-red-400 py-4">
+								<ExclamationCircleOutline slot="icon" size="sm" />
+								<span class="text-xs font-bold tracking-tight">{errorMsg}</span>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/super-admin/setup/+page.svelte:256:29
+Error: Type 'boolean | ""' is not assignable to type 'boolean | undefined'.
+  Type '""' is not assignable to type 'boolean | undefined'. (js)
+
+						<Button type="submit" disabled={isSubmitting || (confirmPassword && confirmPassword !== password)} class="w-full py-4 mt-4 rounded-2xl font-black text-xs tracking-[0.2em] uppercase bg-white text-black hover:bg-primary-500 hover:text-indigo-950 dark:text-white transition-all shadow-2xl active:scale-95 flex items-center justify-center gap-3">
+							{#if isSubmitting}
+
+====================================
+svelte-check found 168 errors and 37 warnings in 25 files
