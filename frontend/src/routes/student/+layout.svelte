@@ -35,11 +35,11 @@
 		<!-- Optimized Flowing Waves -->
 		{#if $branding.showBgAnims}
 			<!-- Top Left Blob (Primary) -->
-			<div class="absolute top-[-40vh] left-[-30vh] w-[120vh] h-[120vh] bg-[var(--brand-primary)] opacity-[0.35] rounded-[45%] blur-[120px] animate-flow" style="will-change: transform;"></div>
+			<div class="absolute top-[-50vh] left-[-40vh] w-[140vh] h-[140vh] bg-[var(--brand-primary)] opacity-[0.45] rounded-[45%] blur-[130px] animate-flow" style="will-change: transform;"></div>
 			<!-- Bottom Right Blob (Secondary) -->
-			<div class="absolute bottom-[-40vh] right-[-30vh] w-[120vh] h-[120vh] bg-[var(--brand-secondary)] opacity-[0.25] rounded-[48%] blur-[130px] animate-flow-reverse" style="will-change: transform;"></div>
+			<div class="absolute bottom-[-50vh] right-[-40vh] w-[140vh] h-[140vh] bg-[var(--brand-secondary)] opacity-[0.35] rounded-[48%] blur-[140px] animate-flow-reverse" style="will-change: transform;"></div>
 			<!-- Center-Left Accent -->
-			<div class="absolute top-[20vh] left-[-40vh] w-[90vh] h-[90vh] bg-[var(--brand-primary)] opacity-[0.15] rounded-[40%] blur-[100px] animate-flow-slow" style="will-change: transform; animation-delay: -2s;"></div>
+			<div class="absolute top-[10vh] left-[-50vh] w-[110vh] h-[110vh] bg-[var(--brand-primary)] opacity-[0.25] rounded-[40%] blur-[110px] animate-flow-slow" style="will-change: transform; animation-delay: -5s;"></div>
 		{/if}
 		
 		<!-- Corner Glow Overlays -->

@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { authSession } from '$lib/stores/auth.js';
-	import { setTheme } from '$lib/stores/theme.js';
+	import { theme, setTheme } from '$lib/stores/theme.js';
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import Ripples from '$lib/components/Ripples.svelte';
 	import { branding } from '$lib/stores/branding.js';
@@ -19,8 +19,7 @@
 			} else if (session.role === 'adviser') {
 				goto('/adviser');
 			} else if (session.role === 'super_admin' || session.role === 'dept_admin') {
-				// Admin/Adviser dashboard: enforce dark theme for data-dense environment
-				setTheme('dark');
+				// Admin/Adviser dashboard: follow global theme but stay visually dark
 				isChecking = false;
 			} else {
 				goto('/login');
@@ -32,7 +31,7 @@
 </script>
 
 {#if !isChecking}
-	<div class="min-h-screen transition-colors duration-700 relative" style="background-color: {$branding.showBgAnims ? 'var(--bg-main)' : 'color-mix(in srgb, var(--bg-main) 92%, white)'}">
+	<div class="min-h-screen transition-all duration-700 relative" style="background-color: {$branding.showBgAnims ? 'transparent' : 'var(--bg-main)'}">
 		<!-- Background Layer (Fixed) -->
 		<div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
 			<!-- Optimized Liquid Blobs -->

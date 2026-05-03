@@ -252,21 +252,19 @@
 						<a
 							href={item.path}
 							onclick={handleNav}
-							class="flex items-center gap-5 px-3 py-2.5 rounded-[1.5rem] transition-all duration-500 relative overflow-hidden group {isActive ? 'bg-black/[0.03] dark:bg-white/[0.05] text-slate-900 dark:text-white border border-black/[0.05] dark:border-white/10 shadow-2xl' : 'text-slate-900/40 dark:text-white/40 hover:text-slate-900 dark:hover:text-white hover:bg-black/[0.02] dark:hover:bg-white/[0.02]'}"
+							class="flex items-center gap-5 px-3 py-2.5 rounded-[1.5rem] transition-all duration-500 relative overflow-hidden group {isActive ? 'bg-white dark:bg-white/10 text-[var(--brand-primary)] dark:text-white shadow-xl' : 'text-slate-900/40 dark:text-white/40 hover:text-slate-900 dark:hover:text-white hover:bg-black/[0.02] dark:hover:bg-white/[0.02]'}"
 						>
-							{#if isActive}
-								<div class="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-6 bg-[var(--brand-primary)] rounded-r-full shadow-[0_0_15px_var(--brand-glow)]"></div>
-								<div class="absolute inset-0 bg-gradient-to-r from-[var(--brand-primary)]/10 to-transparent opacity-50"></div>
-							{/if}
-							
-							<div class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-2xl transition-all duration-500 relative {isActive ? 'bg-[var(--brand-primary)] text-white shadow-[0_8px_20px_var(--brand-glow)] border border-white/20' : 'bg-white/[0.03] border border-white/5 group-hover:scale-110 group-hover:rotate-3 group-hover:border-white/10 group-hover:bg-white/5'}">
+							<div class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-2xl transition-all duration-500 relative {isActive ? 'bg-[var(--brand-primary)] text-white shadow-lg' : 'bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/5 group-hover:scale-110 group-hover:bg-black/[0.05] dark:group-hover:bg-white/5'}">
 								<svg class="w-5 h-5 transition-transform duration-500 {isActive ? 'scale-110' : 'group-hover:scale-110'}" fill="none" stroke="currentColor" stroke-width={isActive ? '2.5' : '2'} viewBox="0 0 24 24">
 									<path stroke-linecap="round" stroke-linejoin="round" d={item.icon} />
 								</svg>
 							</div>
 							
 							{#if !collapsed}
-								<span class="truncate font-black tracking-widest text-[11px] uppercase {isActive ? 'text-white' : 'text-white/40 group-hover:text-white/80'} transition-colors duration-500">{item.name}</span>
+								<span class="truncate font-black tracking-widest text-[11px] uppercase transition-colors duration-500">{item.name}</span>
+								{#if isActive}
+									<div class="ml-auto w-1.5 h-1.5 bg-[var(--brand-primary)] rounded-full shadow-[0_0_8px_var(--brand-glow)] animate-pulse"></div>
+								{/if}
 							{/if}
 						</a>
 						{#if collapsed}
@@ -277,14 +275,14 @@
 					<div class="relative group/nav">
 						<button
 							onclick={toggleTheme}
-							class="w-full flex items-center gap-5 px-3 py-2.5 rounded-[1.5rem] transition-all duration-500 relative overflow-hidden group text-white/40 hover:text-white hover:bg-white/[0.02]"
+							class="w-full flex items-center gap-5 px-3 py-2.5 rounded-[1.5rem] transition-all duration-500 relative overflow-hidden group text-slate-900/40 dark:text-white/40 hover:text-slate-900 dark:hover:text-white hover:bg-black/[0.02] dark:hover:bg-white/[0.02]"
 						>
-							<div class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-2xl transition-all duration-500 bg-white/[0.03] border border-white/5 group-hover:scale-110 group-hover:rotate-90 group-hover:bg-white/5 group-hover:text-yellow-400">
+							<div class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-2xl transition-all duration-500 bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/5 group-hover:scale-110 group-hover:rotate-90 group-hover:bg-black/[0.05] dark:group-hover:bg-white/5 group-hover:text-yellow-500">
 								<SunOutline size="sm" class="transition-colors" />
 							</div>
 							
 							{#if !collapsed}
-								<span class="truncate font-black tracking-widest text-[11px] uppercase text-white/40 group-hover:text-white/80 transition-colors duration-500">{item.name}</span>
+								<span class="truncate font-black tracking-widest text-[11px] uppercase transition-colors duration-500">{item.name}</span>
 							{/if}
 						</button>
 						{#if collapsed}
@@ -299,13 +297,12 @@
 		<div class="mt-auto pt-8 border-t border-white/5 pb-4 relative z-10">
 			<button
 				onclick={handleLogout}
-				class="w-full flex items-center gap-5 px-5 py-4 rounded-[1.5rem] text-white/30 hover:text-white transition-all duration-500 group relative overflow-hidden border border-transparent hover:border-red-500/20 hover:bg-red-500/5 shadow-2xl"
+				class="w-full flex items-center gap-5 px-5 py-4 rounded-[1.5rem] text-slate-900/30 dark:text-white/30 hover:text-red-500 hover:bg-red-500/10 transition-all duration-500 group relative overflow-hidden border border-transparent hover:border-red-500/20 shadow-2xl"
 			>
-				<div class="absolute inset-0 bg-gradient-to-r from-red-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-				<div class="flex items-center justify-center w-8 h-8 rounded-xl bg-white/5 group-hover:bg-red-500 group-hover:text-white transition-all duration-500 group-hover:shadow-[0_0_20px_rgba(239,68,68,0.4)] border border-white/5 group-hover:border-white/20">
+				<div class="flex items-center justify-center w-8 h-8 rounded-xl bg-black/[0.05] dark:bg-white/5 group-hover:bg-red-500 group-hover:text-white transition-all duration-500 group-hover:shadow-[0_0_20px_rgba(239,68,68,0.4)]">
 					<ArrowRightToBracketOutline size="sm" class="rotate-180 group-hover:-translate-x-1 transition-transform duration-500" />
 				</div>
-				{#if !collapsed}<span class="font-black text-[11px] tracking-[0.3em] uppercase group-hover:text-red-400 transition-colors duration-500">Sign Out</span>{/if}
+				{#if !collapsed}<span class="font-black text-[11px] tracking-[0.3em] uppercase transition-colors duration-500">Sign Out</span>{/if}
 			</button>
 		</div>
 
