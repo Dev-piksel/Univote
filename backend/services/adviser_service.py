@@ -27,29 +27,40 @@ async def _ensure_election_modifiable(election_id: str):
 
 async def get_partylists(election_id: Optional[str] = None) -> list:
     supabase = await get_async_supabase()
-    query = supabase.table("partylists").select("id, name, election_id, created_at")
+    query = supabase.table("partylists").select("id, name, election_id, created_at, logo_url")
     if election_id:
         query = query.eq("election_id", election_id)
     result = await query.execute()
     return result.data
 
 
-async def create_partylist(election_id: str, name: str) -> dict:
+async def create_partylist(election_id: str, name: str, logo_url: Optional[str] = None) -> dict:
     await _ensure_election_modifiable(election_id)
     supabase = await get_async_supabase()
     result = (
         await supabase.table("partylists")
-        .insert({"election_id": election_id, "name": name})
+        .insert({"election_id": election_id, "name": name, "logo_url": logo_url})
         .execute()
     )
     return result.data
 
 
-async def update_partylist(partylist_id: str, name: str) -> dict:
+async def update_partylist(partylist_id: str, name: str, logo_url: Optional[str] = None) -> dict:
     supabase = await get_async_supabase()
     result = (
         await supabase.table("partylists")
-        .update({"name": name})
+        .update({"name": name, "logo_url": logo_url})
+        .eq("id", partylist_id)
+        .execute()
+    )
+    return result.data
+
+
+async def update_partylist_logo(partylist_id: str, logo_url: str) -> dict:
+    supabase = await get_async_supabase()
+    result = (
+        await supabase.table("partylists")
+        .update({"logo_url": logo_url})
         .eq("id", partylist_id)
         .execute()
     )
@@ -83,7 +94,7 @@ async def get_candidates(election_id: Optional[str] = None) -> list:
     # Fixed: use full_name (matches new schema), join partylists for name
     supabase = await get_async_supabase()
     query = supabase.table("candidates").select(
-        "id, position, election_id, student_id, partylist_id, students!inner(student_id, first_name, last_name, middle_initial), partylists(name)"
+        "id, position, election_id, student_id, partylist_id, photo_url, students!inner(student_id, first_name, last_name, middle_initial), partylists(name, logo_url)"
     )
     if election_id:
         query = query.eq("election_id", election_id)
@@ -96,6 +107,7 @@ async def create_candidate(
     position: str,
     election_id: str,
     partylist_id: Optional[UUID] = None,
+    photo_url: Optional[str] = None,
 ) -> dict:
     await _ensure_election_modifiable(election_id)
     # Verify the student exists
@@ -134,6 +146,8 @@ async def create_candidate(
     }
     if partylist_id:
         payload["partylist_id"] = str(partylist_id)
+    if photo_url:
+        payload["photo_url"] = photo_url
 
     result = await supabase.table("candidates").insert(payload).execute()
     return result.data
@@ -283,3 +297,21 @@ async def get_active_passcode(election_id: str, adviser_id: str) -> Optional[dic
     )
 
     return res.data[0] if res.data else None
+
+
+async def search_students(query: str, department_id: Optional[str] = None, role: str = "adviser") -> list:
+    """Search for students by ID or name, optionally scoped by department."""
+    supabase = await get_async_supabase()
+    
+    # Select existing columns
+    q = supabase.table("students").select("student_id, first_name, last_name, middle_initial, id")
+    
+    # Apply department filter if not super_admin
+    if role != "super_admin" and department_id:
+        q = q.eq("department_id", department_id)
+        
+    # Apply text search on student_id, first_name, or last_name
+    q = q.or_(f"student_id.ilike.%{query}%,first_name.ilike.%{query}%,last_name.ilike.%{query}%")
+    
+    res = await q.limit(10).execute()
+    return res.data

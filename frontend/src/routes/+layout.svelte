@@ -8,6 +8,7 @@
 	import { authSession } from '$lib/stores/auth.js';
 	import { voterSession } from '$lib/stores/session.js';
 	import { page } from '$app/state';
+	import Toast from '$lib/components/Toast.svelte';
 
 	let { children } = $props();
 
@@ -69,5 +70,7 @@
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
 
 
+
+<Toast />
 
 {@render children()}

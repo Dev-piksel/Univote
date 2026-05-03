@@ -4,6 +4,8 @@
 	import { selectedElectionId } from '$lib/stores/election.js';
 	import { branding } from '$lib/stores/branding.js';
 	import GlassCard from '$lib/components/GlassCard.svelte';
+	import { toast } from '$lib/stores/toast.js';
+	import { compressImage } from '$lib/image-utils.js';
 
 	/** @type {any[]} */
 	let elections = $state([]);
@@ -11,12 +13,46 @@
 	let partylists = $state([]);
 
 	let newPartylist = $state('');
+	let newLogoUrl = $state('');
 	let editingPartylistId = $state(/** @type {string | null} */ (null));
 	let editingPartylistName = $state('');
+	let editingLogoUrl = $state('');
 
+	let isCompressing = $state(false);
 	let isSubmitting = $state(false);
-	let errorMessage = $state('');
-	let successMessage = $state('');
+
+	/** @param {Event} e */
+	function handleLogoUpload(e) {
+		const target = /** @type {HTMLInputElement} */ (e.target);
+		const file = target.files?.[0];
+		if (!file) return;
+
+		if (file.size > 2 * 1024 * 1024) {
+			toast.error('Logo must be smaller than 2MB');
+			return;
+		}
+
+		isCompressing = true;
+		const reader = new FileReader();
+		reader.onload = async () => {
+			const result = /** @type {string} */ (reader.result);
+			try {
+				// Optimal thumbnail size for logos
+				const compressed = await compressImage(result, 300, 300, 0.5);
+				if (editingPartylistId) {
+					editingLogoUrl = compressed;
+				} else {
+					newLogoUrl = compressed;
+				}
+			} catch (err) {
+				console.error('Compression failed:', err);
+				toast.error('Failed to process image.');
+			} finally {
+				isCompressing = false;
+			}
+		};
+		reader.readAsDataURL(file);
+	}
 
 	async function loadElections() {
 		try {
@@ -34,6 +70,7 @@
 			partylists = res.data || [];
 		} catch (err) {
 			console.error('Failed to load partylists:', err);
+			toast.error('Failed to refresh partylists list.');
 		}
 	}
 
@@ -58,19 +95,32 @@
 		e.preventDefault();
 		if (!newPartylist || !$selectedElectionId) return;
 		if (!isModifiable()) {
-			errorMessage = 'Cannot add partylist to an active/completed election.';
+			toast.error('Cannot add partylist to an active/completed election.');
 			return;
 		}
 		isSubmitting = true;
-		errorMessage = '';
-		successMessage = '';
 		try {
-			await adviser.createPartylist($selectedElectionId, newPartylist);
+			const res = await adviser.createPartylist($selectedElectionId, newPartylist);
+			
+			// NON-BLOCKING Logo Upload
+			if (newLogoUrl) {
+				adviser.updatePartylistLogo(res.data[0].id, newLogoUrl)
+					.then(() => {
+						toast.success('Logo uploaded!');
+						loadData();
+					})
+					.catch(err => {
+						console.error('Logo upload failed:', err);
+						toast.error('Partylist created, but logo upload failed.');
+					});
+			}
+
 			newPartylist = '';
-			successMessage = 'Partylist added successfully!';
+			newLogoUrl = '';
+			toast.success('Partylist added successfully!');
 			await loadPartylists();
 		} catch (/** @type {any} */ err) {
-			errorMessage = err.message || 'Failed to add partylist.';
+			toast.error(err.message || 'Failed to add partylist.');
 		} finally {
 			isSubmitting = false;
 		}
@@ -79,7 +129,7 @@
 	/** @param {string} id */
 	async function handleDeletePartylist(id) {
 		if (!isModifiable()) {
-			errorMessage = 'Cannot delete from an active/completed election.';
+			toast.error('Cannot delete from an active/completed election.');
 			return;
 		}
 		if (
@@ -90,31 +140,36 @@
 			return;
 		try {
 			await adviser.deletePartylist(id);
-			successMessage = 'Partylist and its candidates deleted.';
+			toast.success('Partylist and its candidates deleted.');
 			await loadPartylists();
 		} catch (/** @type {any} */ err) {
-			errorMessage = err.message || 'Failed to delete partylist.';
+			toast.error(err.message || 'Failed to delete partylist.');
 		}
 	}
 
 	function startEditPartylist(/** @type {any} */ party) {
 		if (!isModifiable()) {
-			errorMessage = 'Cannot edit an active/completed election.';
+			toast.error('Cannot edit an active/completed election.');
 			return;
 		}
 		editingPartylistId = party.id;
 		editingPartylistName = party.name;
+		editingLogoUrl = party.logo_url || '';
 	}
 
 	async function handleUpdatePartylist() {
 		if (!editingPartylistId || !editingPartylistName) return;
 		try {
 			await adviser.updatePartylist(editingPartylistId, editingPartylistName);
+			if (editingLogoUrl) {
+				await adviser.updatePartylistLogo(editingPartylistId, editingLogoUrl);
+			}
 			editingPartylistId = null;
-			successMessage = 'Partylist updated.';
+			editingLogoUrl = '';
+			toast.success('Partylist updated successfully!');
 			await loadPartylists();
 		} catch (/** @type {any} */ err) {
-			errorMessage = err.message || 'Failed to update partylist.';
+			toast.error(err.message || 'Failed to update partylist.');
 		}
 	}
 </script>
@@ -169,20 +224,22 @@
 						/>
 					</div>
 
-					{#if errorMessage}
-						<div
-							style="color:var(--status-danger-fg);font-size:0.75rem;padding:0.5rem;background:var(--status-danger-bg);border-radius:4px;"
-						>
-							{errorMessage}
+					<div>
+						<label class="field-label" for="party-logo">Logo (Optional)</label>
+						<div class="flex items-center gap-4">
+							{#if newLogoUrl}
+								<img src={newLogoUrl} alt="Preview" class="w-12 h-12 rounded-lg object-contain bg-white/5 border border-white/10" />
+							{/if}
+							<input
+								id="party-logo"
+								type="file"
+								accept="image/*"
+								onchange={handleLogoUpload}
+								class="block w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100"
+							/>
 						</div>
-					{/if}
-					{#if successMessage}
-						<div
-							style="color:var(--status-success-fg);font-size:0.75rem;padding:0.5rem;background:var(--status-success-bg);border-radius:4px;"
-						>
-							{successMessage}
-						</div>
-					{/if}
+					</div>
+
 
 					<button
 						type="submit"
@@ -214,12 +271,20 @@
 								style="border:1px solid var(--border-main);border-radius:6px;padding:1rem;display:flex;flex-direction:column;gap:0.75rem;"
 							>
 								{#if editingPartylistId === party.id}
-									<input
-										type="text"
-										bind:value={editingPartylistName}
-										class="input-base"
-										onkeydown={(e) => e.key === 'Enter' && handleUpdatePartylist()}
-									/>
+									<div class="flex flex-col gap-3">
+										<input
+											type="text"
+											bind:value={editingPartylistName}
+											class="input-base"
+											placeholder="Partylist Name"
+										/>
+										<div class="flex items-center gap-3">
+											{#if editingLogoUrl}
+												<img src={editingLogoUrl} alt="Logo" class="w-10 h-10 rounded-lg object-contain bg-white/5" />
+											{/if}
+											<input type="file" accept="image/*" onchange={handleLogoUpload} class="text-[10px] flex-1" />
+										</div>
+									</div>
 									<div style="display:flex;gap:0.5rem;">
 										<button onclick={handleUpdatePartylist} class="btn-primary btn-sm flex-1"
 											>Save</button
@@ -230,13 +295,22 @@
 										>
 									</div>
 								{:else}
-									<div style="display:flex;align-items:flex-start;justify-content:space-between;">
-										<h3
-											style="font-weight:600;font-size:0.875rem;color:var(--text-main);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"
-											title={party.name}
-										>
-											{party.name}
-										</h3>
+									<div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;">
+										<div class="flex items-center gap-3 min-w-0">
+											{#if party.logo_url}
+												<img src={party.logo_url} alt="Logo" class="w-10 h-10 rounded-lg object-contain bg-white/5 border border-white/10 shrink-0" />
+											{:else}
+												<div class="w-10 h-10 rounded-lg bg-black/10 flex items-center justify-center shrink-0">
+													<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+												</div>
+											{/if}
+											<h3
+												style="font-weight:600;font-size:0.875rem;color:var(--text-main);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"
+												title={party.name}
+											>
+												{party.name}
+											</h3>
+										</div>
 										<div style="display:flex;gap:0.25rem;">
 											{#if isModifiable()}
 												<button

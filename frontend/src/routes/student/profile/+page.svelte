@@ -17,8 +17,8 @@
 	import { fade, fly, scale } from 'svelte/transition';
 	import { formatFullName, formatDepartment } from '$lib/utils.js';
 
-	import { onMount } from 'svelte';
 	import * as api from '$lib/api.js';
+	import { toast } from '$lib/stores/toast.js';
 
 	let student = $state({ full_name: '', student_id: '', photo_url: '', email: '', program: '', year_level: '' });
 	
@@ -52,11 +52,11 @@
 		try {
 			const reader = new FileReader();
 			reader.onload = async (event) => {
-				const base64 = event.target.result;
+				const base64 = /** @type {string} */ (event.target.result);
 				await api.student.uploadProfilePhoto(base64);
-				// Update local state and global session
 				student.photo_url = base64;
 				voterSession.update(s => ({ ...s, photo_url: base64 }));
+				toast.success('Profile photo updated!');
 			};
 			reader.readAsDataURL(file);
 		} catch (err) {

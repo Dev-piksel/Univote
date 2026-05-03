@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Request, Query
+from fastapi import APIRouter, Depends, HTTPException, Request, Query, BackgroundTasks
 from typing import Optional
 from database import get_async_supabase, paginate
 from services import adviser_service, audit_service, election_service
@@ -92,6 +92,37 @@ async def delete_partylist(
     return {"message": "Partylist deleted"}
 
 
+@router.put("/partylists/{partylist_id}/logo")
+async def upload_partylist_logo(
+    request: Request,
+    partylist_id: str,
+    body: dict,
+    user: AuthUser = Depends(require_adviser),
+):
+    """Store a base64 data URL as the partylist logo."""
+    logo_url = body.get("logo_url", "")
+    if not logo_url:
+        raise HTTPException(status_code=400, detail="logo_url is required.")
+    
+    data = await adviser_service.update_partylist_logo(partylist_id, logo_url)
+    
+    # Log partylist logo upload
+    await audit_service.log_action(
+        actor_id=str(user.id),
+        actor_role="adviser",
+        action="UPLOAD_PARTYLIST_LOGO",
+        target_type="partylist",
+        target_id=partylist_id,
+        details={"logo_url_size": len(logo_url)},
+        department_id=user.department_id,
+        request=request,
+        actor_name=user.full_name,
+        actor_username=user.username,
+    )
+    
+    return {"message": "Logo updated.", "logo_url": logo_url}
+
+
 @router.get("/candidates")
 async def get_candidates(
     election_id: str | None = None,
@@ -113,7 +144,8 @@ async def create_candidate(
         partylist_id=candidate.partylist_id,
         photo_url=candidate.photo_url
     )
-    await audit_service.log_action(
+    background_tasks.add_task(
+        audit_service.log_action,
         actor_id=user.id,
         actor_role=user.role,
         action="ADD_CANDIDATE",

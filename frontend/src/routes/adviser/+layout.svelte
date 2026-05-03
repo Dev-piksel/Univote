@@ -3,7 +3,9 @@
 	import { goto } from '$app/navigation';
 	import { authSession } from '$lib/stores/auth.js';
 	import { theme, setTheme } from '$lib/stores/theme.js';
+	import { branding } from '$lib/stores/branding.js';
 	import Sidebar from '$lib/components/Sidebar.svelte';
+	import Ripples from '$lib/components/Ripples.svelte';
 	import { fly } from 'svelte/transition';
 
 	/** @type {{ children: import('svelte').Snippet }} */

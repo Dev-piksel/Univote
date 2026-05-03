@@ -330,6 +330,9 @@ export const adviser = {
 	updatePartylist: (partylist_id, name, logo_url = null) =>
 		request(`/api/adviser/partylists/${partylist_id}`, { ...json({ name, logo_url }), method: 'PUT' }),
 
+	updatePartylistLogo: (partylist_id, logo_url) =>
+		request(`/api/adviser/partylists/${partylist_id}/logo`, { ...json({ logo_url }), method: 'PUT' }),
+
 	/**
 	 * @param {string} partylist_id
 	 */

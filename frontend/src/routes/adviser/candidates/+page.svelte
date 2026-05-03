@@ -5,6 +5,8 @@
 	import { branding } from '$lib/stores/branding.js';
 	import { POSITION_ORDER, sortPositions } from '$lib/constants.js';
 	import { formatFullName } from '$lib/utils.js';
+	import { toast } from '$lib/stores/toast.js';
+	import { compressImage } from '$lib/image-utils.js';
 
 	/** @type {any[]} */
 	let elections = $state([]);
@@ -16,8 +18,7 @@
 	let newCandidate = $state({ student_id: '', position: '', partylist_id: '' });
 	let customPosition = $state('');
 	let isSubmitting = $state(false);
-	let errorMessage = $state('');
-	let successMessage = $state('');
+	let isCompressing = $state(false);
 	/** @type {string | null} */
 	let newCandidatePhotoPreview = $state(null);
 	/** @type {string | null} */
@@ -78,13 +79,17 @@
 	async function handleNewPhotoSelect(e) {
 		const input = /** @type {HTMLInputElement} */ (e.target);
 		const file = input.files?.[0];
-		if (!file) return;
+		isCompressing = true;
 		try {
 			const base64 = await fileToBase64(file);
-			newCandidatePhotoBase64 = base64;
-			newCandidatePhotoPreview = base64;
+			// Optimal balance: 400px is enough for thumbnails, keeps file size ~30KB
+			const compressed = await compressImage(base64, 400, 400, 0.6);
+			newCandidatePhotoBase64 = compressed;
+			newCandidatePhotoPreview = compressed;
 		} catch {
-			errorMessage = 'Failed to read image. Try another file.';
+			toast.error('Failed to process image. Try another file.');
+		} finally {
+			isCompressing = false;
 		}
 	}
 
@@ -104,15 +109,15 @@
 		uploading[candidateId] = true;
 		try {
 			const base64 = await fileToBase64(file);
-			await adviser.uploadCandidatePhoto(candidateId, base64);
-			// Update local state
+			// Compress on the fly
+			const compressed = await compressImage(base64, 600, 600, 0.7);
+			await adviser.uploadCandidatePhoto(candidateId, compressed);
 			candidates = candidates.map((c) =>
-				c.id === candidateId ? { ...c, photo_url: base64 } : c
+				c.id === candidateId ? { ...c, photo_url: compressed } : c
 			);
-			successMessage = 'Photo updated!';
-			setTimeout(() => (successMessage = ''), 2500);
+			toast.success('Candidate photo updated!');
 		} catch (/** @type {any} */ err) {
-			errorMessage = err.message || 'Failed to upload photo.';
+			toast.error(err.message || 'Failed to upload photo.');
 		} finally {
 			uploading[candidateId] = false;
 			input.value = '';
@@ -127,8 +132,9 @@
 			candidates = candidates.map((c) =>
 				c.id === candidateId ? { ...c, photo_url: null } : c
 			);
+			toast.success('Candidate photo removed.');
 		} catch (/** @type {any} */ err) {
-			errorMessage = err.message || 'Failed to remove photo.';
+			toast.error(err.message || 'Failed to remove photo.');
 		} finally {
 			uploading[candidateId] = false;
 		}
@@ -181,7 +187,7 @@
 	async function handleAddCandidate(e) {
 		e.preventDefault();
 		if (!newCandidate.student_id || !newCandidate.position || !$selectedElectionId) {
-			errorMessage = 'Please fill in all required fields.';
+			toast.error('Please fill in all required fields.');
 			return;
 		}
 		isSubmitting = true;
@@ -191,7 +197,7 @@
 			const finalPosition =
 				newCandidate.position === 'Other' ? customPosition : newCandidate.position;
 			if (!finalPosition) {
-				errorMessage = 'Please provide a position name.';
+				toast.error('Please provide a position name.');
 				isSubmitting = false;
 				return;
 			}
@@ -202,29 +208,31 @@
 				partylist_id: newCandidate.partylist_id || null
 			});
 
-			// Upload photo if one was selected
+			// NON-BLOCKING Photo Upload (Background)
 			if (newCandidatePhotoBase64) {
-				// The backend returns { message, data: [...] } where data is the inserted row
 				const newId = createRes?.data?.[0]?.id || createRes?.data?.id || createRes?.id;
 				if (newId) {
-					try {
-						await adviser.uploadCandidatePhoto(newId, newCandidatePhotoBase64);
-					} catch (err) {
-						console.error('Initial photo upload failed:', err);
-						successMessage = 'Candidate added. Photo upload failed — you can retry on the card.';
-					}
+					// We don't 'await' this so the button finishes immediately
+					adviser.uploadCandidatePhoto(newId, newCandidatePhotoBase64)
+						.then(() => {
+							toast.success(`Photo uploaded for ${newCandidate.student_id}`);
+							loadData(); // Refresh to show the new photo
+						})
+						.catch(err => {
+							console.error('Photo upload failed:', err);
+							toast.error('Candidate added, but photo upload failed.');
+						});
 				}
-				newCandidatePhotoBase64 = null;
-				newCandidatePhotoPreview = null;
 			}
 
 			newCandidate = { student_id: '', position: '', partylist_id: '' };
 			customPosition = '';
-			if (!successMessage) successMessage = 'Candidate added successfully!';
-			setTimeout(() => (successMessage = ''), 3000);
+			newCandidatePhotoBase64 = null;
+			newCandidatePhotoPreview = null;
+			toast.success('Candidate registered successfully!');
 			await loadData();
 		} catch (/** @type {any} */ err) {
-			errorMessage = err.message || 'Failed to add candidate.';
+			toast.error(err.message || 'Failed to add candidate.');
 		} finally {
 			isSubmitting = false;
 		}
@@ -259,10 +267,10 @@
 		if (!confirm('Are you sure you want to delete this candidate?')) return;
 		try {
 			await adviser.deleteCandidate(id);
-			successMessage = 'Candidate deleted successfully.';
+			toast.success('Candidate removed successfully.');
 			await loadData();
 		} catch (/** @type {any} */ err) {
-			errorMessage = err.message || 'Failed to delete candidate.';
+			toast.error(err.message || 'Failed to delete candidate.');
 		}
 	}
 </script>
@@ -383,7 +391,7 @@
 									>
 										<div class="flex flex-col text-left">
 											<span class="suggestion-id">{student.student_id}</span>
-											<span class="suggestion-name">{student.full_name}</span>
+											<span class="suggestion-name">{formatFullName(student)}</span>
 										</div>
 									</button>
 								{/each}
@@ -460,8 +468,13 @@
 							{/if}
 							<div style="display:flex;flex-direction:column;gap:0.3rem;">
 								<label
-									style="display:inline-flex;align-items:center;gap:0.375rem;font-size:0.75rem;font-weight:600;color:var(--brand-primary,#0b75fe);cursor:pointer;padding:0.3rem 0.65rem;border:1.5px solid var(--brand-primary,#0b75fe);border-radius:6px;width:fit-content;"
+									style="display:inline-flex;align-items:center;gap:0.375rem;font-size:0.75rem;font-weight:600;color:var(--brand-primary,#0b75fe);cursor:pointer;padding:0.3rem 0.65rem;border:1.5px solid var(--brand-primary,#0b75fe);border-radius:6px;width:fit-content;position:relative;"
 								>
+									{#if isCompressing}
+										<span class="absolute inset-0 bg-black/20 flex items-center justify-center rounded-md">
+											<span class="w-3 h-3 border-2 border-white/30 border-t-white animate-spin rounded-full"></span>
+										</span>
+									{/if}
 									<svg
 										width="11"
 										height="11"
@@ -493,20 +506,6 @@
 						</div>
 					</div>
 
-					{#if errorMessage}
-						<div
-							style="color:var(--status-danger-fg);font-size:0.75rem;padding:0.5rem;background:var(--status-danger-bg);border-radius:4px;"
-						>
-							{errorMessage}
-						</div>
-					{/if}
-					{#if successMessage}
-						<div
-							style="color:var(--status-success-fg);font-size:0.75rem;padding:0.5rem;background:var(--status-success-bg);border-radius:4px;"
-						>
-							{successMessage}
-						</div>
-					{/if}
 
 					<button
 						type="submit"
