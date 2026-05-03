@@ -75,7 +75,6 @@
 		flex-direction: column;
 		background: transparent;
 		position: relative;
-		overflow-x: hidden;
 	}
 
 	.bg-fixed-layer {

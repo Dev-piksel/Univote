@@ -199,6 +199,12 @@
 			height: 100%;
 			width: 100%;
 			padding: 24px 16px;
+			overflow-y: auto;
+			scrollbar-width: none;
+			-ms-overflow-style: none;
+		}
+		.sb-inner::-webkit-scrollbar {
+			display: none;
 		}
 
 		.toggle-btn {

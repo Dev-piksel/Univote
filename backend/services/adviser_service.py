@@ -153,6 +153,29 @@ async def create_candidate(
     return result.data
 
 
+async def update_candidate(
+    candidate_id: str,
+    position: Optional[str] = None,
+    partylist_id: Optional[str] = None,
+) -> dict:
+    supabase = await get_async_supabase()
+    payload = {}
+    if position:
+        payload["position"] = position
+    if partylist_id:
+        payload["partylist_id"] = partylist_id
+    elif partylist_id is None:
+        payload["partylist_id"] = None
+        
+    result = (
+        await supabase.table("candidates")
+        .update(payload)
+        .eq("id", candidate_id)
+        .execute()
+    )
+    return result.data
+
+
 async def delete_candidate(candidate_id: str) -> dict:
     # Get election_id to check status
     supabase = await get_async_supabase()

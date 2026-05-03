@@ -1,4 +1,5 @@
 <script>
+	import { onMount } from 'svelte';
 	import { voterSession } from '$lib/stores/session.js';
 	import { branding } from '$lib/stores/branding.js';
 	import { Card, Badge, Avatar, Button } from 'flowbite-svelte';

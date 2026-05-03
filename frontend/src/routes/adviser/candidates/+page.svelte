@@ -14,6 +14,7 @@
 	let candidates = $state([]);
 	/** @type {any[]} */
 	let partylists = $state([]);
+	let editingCandidate = $state(/** @type {any | null} */ (null));
 
 	let newCandidate = $state({ student_id: '', position: '', partylist_id: '' });
 	let customPosition = $state('');
@@ -43,6 +44,19 @@
 			console.error('Failed to load elections:', err);
 		}
 	}
+
+	// REACTIVE SANITIZER: Ensure $selectedElectionId is always a UUID
+	$effect(() => {
+		if (elections.length > 0) {
+			const current = $selectedElectionId;
+			// If it's empty, a name (has spaces), or not in the list, fix it
+			const isValidId = elections.some(e => e.id === current);
+			if (!current || current.includes(' ') || !isValidId) {
+				const match = elections.find(e => e.name.toLowerCase() === (current || '').toLowerCase().trim());
+				selectedElectionId.set(match?.id || elections[0].id);
+			}
+		}
+	});
 
 	async function loadData() {
 		if (!$selectedElectionId) return;
@@ -190,19 +204,26 @@
 			toast.error('Please fill in all required fields.');
 			return;
 		}
+		
 		isSubmitting = true;
-		errorMessage = '';
-		successMessage = '';
 		try {
+			// CRITICAL: Ensure we use the UUID, not the name
+			let electionId = $selectedElectionId;
+			if (electionId.includes(' ')) {
+				const match = elections.find(e => e.name.toLowerCase() === electionId.toLowerCase().trim());
+				if (match) electionId = match.id;
+			}
+
 			const finalPosition =
 				newCandidate.position === 'Other' ? customPosition : newCandidate.position;
+			
 			if (!finalPosition) {
 				toast.error('Please provide a position name.');
 				isSubmitting = false;
 				return;
 			}
 
-			const createRes = await adviser.createCandidate($selectedElectionId, {
+			const createRes = await adviser.createCandidate(electionId, {
 				student_id: newCandidate.student_id,
 				position: finalPosition,
 				partylist_id: newCandidate.partylist_id || null
@@ -212,15 +233,13 @@
 			if (newCandidatePhotoBase64) {
 				const newId = createRes?.data?.[0]?.id || createRes?.data?.id || createRes?.id;
 				if (newId) {
-					// We don't 'await' this so the button finishes immediately
 					adviser.uploadCandidatePhoto(newId, newCandidatePhotoBase64)
 						.then(() => {
 							toast.success(`Photo uploaded for ${newCandidate.student_id}`);
-							loadData(); // Refresh to show the new photo
+							loadData();
 						})
-						.catch(err => {
-							console.error('Photo upload failed:', err);
-							toast.error('Candidate added, but photo upload failed.');
+						.catch(() => {
+							toast.error('Candidate added, but photo failed.');
 						});
 				}
 			}
@@ -229,11 +248,16 @@
 			customPosition = '';
 			newCandidatePhotoBase64 = null;
 			newCandidatePhotoPreview = null;
+			
 			toast.success('Candidate registered successfully!');
+			
+			// Finish submission immediately
+			isSubmitting = false;
+			
 			await loadData();
 		} catch (/** @type {any} */ err) {
+			console.error('Candidate Error:', err);
 			toast.error(err.message || 'Failed to add candidate.');
-		} finally {
 			isSubmitting = false;
 		}
 	}
@@ -262,15 +286,47 @@
 	);
 	const isModifiable = $derived(() => selectedElection()?.status === 'upcoming');
 
-	/** @param {string} id */
 	async function handleDeleteCandidate(id) {
 		if (!confirm('Are you sure you want to delete this candidate?')) return;
 		try {
 			await adviser.deleteCandidate(id);
-			toast.success('Candidate removed successfully.');
+			toast.success('Candidate deleted successfully.');
 			await loadData();
 		} catch (/** @type {any} */ err) {
 			toast.error(err.message || 'Failed to delete candidate.');
+		}
+	}
+
+	/** @param {any} candidate */
+	function startEdit(candidate) {
+		editingCandidate = { ...candidate };
+		// If partylist is an object, extract ID
+		if (editingCandidate.partylist_id && typeof editingCandidate.partylist_id === 'object') {
+			editingCandidate.partylist_id = editingCandidate.partylist_id.id;
+		}
+	}
+
+	function cancelEdit() {
+		editingCandidate = null;
+	}
+
+	async function handleUpdateCandidate() {
+		if (!editingCandidate) return;
+		try {
+			isSubmitting = true;
+			// Reuse backend logic - we'll need an update_candidate in adviser_service
+			// For now, let's assume we can update position and partylist
+			await adviser.updateCandidate(editingCandidate.id, {
+				position: editingCandidate.position,
+				partylist_id: editingCandidate.partylist_id
+			});
+			toast.success('Candidate updated successfully!');
+			editingCandidate = null;
+			await loadData();
+		} catch (/** @type {any} */ err) {
+			toast.error(err.message || 'Failed to update candidate.');
+		} finally {
+			isSubmitting = false;
 		}
 	}
 </script>
@@ -361,6 +417,7 @@
 		</div>
 	{:else}
 		<div class="bento-grid" style="grid-template-columns: 1fr 2.5fr; gap: 1rem;">
+			{#if !editingCandidate}
 			<!-- Add Candidate Form -->
 			<div class="admin-card" style="padding:1.25rem;height:fit-content;">
 				<div style="margin-bottom:1.25rem;">
@@ -517,6 +574,85 @@
 					</button>
 				</form>
 			</div>
+			{:else}
+			<!-- Edit Candidate Form -->
+			<div class="admin-card" style="padding:1.25rem;height:fit-content;border:1px solid var(--brand-primary,#0b75fe);">
+				<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;">
+					<h2 style="font-size:0.875rem;font-weight:600;color:var(--brand-primary,#0b75fe);">Edit Candidate</h2>
+					<button onclick={cancelEdit} class="btn-icon-neutral" title="Cancel Edit">✕</button>
+				</div>
+
+				<div style="margin-bottom:1rem;padding:0.75rem;background:var(--bg-elevated);border-radius:8px;display:flex;align-items:center;gap:0.75rem;">
+					<div class="avatar-initial" style="width:32px;height:32px;font-size:0.65rem;">
+						{editingCandidate.students?.student_id?.slice(-2)}
+					</div>
+					<div>
+						<p style="font-size:0.75rem;font-weight:700;color:var(--text-main);line-height:1;">{formatFullName(editingCandidate.students)}</p>
+						<p style="font-size:0.65rem;color:var(--text-muted);">{editingCandidate.students?.student_id}</p>
+					</div>
+				</div>
+
+				<form onsubmit={(e) => { e.preventDefault(); handleUpdateCandidate(); }} style="display:flex;flex-direction:column;gap:1rem;">
+					<div>
+						<label class="field-label" for="edit-position">Position *</label>
+						<select id="edit-position" bind:value={editingCandidate.position} class="input-base">
+							{#each POSITION_ORDER as pos}
+								<option value={pos}>{pos}</option>
+							{/each}
+						</select>
+					</div>
+
+					<div>
+						<label class="field-label" for="edit-party">Partylist</label>
+						<select id="edit-party" bind:value={editingCandidate.partylist_id} class="input-base">
+							<option value={null}>Independent</option>
+							{#each partylists as party}
+								<option value={party.id}>{party.name}</option>
+							{/each}
+						</select>
+					</div>
+
+					<div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-top:0.5rem;">
+						<button type="button" onclick={cancelEdit} class="btn-neutral">Cancel</button>
+						<button type="submit" disabled={isSubmitting} class="btn-primary">
+							{isSubmitting ? 'Updating...' : 'Save Changes'}
+						</button>
+					</div>
+				</form>
+
+				<!-- Edit Photo Section -->
+				<div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--border-subtle);">
+					<span class="field-label">Candidate Photo</span>
+					<div style="display:flex;align-items:center;gap:1rem;margin-top:0.5rem;">
+						<div style="position:relative;">
+							{#if editingCandidate.id}
+								<img 
+									src={adviser.getCandidatePhotoUrl(editingCandidate.id)} 
+									alt="Profile"
+									style="width:64px;height:64px;border-radius:12px;object-fit:cover;border:2px solid var(--border-main);"
+									onerror={(e) => { e.currentTarget.src = 'https://ui-avatars.com/api/?name=' + formatFullName(editingCandidate.students); }}
+								/>
+							{/if}
+						</div>
+						<div style="display:flex;flex-direction:column;gap:0.4rem;">
+							<label class="btn-neutral" style="font-size:0.75rem;padding:0.4rem 0.75rem;cursor:pointer;display:inline-flex;align-items:center;gap:0.4rem;">
+								<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><circle cx="12" cy="13" r="3"/></svg>
+								Change Photo
+								<input type="file" accept="image/*" style="display:none;" onchange={(e) => handlePhotoUpload(editingCandidate.id, e)} />
+							</label>
+							{#if editingCandidate.photo_url || true} 
+								<button 
+									onclick={() => { removePhoto(editingCandidate.id); }} 
+									style="font-size:0.7rem;color:var(--status-danger-fg);background:none;border:none;cursor:pointer;text-align:left;padding:0;font-weight:600;"
+								>
+									✕ Remove Photo
+								</button>
+							{/if}
+						</div>
+					</div>
+				</div>
+			</div>
+			{/if}
 
 			<!-- Candidates List -->
 			<div class="admin-card" style="padding:1.5rem;display:flex;flex-direction:column;gap:1.5rem;">
@@ -603,17 +739,22 @@
 												{name}
 											</p>
 											<p style="font-size:0.6875rem;color:var(--text-muted);margin-top:0.125rem;">{partyName}</p>
-											{#if candidate.photo_url && isModifiable()}
-												<button onclick={() => removePhoto(candidate.id)} style="font-size:0.6rem;font-weight:700;color:var(--status-danger-fg);background:none;border:none;cursor:pointer;padding:0;margin-top:2px;">Remove photo</button>
-											{/if}
 										</div>
 
-										{#if isModifiable()}
-											<button
-												onclick={() => handleDeleteCandidate(candidate.id)}
-												class="btn-icon-danger flex-shrink-0"
-												title="Remove candidate"
-											>
+										<div style="display:flex;align-items:center;gap:0.5rem;" class="flex-shrink-0">
+											{#if isModifiable()}
+												<button
+													onclick={() => startEdit(candidate)}
+													class="btn-icon-neutral"
+													title="Edit candidate"
+												>
+													<svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+												</button>
+												<button
+													onclick={() => handleDeleteCandidate(candidate.id)}
+													class="btn-icon-danger"
+													title="Remove candidate"
+												>
 												<svg
 													class="h-4 w-4"
 													fill="none"
@@ -629,6 +770,7 @@
 											</button>
 										{/if}
 									</div>
+								</div>
 								{/each}
 							</div>
 						</div>

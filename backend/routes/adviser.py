@@ -135,6 +135,7 @@ async def get_candidates(
 async def create_candidate(
     candidate: CandidateCreate,
     election_id: str,
+    background_tasks: BackgroundTasks,
     user: AuthUser = Depends(require_adviser),
 ):
     data = await adviser_service.create_candidate(
@@ -179,6 +180,32 @@ async def delete_candidate(
     )
 
     return {"message": "Candidate deleted"}
+
+
+@router.put("/candidates/{candidate_id}")
+async def update_candidate(
+    candidate_id: str,
+    payload: dict,
+    user: AuthUser = Depends(require_adviser),
+):
+    data = await adviser_service.update_candidate(
+        candidate_id=candidate_id,
+        position=payload.get("position"),
+        partylist_id=payload.get("partylist_id")
+    )
+    await audit_service.log_action(
+        actor_id=user.id,
+        actor_role=user.role,
+        action="UPDATE_CANDIDATE",
+        target_type="candidate",
+        target_id=candidate_id,
+        details=payload,
+        department_id=user.department_id,
+        actor_name=user.full_name,
+        actor_username=user.username,
+    )
+
+    return {"message": "Candidate updated", "data": data}
 
 
 @router.get("/live-results/{election_id}")

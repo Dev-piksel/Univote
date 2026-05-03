@@ -350,6 +350,9 @@ export const adviser = {
 	createCandidate: (election_id, payload) =>
 		request(`/api/adviser/candidates?election_id=${election_id}`, json(payload)),
 
+	updateCandidate: (candidate_id, payload) =>
+		request(`/api/adviser/candidates/${candidate_id}`, { ...json(payload), method: 'PUT' }),
+
 	/** @param {string} election_id */
 	getLiveResults: (election_id) => request(`/api/adviser/live-results/${election_id}`),
 
