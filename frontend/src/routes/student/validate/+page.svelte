@@ -73,10 +73,10 @@
 		<div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_20%,#000_60%,transparent_100%)]"></div>
 	</div>
 
-	<Card size="none" class="w-full max-w-5xl bg-white/[0.03] backdrop-blur-3xl border border-white/10 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden grid grid-cols-1 lg:grid-cols-[42%_1fr] min-h-[600px] relative z-10">
+	<Card size="none" class="w-full max-w-5xl bg-white/[0.03] backdrop-blur-3xl border border-white/10 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden grid grid-cols-1 lg:grid-cols-[42%_1fr] relative z-10">
 		
-		<!-- Left: Voter Panel (Order 2 on mobile, 1 on desktop) -->
-		<div class="bg-white/[0.02] backdrop-blur-2xl p-8 md:p-12 flex flex-col justify-between relative overflow-hidden group border-r border-white/5 order-2 lg:order-1">
+		<!-- Left: Voter Panel (hidden on mobile, visible on desktop) -->
+		<div class="hidden lg:flex bg-white/[0.02] backdrop-blur-2xl p-8 md:p-12 flex-col justify-between relative overflow-hidden group border-r border-white/5">
 			<!-- Subtle glow -->
 			<div class="absolute top-10 right-[-20%] w-64 h-64 rounded-full blur-[80px] group-hover:scale-125 transition-transform duration-[2000ms] opacity-20" style="background-color: var(--brand-primary);"></div>
 			<div class="absolute bottom-[-10%] left-[-10%] w-64 h-64 rounded-full blur-[80px] opacity-10" style="background-color: var(--brand-secondary);"></div>
@@ -126,8 +126,8 @@
 			<div class="h-4"></div>
 		</div>
 
-		<!-- Right: Validation Panel (Order 1 on mobile, 2 on desktop) -->
-		<div class="p-6 md:p-16 flex flex-col justify-center items-center lg:items-start bg-transparent relative order-1 lg:order-2 overflow-hidden">
+		<!-- Right: Validation Panel -->
+		<div class="p-6 md:p-16 flex flex-col justify-center items-center lg:items-start bg-transparent relative overflow-hidden">
 			<!-- Animated background light -->
 			<div class="absolute -top-20 -right-20 w-[400px] h-[400px] bg-[var(--brand-primary)]/10 rounded-full blur-[120px] pointer-events-none"></div>
 			

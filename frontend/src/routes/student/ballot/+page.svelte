@@ -298,9 +298,9 @@
 					
 					<div class="w-full relative overflow-hidden bg-[var(--bg-card)]/40 backdrop-blur-3xl border-2 border-[var(--border-main)] rounded-[3.5rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)] group">
 						
-						<div class="p-8 md:p-12">
+						<div class="p-4 md:p-12">
 							<!-- Header Section -->
-							<div class="flex flex-col items-center text-center mb-10">
+							<div class="flex flex-col items-center text-center mb-4 md:mb-10">
 								<div class="w-16 h-16 rounded-3xl bg-[var(--bg-elevated)]/60 border-2 border-[var(--border-main)] flex items-center justify-center mb-6 shadow-2xl group-hover:scale-110 transition-transform duration-700">
 									<LockOutline size="lg" style="color: var(--brand-primary);" />
 								</div>
@@ -314,9 +314,9 @@
 							</div>
 
 							<!-- PIN Input Section -->
-							<div class="space-y-8">
+							<div class="space-y-4 md:space-y-8">
 								<div class="text-center">
-									<p class="text-[10px] font-black text-[var(--text-subtle)] uppercase tracking-[0.3em] mb-8 opacity-60">
+									<p class="text-[9px] font-black text-[var(--text-subtle)] uppercase tracking-[0.3em] mb-4 md:mb-8 opacity-60">
 										Enter the 6-digit biometric PIN from your proctor
 									</p>
 									
