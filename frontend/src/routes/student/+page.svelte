@@ -113,7 +113,7 @@
 				<!-- Header Unit -->
 		<header class="flex flex-col lg:flex-row items-center justify-between mb-10 md:mb-16 gap-6 md:gap-8" in:fly={{ y: -30, duration: 800 }}>
 			<div class="flex-1 text-center lg:text-left">
-				<h1 class="text-3xl sm:text-4xl md:text-7xl font-black tracking-tighter uppercase italic leading-tight mb-4 md:mb-6 text-[var(--text-main)] break-words">
+				<h1 class="text-3xl sm:text-4xl md:text-7xl font-black tracking-tighter uppercase italic leading-tight mb-2 md:mb-6 text-[var(--text-main)] break-words">
 					{getGreetingText()}, <span style="color: var(--brand-primary);">{voterName.split(' ')[0]}</span>
 				</h1>
 			</div>
@@ -130,36 +130,36 @@
 			</div>
 		</header>
 
-	<!-- Status Bento Grid -->
-	<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20 relative z-10">
+				<!-- Stats Grid -->
+				<div class="grid grid-cols-1 gap-3 md:gap-6 w-full lg:w-72 mt-4 md:mt-0 relative z-10 shrink-0">
 		<!-- Card 1 -->
-		<div class="bg-[var(--bg-card)]/20 backdrop-blur-3xl border border-[var(--border-main)] rounded-[2rem] p-6 shadow-xl flex items-center gap-5 group hover:border-[var(--brand-primary)] transition-all" in:fly={{ y: 30, delay: 300, duration: 800 }}>
-			<div class="p-4 bg-emerald-500/10 text-emerald-600 rounded-2xl border border-emerald-500/20 group-hover:scale-110 transition-transform shadow-inner">
-				<CheckCircleOutline size="md" />
-			</div>
-			<div>
-				<p class="text-[9px] font-black text-[var(--text-subtle)] uppercase tracking-widest opacity-50 mb-0.5">Votes Recorded</p>
-				<h4 class="text-3xl font-black text-[var(--text-main)] leading-none italic tabular-nums" in:scale={{ delay: 500 }}>{stats.voted}</h4>
+						<div class="stat-card group bg-[var(--bg-card)]/50 border-2 border-[var(--border-main)] rounded-2xl md:rounded-3xl p-4 md:p-6 shadow-xl relative overflow-hidden flex items-center gap-4 transition-all duration-300">
+							<div class="w-10 h-10 md:w-14 md:h-14 rounded-[1rem] md:rounded-[1.25rem] bg-[var(--status-success-bg)] border border-[var(--status-success-border)] text-[var(--status-success-fg)] flex items-center justify-center shrink-0 shadow-[0_0_20px_var(--status-success-bg)] group-hover:scale-110 transition-transform duration-500 relative z-10">
+								<CheckCircleOutline size="sm" />
+							</div>
+							<div class="relative z-10">
+								<p class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-[var(--text-subtle)] mb-0 md:mb-1">Votes Recorded</p>
+								<h4 class="text-2xl md:text-3xl font-black italic text-[var(--text-main)] leading-none drop-shadow-sm" in:scale={{ delay: 500 }}>{stats.voted}</h4>
 			</div>
 		</div>
 		<!-- Card 2 -->
-		<div class="bg-[var(--bg-card)]/20 backdrop-blur-3xl border border-[var(--border-main)] rounded-[2rem] p-6 shadow-xl flex items-center gap-5 group hover:border-amber-500 transition-all" in:fly={{ y: 30, delay: 450, duration: 800 }}>
-			<div class="p-4 bg-amber-500/10 text-amber-600 rounded-2xl border border-amber-500/20 group-hover:scale-110 transition-transform shadow-inner">
-				<ClockOutline size="md" />
-			</div>
-			<div>
-				<p class="text-[9px] font-black text-[var(--text-subtle)] uppercase tracking-widest opacity-50 mb-0.5">Pending Votes</p>
-				<h4 class="text-3xl font-black text-[var(--text-main)] leading-none italic tabular-nums" in:scale={{ delay: 650 }}>{stats.pending}</h4>
+						<div class="stat-card group bg-[var(--bg-card)]/50 border-2 border-[var(--border-main)] rounded-2xl md:rounded-3xl p-4 md:p-6 shadow-xl relative overflow-hidden flex items-center gap-4 transition-all duration-300">
+							<div class="w-10 h-10 md:w-14 md:h-14 rounded-[1rem] md:rounded-[1.25rem] bg-[var(--status-warning-bg)] border border-[var(--status-warning-border)] text-[var(--status-warning-fg)] flex items-center justify-center shrink-0 shadow-[0_0_20px_var(--status-warning-bg)] group-hover:scale-110 transition-transform duration-500 relative z-10">
+								<ClockOutline size="sm" />
+							</div>
+							<div class="relative z-10">
+								<p class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-[var(--text-subtle)] mb-0 md:mb-1">Pending Votes</p>
+								<h4 class="text-2xl md:text-3xl font-black italic text-[var(--text-main)] leading-none drop-shadow-sm" in:scale={{ delay: 650 }}>{stats.pending}</h4>
 			</div>
 		</div>
 		<!-- Card 3 -->
-		<div class="bg-[var(--bg-card)]/20 backdrop-blur-3xl border border-[var(--border-main)] rounded-[2rem] p-6 shadow-xl flex items-center gap-5 group hover:border-[var(--brand-primary)] transition-all" in:fly={{ y: 30, delay: 600, duration: 800 }}>
-			<div class="p-4 bg-[var(--brand-primary)]/10 text-[var(--brand-primary)] rounded-2xl border border-[var(--border-primary)]/20 group-hover:scale-110 transition-transform shadow-inner">
-				<DatabaseOutline size="md" />
-			</div>
-			<div>
-				<p class="text-[9px] font-black text-[var(--text-subtle)] uppercase tracking-widest opacity-50 mb-0.5">Total Elections</p>
-				<h4 class="text-3xl font-black text-[var(--text-main)] leading-none italic tabular-nums" in:scale={{ delay: 800 }}>{stats.total}</h4>
+						<div class="stat-card group bg-[var(--bg-card)]/50 border-2 border-[var(--border-main)] rounded-2xl md:rounded-3xl p-4 md:p-6 shadow-xl relative overflow-hidden flex items-center gap-4 transition-all duration-300">
+							<div class="w-10 h-10 md:w-14 md:h-14 rounded-[1rem] md:rounded-[1.25rem] bg-[var(--bg-elevated)] border border-[var(--border-main)] text-[var(--brand-primary)] flex items-center justify-center shrink-0 shadow-[0_0_20px_var(--brand-glow)] group-hover:scale-110 transition-transform duration-500 relative z-10">
+								<BuildingOutline size="sm" />
+							</div>
+							<div class="relative z-10">
+								<p class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-[var(--text-subtle)] mb-0 md:mb-1">Total Elections</p>
+								<h4 class="text-2xl md:text-3xl font-black italic text-[var(--text-main)] leading-none drop-shadow-sm" in:scale={{ delay: 800 }}>{stats.total}</h4>
 			</div>
 		</div>
 	</div>

@@ -320,7 +320,7 @@
 										Enter the 6-digit biometric PIN from your proctor
 									</p>
 									
-									<div class="flex justify-center items-center gap-2 sm:gap-4 md:gap-10 lg:gap-16 pin-grid">
+									<div class="flex justify-center items-center gap-1 sm:gap-2 md:gap-8 lg:gap-12 pin-grid">
 										{#each Array(6) as _, i}
 											<div class="relative group/pin">
 												<input
@@ -347,7 +347,7 @@
 															adviserPin = pinArr.join('');
 														}
 													}}
-													class="w-10 h-14 sm:w-14 sm:h-18 md:w-20 md:h-24 lg:w-24 lg:h-32 rounded-2xl md:rounded-[2.5rem] border-2 border-[var(--border-main)] bg-[var(--bg-elevated)]/40 text-center font-black text-xl md:text-5xl focus:outline-none focus:border-[var(--brand-primary)] focus:ring-4 focus:ring-[var(--brand-primary-alpha-10)] transition-all duration-300 placeholder:opacity-10"
+													class="w-8 h-10 sm:w-12 sm:h-14 md:w-16 md:h-20 lg:w-20 lg:h-28 rounded-xl md:rounded-[2rem] border-2 border-[var(--border-main)] bg-[var(--bg-elevated)]/40 text-center font-black text-lg md:text-4xl focus:outline-none focus:border-[var(--brand-primary)] focus:ring-4 focus:ring-[var(--brand-primary-alpha-10)] transition-all duration-300 placeholder:opacity-10"
 													placeholder="•"
 												/>
 												<div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-1 rounded-full transition-all duration-500 {adviserPin[i] ? 'bg-[var(--brand-primary)] w-8 shadow-[0_0_10px_var(--brand-primary)]' : 'bg-transparent'}"></div>
@@ -365,7 +365,7 @@
 								<div class="pt-4 flex flex-col gap-6">
 									<Button
 										color="blue"
-										class="w-full rounded-[1.75rem] py-6 font-black tracking-[0.3em] uppercase transition-all active:scale-[0.98] shadow-2xl relative overflow-hidden group/btn disabled:opacity-30"
+										class="w-full rounded-2xl md:rounded-[1.75rem] py-4 md:py-6 font-black text-[10px] md:text-[11px] tracking-[0.2em] md:tracking-[0.3em] uppercase transition-all active:scale-[0.98] shadow-2xl relative overflow-hidden group/btn disabled:opacity-30"
 										style="background: var(--brand-gradient); color: white; box-shadow: 0 20px 40px -10px var(--brand-glow);"
 										disabled={isVerifyingPasscode || (adviserPin?.length || 0) < 6}
 										onclick={verifyPasscode}
@@ -523,7 +523,7 @@
 						</div>
 						<Button 
 							color="blue" 
-							class="w-full md:w-auto px-6 py-4 md:px-10 md:py-5 rounded-2xl md:rounded-[1.5rem] font-black text-[11px] md:text-[12px] tracking-[0.2em] uppercase transition-all active:scale-95 flex items-center justify-center gap-3 text-white shadow-2xl border-b-6 disabled:grayscale disabled:opacity-40" 
+							class="w-full md:w-auto px-6 py-3 md:px-10 md:py-4 rounded-xl md:rounded-[1.5rem] font-black text-[10px] md:text-[11px] tracking-[0.15em] md:tracking-[0.2em] uppercase transition-all active:scale-95 flex items-center justify-center gap-3 text-white shadow-2xl border-b-[4px] md:border-b-6 disabled:grayscale disabled:opacity-40" 
 							style="background: var(--brand-primary); box-shadow: 0 15px 40px -10px var(--brand-glow); border-bottom-color: var(--brand-primary-hover);"
 							disabled={!allSelected} 
 							onclick={() => showConfirm = true}

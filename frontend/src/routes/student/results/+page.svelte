@@ -218,9 +218,9 @@
 										
 										<div class="space-y-3 md:space-y-4 group/cand">
 											<div class="flex items-center justify-between gap-2 md:gap-6">
-												<div class="flex-1 flex items-center gap-3 md:gap-5 min-w-0">
+												<div class="flex-1 flex items-center gap-2 md:gap-4 min-w-0">
 													<div class="relative shrink-0">
-														<div class="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-[var(--bg-card)]/50 border-2 border-[var(--border-main)] p-0.5 group-hover/cand:scale-110 group-hover/cand:border-[var(--brand-primary)] transition-all duration-500 shadow-2xl relative overflow-hidden">
+														<div class="w-8 h-8 md:w-12 md:h-12 rounded-lg md:rounded-2xl bg-[var(--bg-card)]/50 border-2 border-[var(--border-main)] p-0.5 group-hover/cand:scale-110 group-hover/cand:border-[var(--brand-primary)] transition-all duration-500 shadow-2xl relative overflow-hidden">
 															{#if cand.photo}
 																<img 
 																	src={cand.photo} 
@@ -234,20 +234,20 @@
 															{/if}
 														</div>
 														{#if isWinner}
-															<div class="absolute -top-1.5 -right-1.5 md:-top-2 md:-right-2 w-6 h-6 md:w-7 md:h-7 rounded-md md:rounded-lg text-white flex items-center justify-center shadow-xl ring-2 ring-[var(--bg-card)]" style="background: var(--brand-gradient);" in:scale>
+															<div class="absolute -top-1 -right-1 md:-top-2 md:-right-2 w-5 h-5 md:w-7 md:h-7 rounded-md md:rounded-lg text-white flex items-center justify-center shadow-xl ring-2 ring-[var(--bg-card)]" style="background: var(--brand-gradient);" in:scale>
 																<AwardOutline size="xs" />
 															</div>
 														{/if}
 													</div>
 													<div class="min-w-0">
-														<h4 class="text-sm md:text-base font-black text-[var(--text-main)] tracking-tight uppercase truncate transition-all" style={isWinner ? `color: var(--brand-primary);` : `opacity: 0.7;`}>{cand.name}</h4>
+														<h4 class="text-xs md:text-base font-black text-[var(--text-main)] tracking-tight uppercase truncate transition-all" style={isWinner ? `color: var(--brand-primary);` : `opacity: 0.7;`}>{cand.name}</h4>
 														<p class="text-[8px] md:text-[9px] font-black text-[var(--text-subtle)] uppercase tracking-widest mt-0.5 opacity-50 truncate">{cand.party}</p>
 													</div>
 												</div>
 												
 												<div class="flex flex-col items-end gap-1 shrink-0">
-													<span class="text-xl md:text-2xl font-black tabular-nums leading-none" style={isWinner ? `color: var(--brand-primary);` : `color: var(--text-main);`}>{cand.votes}</span>
-													<span class="text-[8px] md:text-[9px] font-black text-[var(--text-subtle)] uppercase tracking-widest opacity-40">{Math.round(pct)}% SHARE</span>
+													<span class="text-lg md:text-2xl font-black tabular-nums leading-none" style={isWinner ? `color: var(--brand-primary);` : `color: var(--text-main);`}>{cand.votes}</span>
+													<span class="text-[7px] md:text-[9px] font-black text-[var(--text-subtle)] uppercase tracking-widest opacity-40">{Math.round(pct)}% SHARE</span>
 												</div>
 											</div>
 

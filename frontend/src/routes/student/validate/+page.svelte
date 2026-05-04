@@ -134,7 +134,7 @@
 			<div class="w-full max-w-sm relative z-10" in:fade={{ duration: 600 }}>
 				<header class="mb-12 text-center lg:text-left">
 
-					<h1 class="text-4xl md:text-5xl font-black !text-white tracking-tighter mb-2 italic">VOTER <span style="color: var(--brand-primary);">LOGIN</span></h1>
+					<h1 class="text-3xl md:text-5xl font-black !text-white tracking-tighter mb-2 italic">VOTER <span style="color: var(--brand-primary);">LOGIN</span></h1>
 					<p class="text-[10px] md:text-[11px] font-bold text-white/40 uppercase tracking-[0.3em]">SECURE IDENTITY VERIFICATION</p>
 				</header>
 
@@ -156,12 +156,11 @@
 								bind:value={studentId}
 								required
 								placeholder=" "
-								class="peer w-full pl-12 md:pl-14 pr-4 md:pr-6 py-5 md:py-6 bg-transparent text-white placeholder-transparent transition-all outline-none font-black text-base md:text-lg tracking-[0.1em] focus:ring-0"
+								class="peer w-full pl-12 md:pl-14 pr-4 md:pr-6 py-4 md:py-6 bg-transparent text-white placeholder-transparent transition-all outline-none font-black text-sm md:text-lg tracking-[0.1em] focus:ring-0"
 							/>
 							
 							<label 
-								for="student-id"
-								class="absolute left-12 md:left-14 top-1/2 -translate-y-1/2 font-black text-[9px] md:text-[10px] uppercase tracking-[0.4em] pointer-events-none transition-all duration-500 peer-focus:-translate-y-10 md:peer-focus:-translate-y-12 peer-focus:scale-75 peer-[:not(:placeholder-shown)]:-translate-y-10 md:peer-[:not(:placeholder-shown)]:-translate-y-12 peer-[:not(:placeholder-shown)]:scale-75 origin-left z-30 text-white/40 group-focus-within:!text-[var(--brand-primary)]"
+								class="absolute left-12 md:left-14 top-1/2 -translate-y-1/2 font-black text-[8px] md:text-[10px] uppercase tracking-[0.4em] pointer-events-none transition-all duration-500 peer-focus:-translate-y-10 md:peer-focus:-translate-y-12 peer-focus:scale-75 peer-[:not(:placeholder-shown)]:-translate-y-10 md:peer-[:not(:placeholder-shown)]:-translate-y-12 peer-[:not(:placeholder-shown)]:scale-75 origin-left z-30 text-white/40 group-focus-within:!text-[var(--brand-primary)]"
 							>
 								VOTER_ID_IDENTITY
 							</label>
@@ -188,7 +187,7 @@
 						type="submit"
 						color="alternative"
 						disabled={isChecking || !studentId || retrySeconds > 0}
-						class="login-btn w-full py-5 rounded-[1.25rem] font-black text-[11px] tracking-[0.3em] uppercase active:scale-[0.98] group flex items-center justify-center gap-3 shadow-[0_15px_40px_-10px_var(--brand-glow)] border border-white/20 hover:border-[var(--brand-primary)] transition-all duration-300"
+						class="login-btn w-full py-4 md:py-5 rounded-[1.25rem] font-black text-[10px] md:text-[11px] tracking-[0.3em] uppercase active:scale-[0.98] group flex items-center justify-center gap-3 shadow-[0_15px_40px_-10px_var(--brand-glow)] border border-white/20 hover:border-[var(--brand-primary)] transition-all duration-300"
 					>
 						{#if isChecking}
 							<Spinner size="4" color="white" />
