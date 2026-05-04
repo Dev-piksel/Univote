@@ -552,7 +552,7 @@
 	.dash-title {
 		font-size: 2rem;
 		font-weight: 900;
-		color: #fff;
+		color: var(--text-main);
 		margin: 0.25rem 0 0;
 		letter-spacing: -0.04em;
 		font-style: italic;
@@ -562,7 +562,7 @@
 		background: rgba(255, 255, 255, 0.03);
 		backdrop-filter: blur(20px);
 		border: 1px solid rgba(255, 255, 255, 0.1);
-		color: #fff;
+		color: var(--text-main);
 		border-radius: 12px;
 		padding: 0.5rem 2rem 0.5rem 0.75rem;
 		font-size: 0.875rem;
@@ -626,7 +626,7 @@
 	.kpi-num {
 		font-size: 2.5rem;
 		font-weight: 900;
-		color: #fff;
+		color: var(--text-main);
 		margin: 0;
 		letter-spacing: -0.05em;
 		line-height: 1;
@@ -692,7 +692,7 @@
 	.card-title {
 		font-size: 1.125rem;
 		font-weight: 900;
-		color: #fff;
+		color: var(--text-main);
 		text-transform: uppercase;
 		letter-spacing: 0.1em;
 		font-style: italic;

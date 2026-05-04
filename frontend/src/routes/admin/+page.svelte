@@ -602,7 +602,7 @@
 	.dash-title {
 		font-size: 2rem;
 		font-weight: 900;
-		color: #fff;
+		color: var(--text-main);
 		margin: 0.25rem 0 0;
 		letter-spacing: -0.04em;
 		font-style: italic;
@@ -667,7 +667,7 @@
 	.kpi-num {
 		font-size: 2.5rem;
 		font-weight: 900;
-		color: #fff;
+		color: var(--text-main);
 		margin: 0;
 		letter-spacing: -0.05em;
 		line-height: 1;
