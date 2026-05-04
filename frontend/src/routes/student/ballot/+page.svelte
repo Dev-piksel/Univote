@@ -320,7 +320,7 @@
 										Enter the 6-digit biometric PIN from your proctor
 									</p>
 									
-									<div class="flex justify-center items-center gap-3 sm:gap-6 md:gap-10 lg:gap-16 pin-grid">
+									<div class="flex justify-center items-center gap-2 sm:gap-4 md:gap-10 lg:gap-16 pin-grid">
 										{#each Array(6) as _, i}
 											<div class="relative group/pin">
 												<input
@@ -347,7 +347,7 @@
 															adviserPin = pinArr.join('');
 														}
 													}}
-													class="w-12 h-16 sm:w-16 sm:h-20 md:w-20 md:h-24 lg:w-24 lg:h-32 rounded-2xl md:rounded-[2.5rem] border-2 border-[var(--border-main)] bg-[var(--bg-elevated)]/40 text-center font-black text-2xl md:text-5xl focus:outline-none focus:border-[var(--brand-primary)] focus:ring-4 focus:ring-[var(--brand-primary-alpha-10)] transition-all duration-300 placeholder:opacity-10"
+													class="w-10 h-14 sm:w-14 sm:h-18 md:w-20 md:h-24 lg:w-24 lg:h-32 rounded-2xl md:rounded-[2.5rem] border-2 border-[var(--border-main)] bg-[var(--bg-elevated)]/40 text-center font-black text-xl md:text-5xl focus:outline-none focus:border-[var(--brand-primary)] focus:ring-4 focus:ring-[var(--brand-primary-alpha-10)] transition-all duration-300 placeholder:opacity-10"
 													placeholder="•"
 												/>
 												<div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-1 rounded-full transition-all duration-500 {adviserPin[i] ? 'bg-[var(--brand-primary)] w-8 shadow-[0_0_10px_var(--brand-primary)]' : 'bg-transparent'}"></div>
@@ -510,8 +510,8 @@
 				</div>
 
 				<!-- Floating Action Command -->
-				<div class="fixed bottom-24 md:bottom-12 left-0 right-0 z-50 p-6 flex justify-center pointer-events-none">
-					<div class="max-w-3xl w-full bg-[var(--bg-card)]/60 backdrop-blur-3xl border-2 border-[var(--border-main)] rounded-[2.5rem] md:rounded-[3.5rem] p-6 md:p-8 shadow-[0_60px_120px_-20px_rgba(0,0,0,0.6)] pointer-events-auto flex items-center justify-between gap-6 md:gap-12 animate-in slide-in-from-bottom-full duration-1000">
+				<div class="fixed bottom-24 md:bottom-12 left-0 right-0 z-50 p-4 md:p-6 flex justify-center pointer-events-none">
+					<div class="max-w-3xl w-full bg-[var(--bg-card)]/60 backdrop-blur-3xl border-2 border-[var(--border-main)] rounded-[2rem] md:rounded-[3.5rem] p-4 md:p-8 shadow-[0_60px_120px_-20px_rgba(0,0,0,0.6)] pointer-events-auto flex flex-col md:flex-row items-center justify-between gap-4 md:gap-12 animate-in slide-in-from-bottom-full duration-1000">
 						<div class="flex-1 hidden md:block">
 							<div class="flex items-center gap-4 mb-3">
 								<FingerprintOutline size="xs" style="color: var(--brand-primary);" />
@@ -523,7 +523,7 @@
 						</div>
 						<Button 
 							color="blue" 
-							class="px-10 py-5 rounded-[1.5rem] font-black text-[12px] tracking-[0.2em] uppercase transition-all active:scale-95 flex items-center gap-3 text-white shadow-2xl border-b-6 disabled:grayscale disabled:opacity-40" 
+							class="w-full md:w-auto px-6 py-4 md:px-10 md:py-5 rounded-2xl md:rounded-[1.5rem] font-black text-[11px] md:text-[12px] tracking-[0.2em] uppercase transition-all active:scale-95 flex items-center justify-center gap-3 text-white shadow-2xl border-b-6 disabled:grayscale disabled:opacity-40" 
 							style="background: var(--brand-primary); box-shadow: 0 15px 40px -10px var(--brand-glow); border-bottom-color: var(--brand-primary-hover);"
 							disabled={!allSelected} 
 							onclick={() => showConfirm = true}
@@ -539,8 +539,8 @@
 	<!-- Secure Confirmation Overlay -->
 	{#if showConfirm}
 		<div class="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-[var(--bg-main)]/95 backdrop-blur-3xl animate-in fade-in duration-500">
-			<div in:scale={{ duration: 600, start: 0.9 }}>
-				<Card size="xl" class="w-full max-w-2xl bg-[var(--bg-card)]/50 border-2 border-[var(--border-main)] p-8 md:p-16 rounded-[3rem] md:rounded-[5rem] shadow-[0_100px_150px_-30px_rgba(0,0,0,0.7)] relative overflow-hidden group">
+			<div in:scale={{ duration: 600, start: 0.9 }} class="w-full max-w-2xl">
+				<Card size="none" class="w-full bg-[var(--bg-card)]/50 border-2 border-[var(--border-main)] p-6 md:p-16 rounded-[2rem] md:rounded-[5rem] shadow-[0_100px_150px_-30px_rgba(0,0,0,0.7)] relative overflow-hidden group">
 					
 					<!-- Security Texture -->
 					<div class="absolute inset-0 opacity-[0.03] pointer-events-none group-hover:opacity-[0.05] transition-opacity">
@@ -586,7 +586,7 @@
 								maxlength="8" 
 								bind:value={sessionPasscode} 
 								placeholder="SESSION_KEY" 
-								class="w-full bg-[var(--bg-elevated)]/60 border-2 border-[var(--border-main)] text-[var(--text-main)] rounded-[1.5rem] px-6 py-5 text-2xl font-black tracking-[0.4em] focus:border-[var(--brand-primary)] focus:ring-0 transition-all uppercase placeholder:opacity-5 text-center font-mono shadow-xl" 
+								class="w-full bg-[var(--bg-elevated)]/60 border-2 border-[var(--border-main)] text-[var(--text-main)] rounded-[1.5rem] px-4 md:px-6 py-4 md:py-5 text-xl md:text-2xl font-black tracking-widest md:tracking-[0.4em] focus:border-[var(--brand-primary)] focus:ring-0 transition-all uppercase placeholder:opacity-5 text-center font-mono shadow-xl" 
 							/>
 						</div>
 

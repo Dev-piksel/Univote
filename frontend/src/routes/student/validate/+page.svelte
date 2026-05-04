@@ -66,17 +66,17 @@
 	<title>Student Access | {$branding.appName}</title>
 </svelte:head>
 
-<div class="min-h-screen flex items-center justify-center p-6 relative selection:bg-primary-500/30 transition-colors duration-700" style="background-color: {$branding.showBgAnims ? '#050a1b' : 'color-mix(in srgb, #050a1b 92%, white)'}">
+<div class="min-h-screen flex items-center justify-center p-4 md:p-6 relative selection:bg-primary-500/30 transition-colors duration-700" style="background-color: {$branding.showBgAnims ? '#050a1b' : 'color-mix(in srgb, #050a1b 92%, white)'}">
 	<!-- Background layers (Global Ripples) -->
 	<Ripples />
 	<div class="absolute inset-0 pointer-events-none overflow-hidden">
 		<div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_20%,#000_60%,transparent_100%)]"></div>
 	</div>
 
-	<Card size="none" class="w-full max-w-5xl bg-white/[0.03] backdrop-blur-3xl border border-white/10 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)] rounded-[2.5rem] overflow-hidden grid grid-cols-1 lg:grid-cols-[42%_1fr] min-h-[600px] relative z-10">
+	<Card size="none" class="w-full max-w-5xl bg-white/[0.03] backdrop-blur-3xl border border-white/10 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden grid grid-cols-1 lg:grid-cols-[42%_1fr] min-h-[600px] relative z-10">
 		
 		<!-- Left: Voter Panel (Order 2 on mobile, 1 on desktop) -->
-		<div class="bg-white/[0.02] backdrop-blur-2xl p-12 flex flex-col justify-between relative overflow-hidden group border-r border-white/5 order-2 lg:order-1">
+		<div class="bg-white/[0.02] backdrop-blur-2xl p-8 md:p-12 flex flex-col justify-between relative overflow-hidden group border-r border-white/5 order-2 lg:order-1">
 			<!-- Subtle glow -->
 			<div class="absolute top-10 right-[-20%] w-64 h-64 rounded-full blur-[80px] group-hover:scale-125 transition-transform duration-[2000ms] opacity-20" style="background-color: var(--brand-primary);"></div>
 			<div class="absolute bottom-[-10%] left-[-10%] w-64 h-64 rounded-full blur-[80px] opacity-10" style="background-color: var(--brand-secondary);"></div>
@@ -92,16 +92,16 @@
 			</div>
 
 			<div class="relative z-10">
-				<h2 class="text-5xl font-black !text-white leading-[0.95] tracking-tighter mb-6">
+				<h2 class="text-4xl md:text-5xl font-black !text-white leading-[0.95] tracking-tighter mb-4 md:mb-6">
 					YOUR VOTE,<br />
 					<span class="italic text-glow" style="color: var(--brand-primary);">YOUR VOICE.</span>
 				</h2>
 				
-				<p class="text-sm font-medium tracking-normal !text-white/80 leading-relaxed max-w-sm mb-12">
+				<p class="text-xs md:text-sm font-medium tracking-normal !text-white/80 leading-relaxed max-w-sm mb-8 md:mb-12">
 					Authenticate with your student ID to verify your identity and access the secure digital&nbsp;ballot.
 				</p>
 				
-				<div class="space-y-6 mt-16">
+				<div class="space-y-4 md:space-y-6 mt-8 md:mt-16">
 					<div class="flex items-center gap-5 text-xs font-bold text-white/70 tracking-widest cursor-help uppercase group/feat" in:fly={{ x: -20, delay: 0 }} title="Your identity is never linked to your specific vote.">
 						<div class="w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-500 group-hover/feat:scale-110 group-hover/feat:border-[var(--brand-primary)] group-hover/feat:shadow-[0_0_20px_var(--brand-glow)]" style="background-color: var(--brand-primary-alpha-10); border-color: var(--brand-primary-alpha-20); color: var(--brand-primary);">
 							<ShieldCheckOutline size="sm" />
@@ -127,15 +127,15 @@
 		</div>
 
 		<!-- Right: Validation Panel (Order 1 on mobile, 2 on desktop) -->
-		<div class="p-8 md:p-16 flex flex-col justify-center items-center lg:items-start bg-transparent relative order-1 lg:order-2 overflow-hidden">
+		<div class="p-6 md:p-16 flex flex-col justify-center items-center lg:items-start bg-transparent relative order-1 lg:order-2 overflow-hidden">
 			<!-- Animated background light -->
 			<div class="absolute -top-20 -right-20 w-[400px] h-[400px] bg-[var(--brand-primary)]/10 rounded-full blur-[120px] pointer-events-none"></div>
 			
 			<div class="w-full max-w-sm relative z-10" in:fade={{ duration: 600 }}>
 				<header class="mb-12 text-center lg:text-left">
 
-					<h1 class="text-5xl font-black !text-white tracking-tighter mb-2 italic">VOTER <span style="color: var(--brand-primary);">LOGIN</span></h1>
-					<p class="text-[11px] font-bold text-white/40 uppercase tracking-[0.3em]">SECURE IDENTITY VERIFICATION</p>
+					<h1 class="text-4xl md:text-5xl font-black !text-white tracking-tighter mb-2 italic">VOTER <span style="color: var(--brand-primary);">LOGIN</span></h1>
+					<p class="text-[10px] md:text-[11px] font-bold text-white/40 uppercase tracking-[0.3em]">SECURE IDENTITY VERIFICATION</p>
 				</header>
 
 				<form onsubmit={checkStudentId} class="space-y-10">
@@ -156,12 +156,12 @@
 								bind:value={studentId}
 								required
 								placeholder=" "
-								class="peer w-full pl-14 pr-6 py-6 bg-transparent text-white placeholder-transparent transition-all outline-none font-black text-lg tracking-[0.1em] focus:ring-0"
+								class="peer w-full pl-12 md:pl-14 pr-4 md:pr-6 py-5 md:py-6 bg-transparent text-white placeholder-transparent transition-all outline-none font-black text-base md:text-lg tracking-[0.1em] focus:ring-0"
 							/>
 							
 							<label 
 								for="student-id"
-								class="absolute left-14 top-1/2 -translate-y-1/2 font-black text-[10px] uppercase tracking-[0.4em] pointer-events-none transition-all duration-500 peer-focus:-translate-y-12 peer-focus:scale-75 peer-[:not(:placeholder-shown)]:-translate-y-12 peer-[:not(:placeholder-shown)]:scale-75 origin-left z-30 text-white/40 group-focus-within:!text-[var(--brand-primary)]"
+								class="absolute left-12 md:left-14 top-1/2 -translate-y-1/2 font-black text-[9px] md:text-[10px] uppercase tracking-[0.4em] pointer-events-none transition-all duration-500 peer-focus:-translate-y-10 md:peer-focus:-translate-y-12 peer-focus:scale-75 peer-[:not(:placeholder-shown)]:-translate-y-10 md:peer-[:not(:placeholder-shown)]:-translate-y-12 peer-[:not(:placeholder-shown)]:scale-75 origin-left z-30 text-white/40 group-focus-within:!text-[var(--brand-primary)]"
 							>
 								VOTER_ID_IDENTITY
 							</label>

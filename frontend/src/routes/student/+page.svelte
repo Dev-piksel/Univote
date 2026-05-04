@@ -113,7 +113,7 @@
 				<!-- Header Unit -->
 		<header class="flex flex-col lg:flex-row items-center justify-between mb-10 md:mb-16 gap-6 md:gap-8" in:fly={{ y: -30, duration: 800 }}>
 			<div class="flex-1 text-center lg:text-left">
-				<h1 class="text-3xl md:text-7xl font-black tracking-tighter uppercase italic leading-tight mb-4 md:mb-6 text-[var(--text-main)]">
+				<h1 class="text-3xl sm:text-4xl md:text-7xl font-black tracking-tighter uppercase italic leading-tight mb-4 md:mb-6 text-[var(--text-main)] break-words">
 					{getGreetingText()}, <span style="color: var(--brand-primary);">{voterName.split(' ')[0]}</span>
 				</h1>
 			</div>
@@ -208,7 +208,7 @@
 									<span class="text-[10px] font-black uppercase tracking-tight text-amber-600">{getDaysLeft(election.end_date)}</span>
 								</div>
 
-								<div class="flex items-center justify-between pt-4 mt-auto">
+								<div class="flex flex-wrap items-center justify-between gap-4 pt-4 mt-auto">
 									{#if election.has_voted}
 										<button class="text-[var(--brand-primary)] font-black text-[10px] uppercase tracking-widest flex items-center gap-2 hover:scale-105 transition-all p-0 bg-transparent border-none cursor-pointer" onclick={() => toggleReceipt(election.id)}>
 											<FileSearchOutline size="xs" /> Receipt

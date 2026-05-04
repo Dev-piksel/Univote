@@ -217,8 +217,8 @@
 										{@const isWinner = positionWinners.some(w => w.id === cand.id)}
 										
 										<div class="space-y-3 md:space-y-4 group/cand">
-											<div class="flex items-center justify-between gap-4 md:gap-6">
-												<div class="flex items-center gap-3 md:gap-5 min-w-0">
+											<div class="flex items-center justify-between gap-2 md:gap-6">
+												<div class="flex-1 flex items-center gap-3 md:gap-5 min-w-0">
 													<div class="relative shrink-0">
 														<div class="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-[var(--bg-card)]/50 border-2 border-[var(--border-main)] p-0.5 group-hover/cand:scale-110 group-hover/cand:border-[var(--brand-primary)] transition-all duration-500 shadow-2xl relative overflow-hidden">
 															{#if cand.photo}
@@ -240,8 +240,8 @@
 														{/if}
 													</div>
 													<div class="min-w-0">
-														<h4 class="text-base font-black text-[var(--text-main)] tracking-tight uppercase line-clamp-1 transition-all" style={isWinner ? `color: var(--brand-primary);` : `opacity: 0.7;`}>{cand.name}</h4>
-														<p class="text-[9px] font-black text-[var(--text-subtle)] uppercase tracking-widest mt-0.5 opacity-50">{cand.party}</p>
+														<h4 class="text-sm md:text-base font-black text-[var(--text-main)] tracking-tight uppercase truncate transition-all" style={isWinner ? `color: var(--brand-primary);` : `opacity: 0.7;`}>{cand.name}</h4>
+														<p class="text-[8px] md:text-[9px] font-black text-[var(--text-subtle)] uppercase tracking-widest mt-0.5 opacity-50 truncate">{cand.party}</p>
 													</div>
 												</div>
 												

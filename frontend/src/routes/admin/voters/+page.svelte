@@ -215,7 +215,7 @@
 
 	<!-- Add / Edit Form -->
 	{#if showForm}
-		<div class="admin-card" style="padding:1.25rem;">
+		<div class="bento-card" style="padding:1.5rem; border-radius: 16px; margin-bottom: 1.5rem;">
 			<div
 				style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;"
 			>
@@ -288,7 +288,7 @@
 	{/if}
 
 	<!-- CSV Upload -->
-	<div class="admin-card" style="padding:1rem;">
+	<div class="bento-card" style="padding:1.5rem; border-radius: 16px; margin-bottom: 1.5rem;">
 		<div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
 			<p style="font-size:0.8125rem;font-weight:600;color:var(--text-main);flex-shrink:0;">
 				Bulk Import via CSV
@@ -327,7 +327,7 @@
 	</div>
 
 	<!-- Voter Table -->
-	<div class="admin-card" style="overflow:hidden;">
+	<div class="bento-card" style="overflow:hidden; border-radius: 16px;">
 		<div style="padding:0.75rem 1rem;border-bottom:1px solid var(--border-main);">
 			<p class="section-label">
 				Listing student voters
@@ -443,3 +443,39 @@
 	onConfirm={confirmState.onConfirm}
 	onCancel={() => (confirmState.show = false)}
 />
+
+<style>
+	.data-table thead th {
+		position: sticky;
+		top: 0;
+		background: var(--bg-card);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+		z-index: 10;
+		border-bottom: 1px solid var(--border-main);
+		padding: 1rem;
+		font-size: 0.75rem;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--text-subtle);
+		transition: color 0.2s;
+	}
+	.data-table thead th:hover {
+		color: var(--text-main);
+	}
+	.data-table tbody td {
+		padding: 1rem;
+		vertical-align: middle;
+	}
+	.data-table tbody tr {
+		transition: all 0.2s ease;
+		border-bottom: 1px solid var(--border-subtle);
+	}
+	.data-table tbody tr:last-child {
+		border-bottom: none;
+	}
+	.data-table tbody tr:hover {
+		background: rgba(128, 128, 128, 0.05);
+	}
+</style>

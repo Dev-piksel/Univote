@@ -217,7 +217,7 @@
 		<div style="display:flex;flex-direction:column;gap:2rem;">
 			<div class="bento-grid bento-2col">
 				{#each [1, 2, 3, 4] as i}
-					<div class="admin-card skeleton" style="height:250px;opacity:0.5;"></div>
+					<div class="bento-card skeleton" style="height:250px;opacity:0.5; border-radius: 16px;"></div>
 				{/each}
 			</div>
 		</div>
@@ -275,7 +275,7 @@
 						{#each positions as position}
 							{#if winnersData[position] && winnersData[position].length > 0}
 								<div
-									class="admin-card relative overflow-hidden"
+									class="bento-card relative overflow-hidden"
 									style="padding:1.5rem;display:flex;flex-direction:column;align-items:center;text-align:center;border: 1px solid #10B981;box-shadow: 0 0 16px rgba(16,185,129,0.15), inset 0 0 24px rgba(16,185,129,0.05);"
 								>
 									<div
@@ -335,7 +335,7 @@
 				<div class="bento-grid bento-2col">
 					{#each positions as position, idx}
 						{@const { entries, totalVotes } = getPositionResults(position)}
-						<div class="admin-card" style="padding:1.5rem;">
+						<div class="bento-card" style="padding:1.5rem; border-radius: 16px;">
 							<!-- Header -->
 							<div
 								style="display:flex;align-items:flex-start;justify-content:space-between;border-bottom:1px solid var(--border-main);padding-bottom:1rem;margin-bottom:1.25rem;"

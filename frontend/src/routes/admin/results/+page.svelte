@@ -207,69 +207,47 @@
 	</div>
 
 	{#if !$selectedElectionId || !elections.find(e => e.id === $selectedElectionId)}
-		<div class="empty-state">
-			<svg
-				class="empty-state-icon"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="1.5"
-				viewBox="0 0 24 24"
-				><path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-				/></svg
-			>
-			<h3 class="empty-state-title">Select an Election</h3>
-			<p class="empty-state-text">
-				Choose an election session from the menu above to view its real-time results.
+		<div class="bento-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4rem 2rem;text-align:center;min-height:350px;">
+			<div style="width:72px;height:72px;border-radius:50%;background:var(--brand-glow);color:var(--brand-primary);display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;box-shadow:0 10px 30px var(--brand-glow);">
+				<svg style="width:36px;height:36px;" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+				</svg>
+			</div>
+			<h3 style="font-size:1.5rem;font-weight:800;color:var(--text-main);margin-bottom:0.5rem;letter-spacing:-0.02em;">Select an Election</h3>
+			<p style="color:var(--text-subtle);max-width:400px;font-size:0.875rem;line-height:1.6;">
+				Choose an election session from the menu above to securely monitor live returns and real-time tallies.
 			</p>
 		</div>
 	{:else if isLoading}
 		<div style="display:flex;flex-direction:column;gap:2rem;">
 			<div class="bento-grid bento-2col">
 				{#each [1, 2, 3, 4] as i}
-					<div class="admin-card skeleton" style="height:250px;opacity:0.5;"></div>
+					<div class="bento-card skeleton" style="height:250px;opacity:0.5;"></div>
 				{/each}
 			</div>
 		</div>
 	{:else if electionStatus === 'upcoming'}
-		<div class="empty-state">
-			<svg
-				class="empty-state-icon"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="1.5"
-				viewBox="0 0 24 24"
-				><path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-				/></svg
-			>
-			<h3 class="empty-state-title">Election Not Started</h3>
-			<p class="empty-state-text">
+		<div class="bento-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4rem 2rem;text-align:center;min-height:350px;">
+			<div style="width:72px;height:72px;border-radius:50%;background:var(--status-info-bg);color:var(--status-info-fg);display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;">
+				<svg style="width:36px;height:36px;" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+				</svg>
+			</div>
+			<h3 style="font-size:1.5rem;font-weight:800;color:var(--text-main);margin-bottom:0.5rem;letter-spacing:-0.02em;">Election Not Started</h3>
+			<p style="color:var(--text-subtle);max-width:400px;font-size:0.875rem;line-height:1.6;">
 				Live results for this election will be available once the voting period officially begins.
 			</p>
 		</div>
 	{:else if positions.length === 0}
-		<div class="empty-state">
-			<svg
-				class="empty-state-icon"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="1.5"
-				viewBox="0 0 24 24"
-				><path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-				/></svg
-			>
-			<h3 class="empty-state-title">No Votes Recorded</h3>
-			<p class="empty-state-text">
-				Live cryptographic tallies will appear here automatically once voters begin submitting their
-				ballots.
+		<div class="bento-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4rem 2rem;text-align:center;min-height:350px;">
+			<div style="width:72px;height:72px;border-radius:50%;background:var(--status-neutral-bg);color:var(--text-muted);display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;">
+				<svg style="width:36px;height:36px;" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+				</svg>
+			</div>
+			<h3 style="font-size:1.5rem;font-weight:800;color:var(--text-main);margin-bottom:0.5rem;letter-spacing:-0.02em;">No Votes Recorded</h3>
+			<p style="color:var(--text-subtle);max-width:400px;font-size:0.875rem;line-height:1.6;">
+				Live cryptographic tallies will appear here automatically once voters begin submitting their ballots.
 			</p>
 		</div>
 	{:else}
@@ -287,8 +265,8 @@
 						{#each positions as position}
 							{#if winnersData[position] && winnersData[position].length > 0}
 								<div
-									class="admin-card relative overflow-hidden"
-									style="padding:1.5rem;display:flex;flex-direction:column;align-items:center;text-align:center;border: 1px solid #10B981;box-shadow: 0 0 16px rgba(16,185,129,0.15), inset 0 0 24px rgba(16,185,129,0.05);"
+									class="bento-card featured relative overflow-hidden"
+									style="padding:1.5rem;display:flex;flex-direction:column;align-items:center;text-align:center;border: 1px solid rgba(16,185,129,0.3);box-shadow: 0 0 16px rgba(16,185,129,0.15), inset 0 0 24px rgba(16,185,129,0.05);"
 								>
 									<div
 										class="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-transparent via-[#10B981] to-transparent opacity-70"
@@ -347,7 +325,7 @@
 				<div class="bento-grid bento-2col">
 					{#each positions as position, idx}
 						{@const { entries, totalVotes } = getPositionResults(position)}
-						<div class="admin-card" style="padding:1.5rem;">
+						<div class="bento-card" style="padding:1.5rem;">
 							<!-- Header -->
 							<div
 								style="display:flex;align-items:flex-start;justify-content:space-between;border-bottom:1px solid var(--border-main);padding-bottom:1rem;margin-bottom:1.25rem;"
@@ -374,7 +352,7 @@
 									{@const pct =
 										totalVotes > 0 ? Math.round((candidate.votes / totalVotes) * 100) : 0}
 									{@const isLeading = ci === 0 && candidate.votes > 0}
-									<div>
+									<div class="tally-row">
 										<div
 											style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;"
 										>
@@ -432,3 +410,21 @@
 		</div>
 	{/if}
 </div>
+
+<style>
+	.tally-row {
+		padding: 0.75rem;
+		border-radius: 12px;
+		transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+		border: 1px solid transparent;
+	}
+	.tally-row:hover {
+		background-color: var(--bg-elevated);
+		border-color: var(--border-subtle);
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+	}
+	:global(.dark) .tally-row:hover {
+		box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+	}
+</style>

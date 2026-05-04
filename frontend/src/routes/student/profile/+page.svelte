@@ -79,7 +79,7 @@
 
 <svelte:head><title>My Voter Profile | {$branding.appName}</title></svelte:head>
 
-<div class="min-h-screen text-[var(--text-main)] p-4 md:p-8 relative flex flex-col">
+<div class="min-h-screen text-content-main p-4 md:p-8 relative flex flex-col">
 
 
 
@@ -99,11 +99,11 @@
 					<div class="absolute -bottom-12 md:-bottom-16 left-6 md:left-12 p-1.5 md:p-2 bg-[var(--bg-card)] rounded-[2rem] md:rounded-[2.5rem] shadow-2xl">
 						<label class="cursor-pointer block relative group/photo">
 							<input type="file" accept="image/*" onchange={handlePhotoUpload} hidden disabled={isUploading} />
-							<div class="w-24 h-24 md:w-32 md:h-32 rounded-[1.5rem] md:rounded-[2rem] bg-[var(--bg-elevated)] border-2 md:border-4 border-[var(--bg-card)] overflow-hidden relative">
+							<div class="w-20 h-20 md:w-32 md:h-32 rounded-[1.25rem] md:rounded-[2rem] bg-[var(--bg-elevated)] border-2 md:border-4 border-[var(--bg-card)] overflow-hidden relative">
 								{#if student.photo_url}
 									<img src={student.photo_url} alt={student.full_name} class="w-full h-full object-cover transition-transform duration-700 group-hover/photo:scale-110" />
 								{:else}
-									<div class="w-full h-full bg-primary-500/10 flex items-center justify-center text-[var(--brand-primary)] font-black text-2xl md:text-4xl">{initials}</div>
+									<div class="w-full h-full bg-primary-500/10 flex items-center justify-center text-brand-primary font-black text-2xl md:text-4xl">{initials}</div>
 								{/if}
 
 								{#if isUploading}
@@ -123,41 +123,41 @@
 				<div class="pt-16 md:pt-24 pb-8 md:pb-12 px-6 md:px-12">
 					<div class="flex flex-col md:flex-row justify-between items-start gap-6 md:gap-8 mb-10 md:mb-16">
 						<div>
-							<h2 class="text-2xl md:text-4xl font-black text-[var(--text-main)] tracking-tighter uppercase italic leading-tight mb-1">{student.full_name}</h2>
+							<h2 class="text-xl md:text-4xl font-black text-content-main tracking-tighter uppercase italic leading-tight mb-1 break-words">{student.full_name}</h2>
 							<p class="text-[10px] md:text-[11px] font-black uppercase tracking-[0.4em] italic mb-2" style="color: var(--brand-primary);">{student.student_id}</p>
 						</div>
 						<div class="flex flex-col items-start md:items-end md:text-right">
-							<p class="text-[9px] md:text-[10px] font-black text-[var(--text-subtle)] uppercase tracking-widest opacity-50 mb-1">Email Address</p>
-							<p class="text-base md:text-lg font-black text-[var(--text-main)] tracking-tight italic break-all">{student.email || 'N/A'}</p>
+							<p class="text-[9px] md:text-[10px] font-black text-content-subtle uppercase tracking-widest opacity-50 mb-1">Email Address</p>
+							<p class="text-base md:text-lg font-black text-content-main tracking-tight italic break-all">{student.email || 'N/A'}</p>
 						</div>
 					</div>
 
 					<div class="flex items-center gap-4 mb-8 md:mb-10 pt-8 md:pt-10 border-t border-[var(--border-subtle)]">
 						<div class="w-1.5 h-6 md:w-2 md:h-8 bg-[var(--brand-primary)] rounded-full"></div>
-						<h3 class="text-xl md:text-2xl font-black text-[var(--text-main)] tracking-tighter uppercase italic">Academic <span class="text-[var(--brand-primary)]">Details</span></h3>
+						<h3 class="text-xl md:text-2xl font-black text-content-main tracking-tighter uppercase italic">Academic <span class="text-brand-primary">Details</span></h3>
 					</div>
 
 					<div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
 						<div class="space-y-1 md:space-y-2">
 							<div class="flex items-center gap-2 mb-2 md:mb-3">
-								<BookOutline size="xs" class="text-[var(--brand-primary)]" />
-								<p class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-subtle)]">Course</p>
+								<BookOutline size="xs" class="text-brand-primary" />
+								<p class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-content-subtle">Course</p>
 							</div>
-							<p class="text-lg md:text-2xl font-black text-[var(--text-main)] uppercase tracking-tight leading-tight">{formatDepartment(student.program || 'BSIT')}</p>
+							<p class="text-lg md:text-2xl font-black text-content-main uppercase tracking-tight leading-tight">{formatDepartment(student.program || 'BSIT')}</p>
 						</div>
 
 						<div class="space-y-1 md:space-y-2">
 							<div class="flex items-center gap-2 mb-2 md:mb-3">
-								<UserOutline size="xs" class="text-[var(--brand-primary)]" />
-								<p class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-subtle)]">Year Level</p>
+								<UserOutline size="xs" class="text-brand-primary" />
+								<p class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-content-subtle">Year Level</p>
 							</div>
-							<p class="text-3xl md:text-4xl font-black text-[var(--text-main)] uppercase tracking-tighter">{student.year_level || 'N/A'}<span class="text-sm md:text-base text-[var(--text-subtle)] ml-2">Year</span></p>
+							<p class="text-3xl md:text-4xl font-black text-content-main uppercase tracking-tighter">{student.year_level || 'N/A'}<span class="text-sm md:text-base text-content-subtle ml-2">Year</span></p>
 						</div>
 
 						<div class="space-y-1 md:space-y-2">
 							<div class="flex items-center gap-2 mb-2 md:mb-3">
-								<ShieldCheckOutline size="xs" class="text-[var(--brand-primary)]" />
-								<p class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-subtle)]">Status</p>
+								<ShieldCheckOutline size="xs" class="text-brand-primary" />
+								<p class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-content-subtle">Status</p>
 							</div>
 							<p class="text-lg md:text-2xl font-black text-emerald-500 uppercase tracking-tight italic text-glow">Verified</p>
 						</div>
