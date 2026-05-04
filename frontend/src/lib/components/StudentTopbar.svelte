@@ -16,7 +16,7 @@
 
 <header class="topbar">
 	<a href="/student" class="topbar-logo" style="text-decoration: none;">
-		<img src={$branding.logoUrl || "/Messenger_creation_1261776042047231.jpeg"} alt="{$branding.appName} Logo" class="logo-img" />
+		<img src={$branding.logoUrl || "/favicon.svg"} alt="{$branding.appName} Logo" class="logo-img" />
 		<span class="logo-text">{$branding.appName}</span>
 	</a>
 	<div class="topbar-right">

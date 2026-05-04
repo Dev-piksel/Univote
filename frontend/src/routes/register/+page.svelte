@@ -76,7 +76,7 @@
 			
 			<div class="flex items-center gap-4 relative z-10">
 				<button onclick={toggleTheme} class="bg-white/20 backdrop-blur-xl p-2 rounded-2xl hover:scale-110 hover:bg-white/30 transition-all duration-300 shadow-lg">
-					<img src={$branding.logoUrl || "/Messenger_creation_1261776042047231.jpeg"} alt="{$branding.appName} Logo" class="w-10 h-10 object-contain rounded-lg" />
+					<img src={$branding.logoUrl || "/favicon.svg"} alt="{$branding.appName} Logo" class="w-10 h-10 object-contain rounded-lg" />
 				</button>
 				<span class="text-xl font-black text-indigo-950 dark:text-white tracking-widest uppercase">{$branding.appName}</span>
 			</div>

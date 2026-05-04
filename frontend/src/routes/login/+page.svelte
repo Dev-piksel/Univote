@@ -68,7 +68,7 @@
 			
 			<div class="flex items-center gap-4 relative z-10">
 				<div class="bg-white/5 backdrop-blur-2xl p-2 rounded-2xl border border-white/10 shadow-2xl">
-					<img src={$branding.logoUrl || "/Messenger_creation_1261776042047231.jpeg"} alt="{$branding.appName} Logo" class="w-10 h-10 object-contain rounded-lg" />
+					<img src={$branding.logoUrl || "/favicon.svg"} alt="{$branding.appName} Logo" class="w-10 h-10 object-contain rounded-lg" />
 				</div>
 				<div class="flex flex-col">
 					<span class="text-xl font-black text-white tracking-tighter leading-none">{$branding.appName.toUpperCase()}</span>

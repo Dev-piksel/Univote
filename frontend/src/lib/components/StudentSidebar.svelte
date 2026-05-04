@@ -85,7 +85,7 @@
 		<!-- Brand Identity -->
 		<div class="sb-brand">
 			<div class="logo-wrapper">
-				<img src={$branding.logoUrl || "/Messenger_creation_1261776042047231.jpeg"} alt="Logo" />
+				<img src={$branding.logoUrl || "/favicon.svg"} alt="Logo" />
 				<div class="logo-glow"></div>
 			</div>
 			{#if !collapsed}

@@ -181,7 +181,7 @@
 			<a href={role === 'student' ? '/student' : (role === 'adviser' ? '/adviser' : '/admin')} onclick={handleNav} class="flex items-center gap-4 no-underline group/brand">
 				<div class="bg-white/5 backdrop-blur-2xl p-1.5 rounded-xl border border-white/10 shadow-2xl group-hover/brand:scale-110 transition-transform duration-500">
 					<img
-						src={$branding.logoUrl || '/Messenger_creation_1261776042047231.jpeg'}
+						src={$branding.logoUrl || '/favicon.svg'}
 						alt="Logo"
 						class="w-8 h-8 object-contain rounded-lg"
 					/>
@@ -327,7 +327,7 @@
 			<GridOutline size="md" />
 		</button>
 		<img
-			src={$branding.logoUrl || '/Messenger_creation_1261776042047231.jpeg'}
+			src={$branding.logoUrl || '/favicon.svg'}
 			alt="Logo"
 			class="w-8 h-8 object-contain rounded-lg shadow-2xl"
 		/>

@@ -41,7 +41,7 @@
 	<nav class="nav">
 		<button class="brand" onclick={toggleTheme} title="Toggle theme">
 			<img
-				src={$branding.logoUrl || '/Messenger_creation_1261776042047231.jpeg'}
+				src={$branding.logoUrl || '/favicon.svg'}
 				alt="Logo"
 				class="brand-img"
 			/>

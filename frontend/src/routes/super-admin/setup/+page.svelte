@@ -110,7 +110,7 @@
 		<div class="md:w-1/3 bg-gradient-to-br from-primary-600/20 to-indigo-800/10 p-10 flex flex-col justify-between border-b md:border-b-0 md:border-r border-indigo-100 dark:border-white/5">
 			<div class="flex items-center gap-4">
 				<button onclick={toggleTheme} class="bg-indigo-100/50 dark:bg-white/10 backdrop-blur-xl p-2 rounded-2xl border border-indigo-200 dark:border-white/10 hover:border-indigo-300 dark:border-white/20 transition-all duration-300">
-					<img src={$branding.logoUrl || "/Messenger_creation_1261776042047231.jpeg"} alt="Logo" class="w-10 h-10 object-contain rounded-lg shadow-2xl" />
+					<img src={$branding.logoUrl || "/favicon.svg"} alt="Logo" class="w-10 h-10 object-contain rounded-lg shadow-2xl" />
 				</button>
 				<div class="flex flex-col">
 					<span class="text-xl font-black text-indigo-950 dark:text-white tracking-tighter leading-none">{$branding.appName.toUpperCase()}</span>
