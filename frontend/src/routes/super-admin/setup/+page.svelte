@@ -96,7 +96,7 @@
 
 <svelte:head><title>System Initialization | {$branding.appName}</title></svelte:head>
 
-<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 via-white to-cyan-50 dark:bg-none dark:bg-[#0a0f1e] p-6 relative overflow-hidden selection:bg-primary-500/30">
+<div class="min-h-screen flex items-center justify-center bg-[#0a0f1e] p-6 relative overflow-hidden selection:bg-primary-500/30">
 	<!-- Dynamic Mesh Background -->
 	<div class="absolute inset-0 pointer-events-none overflow-hidden">
 		<div class="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] bg-primary-600/15 rounded-full blur-[140px] animate-pulse"></div>
@@ -104,16 +104,16 @@
 		<div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_20%,#000_60%,transparent_100%)]"></div>
 	</div>
 
-	<Card size="xl" class="w-full max-w-4xl bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 shadow-2xl rounded-[2.5rem] overflow-hidden relative z-10 border flex flex-col md:flex-row min-h-[650px]">
+	<Card size="xl" class="w-full max-w-4xl bg-white/5 backdrop-blur-3xl border-white/10 shadow-2xl rounded-[2.5rem] overflow-hidden relative z-10 border flex flex-col md:flex-row min-h-[650px]">
 		
 		<!-- Left: Branding Panel -->
-		<div class="md:w-1/3 bg-gradient-to-br from-primary-600/20 to-indigo-800/10 p-10 flex flex-col justify-between border-b md:border-b-0 md:border-r border-indigo-100 dark:border-white/5">
+		<div class="md:w-1/3 bg-gradient-to-br from-primary-600/20 to-indigo-800/10 p-10 flex flex-col justify-between border-b md:border-b-0 md:border-r border-white/5">
 			<div class="flex items-center gap-4">
-				<button onclick={toggleTheme} class="bg-indigo-100/50 dark:bg-white/10 backdrop-blur-xl p-2 rounded-2xl border border-indigo-200 dark:border-white/10 hover:border-indigo-300 dark:border-white/20 transition-all duration-300">
+				<button onclick={toggleTheme} class="bg-white/10 backdrop-blur-xl p-2 rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300">
 					<img src={$branding.logoUrl || "/favicon.svg"} alt="Logo" class="w-10 h-10 object-contain rounded-lg shadow-2xl" />
 				</button>
 				<div class="flex flex-col">
-					<span class="text-xl font-black text-indigo-950 dark:text-white tracking-tighter leading-none">{$branding.appName.toUpperCase()}</span>
+					<span class="text-xl font-black text-white tracking-tighter leading-none">{$branding.appName.toUpperCase()}</span>
 					<span class="text-[9px] font-black text-primary-400 uppercase tracking-[0.3em] mt-1">Core Architecture</span>
 				</div>
 			</div>
@@ -122,13 +122,13 @@
 				<div class="w-16 h-16 rounded-2xl bg-primary-500/10 border border-primary-500/20 flex items-center justify-center text-primary-400 mb-6 shadow-2xl">
 					<ShieldCheckOutline size="lg" />
 				</div>
-				<h2 class="text-3xl font-black text-indigo-950 dark:text-white leading-none tracking-tighter mb-4">SYSTEM INITIALIZATION</h2>
-				<p class="text-[10px] font-bold tracking-[0.2em] text-indigo-900/60 dark:text-white/40 leading-relaxed uppercase">
+				<h2 class="text-3xl font-black text-white leading-none tracking-tighter mb-4">SYSTEM INITIALIZATION</h2>
+				<p class="text-[10px] font-bold tracking-[0.2em] text-white/40 leading-relaxed uppercase">
 					Establish the primary Super Administrator account to begin managing the election infrastructure.
 				</p>
 			</div>
 
-			<div class="text-[9px] font-black text-indigo-900/40 dark:text-white/20 tracking-[0.5em] uppercase">
+			<div class="text-[9px] font-black text-white/20 tracking-[0.5em] uppercase">
 				UNIVOTE SECURE CORE
 			</div>
 		</div>
@@ -144,9 +144,9 @@
 					<div class="w-20 h-20 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400 mb-6 border border-blue-500/20 shadow-2xl">
 						<CheckCircleOutline size="xl" />
 					</div>
-					<h3 class="text-2xl font-black text-indigo-950 dark:text-white tracking-tighter mb-4 uppercase">SETUP ALREADY COMPLETE</h3>
-					<p class="text-sm text-indigo-900/60 dark:text-white/40 max-w-sm mb-8 font-medium">A Super Admin account is already configured for this system.</p>
-					<Button href="/login" class="px-8 py-3 rounded-xl font-black text-xs tracking-widest bg-white text-black hover:bg-primary-500 hover:text-indigo-950 dark:text-white transition-all uppercase">
+					<h3 class="text-2xl font-black text-white tracking-tighter mb-4 uppercase">SETUP ALREADY COMPLETE</h3>
+					<p class="text-sm text-white/40 max-w-sm mb-8 font-medium">A Super Admin account is already configured for this system.</p>
+					<Button href="/login" class="px-8 py-3 rounded-xl font-black text-xs tracking-widest bg-white text-black hover:bg-primary-500 hover:text-indigo-950 transition-all uppercase">
 						Go to Login
 						<ChevronRightOutline size="sm" class="ml-2" />
 					</Button>
@@ -156,16 +156,16 @@
 					<div class="w-20 h-20 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400 mb-6 border border-emerald-500/20 shadow-2xl">
 						<CheckCircleOutline size="xl" />
 					</div>
-					<h3 class="text-2xl font-black text-indigo-950 dark:text-white tracking-tighter mb-4 uppercase">ACCOUNT CREATED</h3>
-					<p class="text-sm text-indigo-900/60 dark:text-white/40 max-w-sm mb-8 font-medium">{successMsg} Redirecting to login...</p>
+					<h3 class="text-2xl font-black text-white tracking-tighter mb-4 uppercase">ACCOUNT CREATED</h3>
+					<p class="text-sm text-white/40 max-w-sm mb-8 font-medium">{successMsg} Redirecting to login...</p>
 					<Spinner color="green" size="6" />
 				</div>
 			{:else}
 				<div in:fade>
 					<header class="mb-8 flex items-center justify-between">
 						<div>
-							<h1 class="text-2xl font-black text-indigo-950 dark:text-white tracking-tighter mb-1">SUPER ADMIN SETUP</h1>
-							<p class="text-[9px] font-black text-indigo-900/50 dark:text-white/30 uppercase tracking-widest">Permanent System Credential</p>
+							<h1 class="text-2xl font-black text-white tracking-tighter mb-1">SUPER ADMIN SETUP</h1>
+							<p class="text-[9px] font-black text-white/30 uppercase tracking-widest">Permanent System Credential</p>
 						</div>
 						<Badge color="red" rounded class="bg-red-500/10 text-red-400 border border-red-500/20 flex items-center gap-2 px-3 py-1">
 							<InfoCircleOutline size="xs" />
@@ -182,77 +182,129 @@
 						</div>
 					{/if}
 
-					<form onsubmit={handleSetup} class="space-y-6">
-						<div class="grid md:grid-cols-2 gap-6">
-							<div class="space-y-6">
-								<div class="relative group">
-									<div class="absolute left-6 top-1/2 -translate-y-1/2 text-indigo-900/40 dark:text-white/20 group-focus-within:text-primary-400 transition-colors z-20 pointer-events-none">
-										<UserOutline size="sm" />
-									</div>
-									<FloatingLabelInput id="sa-id" type="text" style="outlined" bind:value={idNumber} required class="pl-12 py-4 bg-indigo-50/50 dark:bg-white/5 border-indigo-200 dark:border-white/10 text-indigo-950 dark:text-white focus:border-primary-400 rounded-2xl">
-										Admin / Employee ID
-									</FloatingLabelInput>
+					<form onsubmit={handleSetup} class="space-y-5">
+						<!-- Row 1: Admin ID + Last Name -->
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+							<div class="relative group">
+								<div class="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-primary-400 transition-colors z-20 pointer-events-none">
+									<UserOutline size="sm" />
 								</div>
-
-								<div class="relative group">
-									<FloatingLabelInput id="sa-firstname" type="text" style="outlined" bind:value={firstName} required class="py-4 bg-indigo-50/50 dark:bg-white/5 border-indigo-200 dark:border-white/10 text-indigo-950 dark:text-white focus:border-primary-400 rounded-2xl">
-										First Name
-									</FloatingLabelInput>
-								</div>
+								<FloatingLabelInput
+									id="sa-id"
+									type="text"
+									style="outlined"
+									bind:value={idNumber}
+									required
+									class="pl-10 bg-white/5 border-white/10 text-white focus:border-primary-400 rounded-xl"
+								>
+									Admin / Employee ID
+								</FloatingLabelInput>
 							</div>
 
-							<div class="space-y-6">
-								<div class="relative group">
-									<FloatingLabelInput id="sa-lastname" type="text" style="outlined" bind:value={lastName} required class="py-4 bg-indigo-50/50 dark:bg-white/5 border-indigo-200 dark:border-white/10 text-indigo-950 dark:text-white focus:border-primary-400 rounded-2xl">
-										Last Name
-									</FloatingLabelInput>
-								</div>
-
-								<div class="relative group">
-									<FloatingLabelInput id="sa-mi" type="text" style="outlined" bind:value={middleInitial} class="py-4 bg-indigo-50/50 dark:bg-white/5 border-indigo-200 dark:border-white/10 text-indigo-950 dark:text-white focus:border-primary-400 rounded-2xl">
-										Middle Initial (Opt)
-									</FloatingLabelInput>
-								</div>
+							<div class="relative group">
+								<FloatingLabelInput
+									id="sa-lastname"
+									type="text"
+									style="outlined"
+									bind:value={lastName}
+									required
+									class="bg-white/5 border-white/10 text-white focus:border-primary-400 rounded-xl"
+								>
+									Last Name
+								</FloatingLabelInput>
 							</div>
 						</div>
 
-						<div class="grid md:grid-cols-2 gap-6 pt-2">
+						<!-- Row 2: First Name + Middle Initial -->
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+							<div class="relative group">
+								<FloatingLabelInput
+									id="sa-firstname"
+									type="text"
+									style="outlined"
+									bind:value={firstName}
+									required
+									class="bg-white/5 border-white/10 text-white focus:border-primary-400 rounded-xl"
+								>
+									First Name
+								</FloatingLabelInput>
+							</div>
+
+							<div class="relative group">
+								<FloatingLabelInput
+									id="sa-mi"
+									type="text"
+									style="outlined"
+									bind:value={middleInitial}
+									class="bg-white/5 border-white/10 text-white focus:border-primary-400 rounded-xl"
+								>
+									Middle Initial (Opt)
+								</FloatingLabelInput>
+							</div>
+						</div>
+
+						<!-- Row 3: Master Password + Confirm Password -->
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-start">
+							<!-- Password + strength meter -->
 							<div class="space-y-2">
 								<div class="relative group">
-									<div class="absolute left-6 top-1/2 -translate-y-1/2 text-indigo-900/40 dark:text-white/20 group-focus-within:text-primary-400 transition-colors z-20 pointer-events-none">
+									<div class="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-primary-400 transition-colors z-20 pointer-events-none">
 										<LockOutline size="sm" />
 									</div>
-									<div class="relative">
-										<FloatingLabelInput id="sa-pw" type={showPassword ? 'text' : 'password'} style="outlined" bind:value={password} required class="pl-12 py-4 bg-indigo-50/50 dark:bg-white/5 border-indigo-200 dark:border-white/10 text-indigo-950 dark:text-white focus:border-primary-400 rounded-2xl">
-											Master Password
-										</FloatingLabelInput>
-										<button type="button" onclick={() => (showPassword = !showPassword)} class="absolute right-4 top-1/2 -translate-y-1/2 text-indigo-900/40 dark:text-white/20 hover:text-indigo-950 dark:text-white transition-colors z-20">
-											{#if showPassword}<EyeSlashOutline size="sm" />{:else}<EyeOutline size="sm" />{/if}
-										</button>
-									</div>
+									<FloatingLabelInput
+										id="sa-pw"
+										type={showPassword ? 'text' : 'password'}
+										style="outlined"
+										bind:value={password}
+										required
+										class="pl-10 pr-10 bg-white/5 border-white/10 text-white focus:border-primary-400 rounded-xl"
+									>
+										Master Password
+									</FloatingLabelInput>
+									<button
+										type="button"
+										onclick={() => (showPassword = !showPassword)}
+										class="absolute right-4 top-1/2 -translate-y-1/2 text-white/20 hover:text-white transition-colors z-20"
+									>
+										{#if showPassword}<EyeSlashOutline size="sm" />{:else}<EyeOutline size="sm" />{/if}
+									</button>
 								</div>
 								{#if password}
-									<div class="h-1 w-full bg-indigo-50/50 dark:bg-white/5 rounded-full overflow-hidden mt-2">
+									<div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
 										<div class="h-full transition-all duration-500" style="width: {strength.width}; background: var(--tw-color-{strength.color}-500);"></div>
 									</div>
 									<div class="flex justify-between items-center">
-										<span class="text-[8px] font-black uppercase tracking-widest text-indigo-900/40 dark:text-white/20">Security Grade</span>
+										<span class="text-[8px] font-black uppercase tracking-widest text-white/20">Security Grade</span>
 										<span class="text-[8px] font-black uppercase tracking-widest text-{strength.color}-400">{strength.label}</span>
 									</div>
 								{/if}
 							</div>
 
+							<!-- Confirm password -->
+							<div class="space-y-2">
 								<div class="relative group">
-									<FloatingLabelInput id="sa-cpw" type="password" style="outlined" bind:value={confirmPassword} required class="py-4 bg-indigo-50/50 dark:bg-white/5 border-indigo-200 dark:border-white/10 text-indigo-950 dark:text-white focus:border-primary-400 rounded-2xl">
+									<FloatingLabelInput
+										id="sa-cpw"
+										type="password"
+										style="outlined"
+										bind:value={confirmPassword}
+										required
+										class="bg-white/5 border-white/10 text-white focus:border-primary-400 rounded-xl"
+									>
 										Confirm Master Password
 									</FloatingLabelInput>
 								</div>
 								{#if confirmPassword && confirmPassword !== password}
-									<Helper color="red" class="mt-2 text-[9px] font-black uppercase tracking-widest">Passwords mismatch</Helper>
+									<Helper color="red" class="text-[9px] font-black uppercase tracking-widest">Passwords mismatch</Helper>
 								{/if}
 							</div>
+						</div>
 
-						<Button type="submit" disabled={isSubmitting || !!(confirmPassword && confirmPassword !== password)} class="w-full py-4 mt-4 rounded-2xl font-black text-xs tracking-[0.2em] uppercase bg-white text-black hover:bg-primary-500 hover:text-indigo-950 dark:text-white transition-all shadow-2xl active:scale-95 flex items-center justify-center gap-3">
+						<Button
+							type="submit"
+							disabled={isSubmitting || !!(confirmPassword && confirmPassword !== password)}
+							class="w-full py-4 mt-2 rounded-2xl font-black text-xs tracking-[0.2em] uppercase bg-white text-black hover:bg-primary-500 hover:text-indigo-950 transition-all shadow-2xl active:scale-95 flex items-center justify-center gap-3"
+						>
 							{#if isSubmitting}
 								<Spinner size="4" color="gray" />
 								INITIALIZING CORE...

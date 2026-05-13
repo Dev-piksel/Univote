@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
 
-const initialTheme = browser ? sessionStorage.getItem('univote_theme') || 'light' : 'light';
+const initialTheme = browser ? sessionStorage.getItem('univote_theme') || 'dark' : 'dark';
 export const theme = writable(initialTheme);
 
 if (browser) {

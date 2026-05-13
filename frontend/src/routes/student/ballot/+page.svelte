@@ -459,49 +459,31 @@
 								</div>
 							</div>
 
-							<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-								{#each candidatesGrouped[position] as cand}
-									<button 
-										class="relative group/cand text-left transition-all duration-700 active:scale-[0.96]"
+							<div class="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
+								{#each candidatesGrouped[position] as cand									<button
+										class="relative flex flex-col items-center p-3 md:p-4 transition-all duration-300 border-2 cursor-pointer rounded-2xl md:rounded-3xl active:scale-95 text-center {selectedVotes[position] === cand.id ? 'border-[var(--brand-primary)] shadow-[0_0_15px_var(--brand-glow)]' : 'border-[var(--border-main)] hover:border-[var(--text-subtle)]'}"
+										style={selectedVotes[position] === cand.id ? 'background-color: var(--brand-primary-alpha-5); backdrop-filter: blur(16px);' : 'background-color: var(--bg-card); opacity: 0.9; backdrop-filter: blur(16px);'}
 										onclick={() => selectCandidate(position, cand.id)}
 									>
-										<!-- Ambient Glow -->
-										<div class="absolute -inset-1 rounded-[2rem] md:rounded-[2.5rem] opacity-0 group-hover/cand:opacity-10 blur-2xl transition-opacity duration-700" style="background: var(--brand-gradient); {selectedVotes[position] === cand.id ? 'opacity: 0.25;' : ''}"></div>
-										
-										<div class="relative h-full bg-[var(--bg-card)]/40 backdrop-blur-2xl border-2 border-[var(--border-main)] rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 flex flex-col gap-6 md:gap-8 transition-all duration-700 {selectedVotes[position] === cand.id ? 'shadow-[0_30px_60px_-15px_var(--brand-glow)] -translate-y-2' : 'hover:border-[var(--border-subtle)] hover:bg-[var(--bg-hover)]'}" style={selectedVotes[position] === cand.id ? `border-color: var(--brand-primary); background-color: var(--brand-primary-alpha-5);` : ''}>
-											
-											<div class="flex items-center gap-4 md:gap-6">
-												<div class="relative shrink-0">
-													<div class="w-14 h-14 md:w-20 md:h-20 rounded-[1.2rem] md:rounded-[1.8rem] bg-[var(--bg-elevated)] border-2 border-[var(--border-main)] p-1 group-hover/cand:scale-110 group-hover/cand:border-[var(--brand-primary)]/50 transition-all duration-700 shadow-2xl relative overflow-hidden">
-														<img 
-															src={studentApi.getCandidatePhotoUrl ? studentApi.getCandidatePhotoUrl(cand.id) : `/api/common/candidates/${cand.id}/photo`} 
-															alt={cand.name} 
-															class="w-full h-full object-cover rounded-xl md:rounded-2xl {selectedVotes[position] === cand.id ? '' : 'grayscale-[0.4] group-hover/cand:grayscale-0'} transition-all duration-700" 
-															onerror={(e) => { e.currentTarget.style.display='none'; e.currentTarget.nextElementSibling.style.display='flex'; }} 
-														/>
-														<div class="w-full h-full rounded-xl md:rounded-2xl bg-[var(--brand-primary)]/10 flex items-center justify-center text-[var(--brand-primary)] font-black text-xl md:text-2xl" style="display:none;">{cand.name[0]}</div>
-													</div>
-													{#if selectedVotes[position] === cand.id}
-														<div class="absolute -top-2 -right-2 md:-top-3 md:-right-3 w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-[1.1rem] bg-[var(--brand-primary)] text-white flex items-center justify-center shadow-2xl ring-2 md:ring-4 ring-[var(--bg-card)]" in:scale>
-															<CheckCircleOutline size="xs" />
-														</div>
-													{/if}
-												</div>
-												<div class="min-w-0">
-													<h5 class="text-lg md:text-xl font-black tracking-tighter uppercase leading-none mb-2 line-clamp-2 transition-colors" style={selectedVotes[position] === cand.id ? `color: var(--brand-primary);` : ``}>{cand.name}</h5>
-													<Badge color="none" class="bg-[var(--bg-elevated)] text-[var(--text-subtle)] border border-[var(--border-main)] text-[7px] md:text-[8px] font-black px-2 py-0.5 uppercase tracking-widest">{cand.party}</Badge>
-												</div>
+										<!-- Avatar -->
+										<div class="relative mb-2 md:mb-3 shrink-0">
+											<div class="w-14 h-14 md:w-20 md:h-20 rounded-full border-2 overflow-hidden {selectedVotes[position] === cand.id ? 'border-[var(--brand-primary)]' : 'border-[var(--border-main)]'} bg-[var(--bg-elevated)] relative">
+												<img
+													src={studentApi.getCandidatePhotoUrl ? studentApi.getCandidatePhotoUrl(cand.id) : `/api/common/candidates/${cand.id}/photo`}
+													alt={cand.name}
+													class="w-full h-full object-cover {selectedVotes[position] === cand.id ? '' : 'grayscale-[0.4]'} transition-all duration-500"
+													onerror={(e) => { e.currentTarget.style.display='none'; e.currentTarget.nextElementSibling.style.display='flex'; }}
+												/>
+												<div class="w-full h-full bg-[var(--brand-primary)]/10 items-center justify-center font-black text-xl text-[var(--brand-primary)]" style="display:none;">{cand.name[0]}</div>
 											</div>
-
-											<div class="mt-auto pt-4 md:pt-6 border-t border-[var(--border-subtle)] flex items-center justify-between">
-												<span class="text-[7px] md:text-[8px] font-black uppercase tracking-[0.15em] opacity-40 group-hover/cand:opacity-100 transition-opacity">Select</span>
-												<div class="w-6 h-6 md:w-8 md:h-8 rounded-lg md:rounded-xl border-2 border-[var(--border-main)] flex items-center justify-center group-hover/cand:border-[var(--brand-primary)] transition-all">
-													{#if selectedVotes[position] === cand.id}
-														<div class="w-3 h-3 md:w-4 md:h-4 bg-[var(--brand-primary)] rounded-sm md:rounded-md animate-in zoom-in duration-300"></div>
-													{/if}
+											{#if selectedVotes[position] === cand.id}
+												<div class="absolute -top-1 -right-1 w-5 h-5 bg-[var(--brand-primary)] rounded-full flex items-center justify-center shadow-lg ring-2 ring-[var(--bg-card)]" in:scale>
+													<CheckCircleOutline size="xs" class="text-white" />
 												</div>
-											</div>
+											{/if}
 										</div>
+										<span class="text-xs md:text-sm font-bold leading-tight mb-1 line-clamp-2 {selectedVotes[position] === cand.id ? 'text-[var(--brand-primary)]' : 'text-[var(--text-main)]'}">{cand.name}</span>
+										<span class="text-[8px] md:text-[9px] uppercase tracking-wider text-[var(--text-subtle)] line-clamp-1">{cand.party}</span>
 									</button>
 								{/each}
 							</div>
@@ -509,26 +491,26 @@
 					{/each}
 				</div>
 
-				<!-- Floating Action Command -->
-				<div class="fixed bottom-24 md:bottom-12 left-0 right-0 z-50 p-4 md:p-6 flex justify-center pointer-events-none">
-					<div class="max-w-3xl w-full bg-[var(--bg-card)]/60 backdrop-blur-3xl border-2 border-[var(--border-main)] rounded-[2rem] md:rounded-[3.5rem] p-4 md:p-8 shadow-[0_60px_120px_-20px_rgba(0,0,0,0.6)] pointer-events-auto flex flex-col md:flex-row items-center justify-between gap-4 md:gap-12 animate-in slide-in-from-bottom-full duration-1000">
-						<div class="flex-1 hidden md:block">
-							<div class="flex items-center gap-4 mb-3">
-								<FingerprintOutline size="xs" style="color: var(--brand-primary);" />
-								<span class="text-[10px] font-black text-[var(--text-main)] uppercase tracking-[0.2em]">Final Review</span>
+				<!-- Floating Progress Dock -->
+				<div class="fixed bottom-20 md:bottom-6 left-3 right-3 max-w-xl md:max-w-3xl mx-auto z-50">
+					<div class="flex items-center justify-between p-3 pl-4 bg-[var(--bg-card)]/90 backdrop-blur-2xl border border-[var(--border-main)] rounded-2xl shadow-2xl">
+						<div class="flex flex-col flex-1 mr-3">
+							<div class="flex justify-between items-center mb-1.5">
+								<span class="text-[9px] font-black uppercase tracking-widest text-[var(--text-subtle)]">Progress</span>
+								<span class="text-[9px] font-black" style="color: var(--brand-primary);">{selectedCount}/{totalPositions} Selected</span>
 							</div>
-							<div class="h-2.5 bg-[var(--bg-elevated)] rounded-full overflow-hidden border border-[var(--border-subtle)]">
-								<div class="h-full transition-all duration-1000" style="width: {progress}%; background: var(--brand-gradient); box-shadow: 0 0 20px var(--brand-glow);"></div>
+							<div class="w-full h-1.5 bg-[var(--border-main)] rounded-full overflow-hidden">
+								<div class="h-full transition-all duration-500 ease-out rounded-full" style="width: {progress}%; background: var(--brand-gradient); box-shadow: 0 0 10px var(--brand-glow);"></div>
 							</div>
 						</div>
-						<Button 
-							color="blue" 
-							class="w-full md:w-auto px-6 py-3 md:px-10 md:py-4 rounded-xl md:rounded-[1.5rem] font-black text-[10px] md:text-[11px] tracking-[0.15em] md:tracking-[0.2em] uppercase transition-all active:scale-95 flex items-center justify-center gap-3 text-white shadow-2xl border-b-[4px] md:border-b-6 disabled:grayscale disabled:opacity-40" 
-							style="background: var(--brand-primary); box-shadow: 0 15px 40px -10px var(--brand-glow); border-bottom-color: var(--brand-primary-hover);"
-							disabled={!allSelected} 
+						<Button
+							color="blue"
+							class="px-4 md:px-6 py-2.5 rounded-xl font-black text-[10px] tracking-[0.15em] uppercase transition-all active:scale-95 flex items-center gap-2 text-white disabled:opacity-30 disabled:grayscale shrink-0"
+							style="background: var(--brand-gradient); box-shadow: 0 8px 20px -5px var(--brand-glow);"
+							disabled={!allSelected}
 							onclick={() => showConfirm = true}
 						>
-							Cast Vote <ShieldCheckOutline size="xs" />
+							Review <ShieldCheckOutline size="xs" />
 						</Button>
 					</div>
 				</div>
