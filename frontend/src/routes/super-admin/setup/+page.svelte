@@ -8,11 +8,9 @@
 	import {
 		Card,
 		Button,
-		FloatingLabelInput,
 		Spinner,
 		Alert,
-		Badge,
-		Helper
+		Badge
 	} from 'flowbite-svelte';
 	import {
 		ShieldCheckOutline,
@@ -182,120 +180,148 @@
 						</div>
 					{/if}
 
-					<form onsubmit={handleSetup} class="space-y-5">
+					<form onsubmit={handleSetup} class="space-y-4">
 						<!-- Row 1: Admin ID + Last Name -->
-						<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+							<!-- Admin / Employee ID -->
 							<div class="relative group">
-								<div class="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-primary-400 transition-colors z-20 pointer-events-none">
-									<UserOutline size="sm" />
+								<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none"></div>
+								<div class="relative bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group-focus-within:border-primary-400 transition-all duration-300">
+									<div class="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-primary-400 transition-colors z-10 pointer-events-none">
+										<UserOutline size="sm" />
+									</div>
+									<input
+										id="sa-id"
+										type="text"
+										bind:value={idNumber}
+										required
+										placeholder=" "
+										class="peer w-full pl-10 pr-4 pt-6 pb-2 bg-transparent text-white placeholder-transparent outline-none font-semibold text-sm tracking-wide focus:ring-0"
+									/>
+									<label for="sa-id" class="absolute left-10 top-1/2 -translate-y-1/2 text-white/40 font-black text-[9px] uppercase tracking-[0.3em] pointer-events-none transition-all duration-300 peer-focus:-translate-y-[1.1rem] peer-focus:scale-90 peer-[:not(:placeholder-shown)]:-translate-y-[1.1rem] peer-[:not(:placeholder-shown)]:scale-90 origin-left">
+										Admin / Employee ID
+									</label>
 								</div>
-								<FloatingLabelInput
-									id="sa-id"
-									type="text"
-									style="outlined"
-									bind:value={idNumber}
-									required
-									class="pl-10 bg-white/5 border-white/10 text-white focus:border-primary-400 rounded-xl"
-								>
-									Admin / Employee ID
-								</FloatingLabelInput>
 							</div>
 
+							<!-- Last Name -->
 							<div class="relative group">
-								<FloatingLabelInput
-									id="sa-lastname"
-									type="text"
-									style="outlined"
-									bind:value={lastName}
-									required
-									class="bg-white/5 border-white/10 text-white focus:border-primary-400 rounded-xl"
-								>
-									Last Name
-								</FloatingLabelInput>
+								<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none"></div>
+								<div class="relative bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group-focus-within:border-primary-400 transition-all duration-300">
+									<input
+										id="sa-lastname"
+										type="text"
+										bind:value={lastName}
+										required
+										placeholder=" "
+										class="peer w-full px-4 pt-6 pb-2 bg-transparent text-white placeholder-transparent outline-none font-semibold text-sm tracking-wide focus:ring-0"
+									/>
+									<label for="sa-lastname" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-black text-[9px] uppercase tracking-[0.3em] pointer-events-none transition-all duration-300 peer-focus:-translate-y-[1.1rem] peer-focus:scale-90 peer-[:not(:placeholder-shown)]:-translate-y-[1.1rem] peer-[:not(:placeholder-shown)]:scale-90 origin-left">
+										Last Name
+									</label>
+								</div>
 							</div>
 						</div>
 
 						<!-- Row 2: First Name + Middle Initial -->
-						<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+							<!-- First Name -->
 							<div class="relative group">
-								<FloatingLabelInput
-									id="sa-firstname"
-									type="text"
-									style="outlined"
-									bind:value={firstName}
-									required
-									class="bg-white/5 border-white/10 text-white focus:border-primary-400 rounded-xl"
-								>
-									First Name
-								</FloatingLabelInput>
+								<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none"></div>
+								<div class="relative bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group-focus-within:border-primary-400 transition-all duration-300">
+									<input
+										id="sa-firstname"
+										type="text"
+										bind:value={firstName}
+										required
+										placeholder=" "
+										class="peer w-full px-4 pt-6 pb-2 bg-transparent text-white placeholder-transparent outline-none font-semibold text-sm tracking-wide focus:ring-0"
+									/>
+									<label for="sa-firstname" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-black text-[9px] uppercase tracking-[0.3em] pointer-events-none transition-all duration-300 peer-focus:-translate-y-[1.1rem] peer-focus:scale-90 peer-[:not(:placeholder-shown)]:-translate-y-[1.1rem] peer-[:not(:placeholder-shown)]:scale-90 origin-left">
+										First Name
+									</label>
+								</div>
 							</div>
 
+							<!-- Middle Initial -->
 							<div class="relative group">
-								<FloatingLabelInput
-									id="sa-mi"
-									type="text"
-									style="outlined"
-									bind:value={middleInitial}
-									class="bg-white/5 border-white/10 text-white focus:border-primary-400 rounded-xl"
-								>
-									Middle Initial (Opt)
-								</FloatingLabelInput>
+								<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none"></div>
+								<div class="relative bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group-focus-within:border-primary-400 transition-all duration-300">
+									<input
+										id="sa-mi"
+										type="text"
+										bind:value={middleInitial}
+										placeholder=" "
+										class="peer w-full px-4 pt-6 pb-2 bg-transparent text-white placeholder-transparent outline-none font-semibold text-sm tracking-wide focus:ring-0"
+									/>
+									<label for="sa-mi" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-black text-[9px] uppercase tracking-[0.3em] pointer-events-none transition-all duration-300 peer-focus:-translate-y-[1.1rem] peer-focus:scale-90 peer-[:not(:placeholder-shown)]:-translate-y-[1.1rem] peer-[:not(:placeholder-shown)]:scale-90 origin-left">
+										Middle Initial (Opt)
+									</label>
+								</div>
 							</div>
 						</div>
 
 						<!-- Row 3: Master Password + Confirm Password -->
-						<div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-start">
-							<!-- Password + strength meter -->
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+							<!-- Master Password + strength -->
 							<div class="space-y-2">
 								<div class="relative group">
-									<div class="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-primary-400 transition-colors z-20 pointer-events-none">
-										<LockOutline size="sm" />
+									<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none"></div>
+									<div class="relative bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group-focus-within:border-primary-400 transition-all duration-300">
+										<div class="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-primary-400 transition-colors z-10 pointer-events-none">
+											<LockOutline size="sm" />
+										</div>
+										<input
+											id="sa-pw"
+											type={showPassword ? 'text' : 'password'}
+											bind:value={password}
+											required
+											placeholder=" "
+											class="peer w-full pl-10 pr-10 pt-6 pb-2 bg-transparent text-white placeholder-transparent outline-none font-semibold text-sm tracking-wide focus:ring-0"
+										/>
+										<label for="sa-pw" class="absolute left-10 top-1/2 -translate-y-1/2 text-white/40 font-black text-[9px] uppercase tracking-[0.3em] pointer-events-none transition-all duration-300 peer-focus:-translate-y-[1.1rem] peer-focus:scale-90 peer-[:not(:placeholder-shown)]:-translate-y-[1.1rem] peer-[:not(:placeholder-shown)]:scale-90 origin-left">
+											Master Password
+										</label>
+										<button
+											type="button"
+											onclick={() => (showPassword = !showPassword)}
+											class="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white transition-colors z-10"
+										>
+											{#if showPassword}<EyeSlashOutline size="sm" />{:else}<EyeOutline size="sm" />{/if}
+										</button>
 									</div>
-									<FloatingLabelInput
-										id="sa-pw"
-										type={showPassword ? 'text' : 'password'}
-										style="outlined"
-										bind:value={password}
-										required
-										class="pl-10 pr-10 bg-white/5 border-white/10 text-white focus:border-primary-400 rounded-xl"
-									>
-										Master Password
-									</FloatingLabelInput>
-									<button
-										type="button"
-										onclick={() => (showPassword = !showPassword)}
-										class="absolute right-4 top-1/2 -translate-y-1/2 text-white/20 hover:text-white transition-colors z-20"
-									>
-										{#if showPassword}<EyeSlashOutline size="sm" />{:else}<EyeOutline size="sm" />{/if}
-									</button>
 								</div>
 								{#if password}
 									<div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-										<div class="h-full transition-all duration-500" style="width: {strength.width}; background: var(--tw-color-{strength.color}-500);"></div>
+										<div class="h-full transition-all duration-500 rounded-full" style="width: {strength.width}; background: {strength.color === 'red' ? '#ef4444' : strength.color === 'yellow' ? '#eab308' : strength.color === 'blue' ? '#3b82f6' : '#22c55e'};"></div>
 									</div>
-									<div class="flex justify-between items-center">
+									<div class="flex justify-between items-center px-1">
 										<span class="text-[8px] font-black uppercase tracking-widest text-white/20">Security Grade</span>
-										<span class="text-[8px] font-black uppercase tracking-widest text-{strength.color}-400">{strength.label}</span>
+										<span class="text-[8px] font-black uppercase tracking-widest" style="color: {strength.color === 'red' ? '#ef4444' : strength.color === 'yellow' ? '#eab308' : strength.color === 'blue' ? '#3b82f6' : '#22c55e'};">{strength.label}</span>
 									</div>
 								{/if}
 							</div>
 
-							<!-- Confirm password -->
+							<!-- Confirm Password -->
 							<div class="space-y-2">
 								<div class="relative group">
-									<FloatingLabelInput
-										id="sa-cpw"
-										type="password"
-										style="outlined"
-										bind:value={confirmPassword}
-										required
-										class="bg-white/5 border-white/10 text-white focus:border-primary-400 rounded-xl"
-									>
-										Confirm Master Password
-									</FloatingLabelInput>
+									<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none"></div>
+									<div class="relative bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group-focus-within:border-primary-400 transition-all duration-300" class:!border-red-500={confirmPassword && confirmPassword !== password}>
+										<input
+											id="sa-cpw"
+											type="password"
+											bind:value={confirmPassword}
+											required
+											placeholder=" "
+											class="peer w-full px-4 pt-6 pb-2 bg-transparent text-white placeholder-transparent outline-none font-semibold text-sm tracking-wide focus:ring-0"
+										/>
+										<label for="sa-cpw" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-black text-[9px] uppercase tracking-[0.3em] pointer-events-none transition-all duration-300 peer-focus:-translate-y-[1.1rem] peer-focus:scale-90 peer-[:not(:placeholder-shown)]:-translate-y-[1.1rem] peer-[:not(:placeholder-shown)]:scale-90 origin-left">
+											Confirm Master Password
+										</label>
+									</div>
 								</div>
 								{#if confirmPassword && confirmPassword !== password}
-									<Helper color="red" class="text-[9px] font-black uppercase tracking-widest">Passwords mismatch</Helper>
+									<p class="text-[9px] font-black uppercase tracking-widest text-red-400 px-1">Passwords mismatch</p>
 								{/if}
 							</div>
 						</div>
@@ -310,7 +336,7 @@
 								INITIALIZING CORE...
 							{:else}
 								ESTABLISH SUPER ADMIN
-								<ChevronRightOutline size="sm" class="group-hover:translate-x-1" />
+								<ChevronRightOutline size="sm" />
 							{/if}
 						</Button>
 					</form>
