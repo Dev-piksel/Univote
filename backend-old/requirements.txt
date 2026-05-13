@@ -1,9 +1,0 @@
-fastapi
-uvicorn
-supabase
-pydantic
-python-dotenv
-python-multipart
-passlib[argon2]
-slowapi
-gunicorn

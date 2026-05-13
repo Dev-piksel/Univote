@@ -435,71 +435,8 @@
 		</div>
 	</div>
 
-	<!-- ── BOTTOM: Activity log + Quick Nav ── -->
+	<!-- ── BOTTOM: Quick Nav ── -->
 	<div class="btm-row">
-		<!-- Recent Activity table -->
-		<div class="dash-card activity-card">
-			<div class="card-header">
-				<p class="card-title">Recent Activity</p>
-				<button onclick={() => goto('/admin/audit')} class="view-btn">View all →</button>
-			</div>
-			<table class="act-table">
-				<thead>
-					<tr>
-						<th>User</th>
-						<th>Action</th>
-						<th>Time</th>
-						<th>Role</th>
-					</tr>
-				</thead>
-				<tbody>
-					{#if isLoading}
-						{#each Array(5) as _}
-							<tr
-								><td colspan="4"
-									><div class="skeleton" style="height:1.5rem;border-radius:4px;"></div></td
-								></tr
-							>
-						{/each}
-					{:else if recentLogs.length === 0}
-						<tr
-							><td colspan="4" style="text-align:center;color:var(--text-subtle);padding:2rem;"
-								>No activity yet</td
-							></tr
-						>
-					{:else}
-						{#each recentLogs as log}
-							<tr>
-								<td>
-									<div class="act-user">
-										<div
-											class="act-avatar {log.actor_role === 'admin' ? 'av-admin' : 'av-adviser'}"
-										>
-											{log.actor_role?.[0]?.toUpperCase()}
-										</div>
-										<span class="act-name"
-											>{log.actor_role === 'admin' ? adminName : 'Adviser'}</span
-										>
-									</div>
-								</td>
-								<td class="act-action">{log.action?.replace(/_/g, ' ')}</td>
-								<td class="act-time"
-									>{new Date(log.created_at).toLocaleTimeString([], {
-										hour: '2-digit',
-										minute: '2-digit'
-									})}</td
-								>
-								<td>
-									<span class="role-tag {log.actor_role === 'admin' ? 'rt-admin' : 'rt-adviser'}"
-										>{log.actor_role}</span
-									>
-								</td>
-							</tr>
-						{/each}
-					{/if}
-				</tbody>
-			</table>
-		</div>
 
 		<!-- Quick navigation -->
 		<div class="dash-card quick-nav-card">
@@ -1000,85 +937,7 @@
 		gap: 1rem;
 	}
 
-	/* ── Activity Table ── */
-	.act-table {
-		width: 100%;
-		border-collapse: collapse;
-		font-size: 0.8125rem;
-	}
-	.act-table th {
-		font-size: 0.625rem;
-		font-weight: 700;
-		color: var(--text-subtle);
-		text-transform: uppercase;
-		letter-spacing: 0.08em;
-		padding: 0 0.5rem 0.625rem;
-		text-align: left;
-		border-bottom: 1px solid var(--border-subtle);
-	}
-	.act-table td {
-		padding: 0.625rem 0.5rem;
-		border-bottom: 1px solid var(--border-subtle);
-		vertical-align: middle;
-		color: var(--text-main);
-	}
-	.act-table tr:last-child td {
-		border-bottom: none;
-	}
-	.act-user {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-	}
-	.act-avatar {
-		width: 28px;
-		height: 28px;
-		border-radius: 8px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 0.6875rem;
-		font-weight: 700;
-		flex-shrink: 0;
-	}
-	.av-admin {
-		background: #fef3c7;
-		color: #d97706;
-	}
-	.av-adviser {
-		background: var(--brand-primary-light, #e6f0ff);
-		color: var(--brand-primary, #0b75fe);
-	}
-	.act-name {
-		font-size: 0.75rem;
-		font-weight: 600;
-		color: var(--text-main);
-	}
-	.act-action {
-		font-size: 0.75rem;
-		color: var(--text-muted);
-		text-transform: capitalize;
-	}
-	.act-time {
-		font-size: 0.6875rem;
-		color: var(--text-subtle);
-		white-space: nowrap;
-	}
-	.role-tag {
-		font-size: 0.625rem;
-		font-weight: 700;
-		padding: 0.2rem 0.5rem;
-		border-radius: 999px;
-		text-transform: capitalize;
-	}
-	.rt-admin {
-		background: #fef3c7;
-		color: #d97706;
-	}
-	.rt-adviser {
-		background: var(--brand-primary-light, #e6f0ff);
-		color: var(--brand-primary, #0b75fe);
-	}
+
 
 	/* ── Quick Nav ── */
 	.quick-nav-card {

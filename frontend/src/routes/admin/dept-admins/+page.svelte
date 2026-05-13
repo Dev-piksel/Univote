@@ -18,12 +18,7 @@
 		TableBodyCell,
 		Skeleton,
 		Card,
-		FloatingLabelInput,
-		Select,
-		Avatar,
-		Helper,
-		Input,
-		Label
+		Avatar
 	} from 'flowbite-svelte';
 	import {
 		PlusOutline,
@@ -56,6 +51,7 @@
 
 	let newAdmin = $state({ id_number: '', first_name: '', last_name: '', middle_initial: '', email: '', password: '', department_id: '', photo_url: '' });
 	let visibleIds = $state(new Set());
+	let showPassword = $state(false);
 	let editingAdmin = $state(/** @type {any} */ (null));
 	/** @type {string | null} */
 	let photoPreview = $state(null);
@@ -437,55 +433,81 @@
 						</div>
 					</div>
 
-					<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-						<div class="space-y-8">
+					<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+						<!-- Column 1 -->
+						<div class="space-y-6">
+							<!-- Employee ID -->
 							<div class="relative group">
-								<FloatingLabelInput id="input-id_number" type="text" style="filled" bind:value={newAdmin.id_number} disabled={!!editingAdmin} required class="bg-indigo-50/50 dark:bg-white/5 border-none dark:text-white text-indigo-950 dark:text-white focus:border-primary-400 font-bold uppercase">
-									Employee ID
-								</FloatingLabelInput>
+								<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none"></div>
+								<div class="relative bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group-focus-within:border-primary-400 transition-all duration-300 {editingAdmin ? 'opacity-50' : ''}">
+									<input id="input-id_number" type="text" bind:value={newAdmin.id_number} disabled={!!editingAdmin} required placeholder=" " class="peer w-full px-4 pt-6 pb-2 bg-transparent text-white placeholder-transparent outline-none font-semibold text-sm tracking-wide focus:ring-0 disabled:cursor-not-allowed" />
+									<label for="input-id_number" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-black text-[9px] uppercase tracking-[0.3em] pointer-events-none transition-all duration-300 peer-focus:-translate-y-[1.1rem] peer-focus:scale-90 peer-[:not(:placeholder-shown)]:-translate-y-[1.1rem] peer-[:not(:placeholder-shown)]:scale-90 origin-left">Employee ID</label>
+								</div>
 							</div>
+							<!-- First Name -->
 							<div class="relative group">
-								<FloatingLabelInput id="input-first_name" type="text" style="filled" bind:value={newAdmin.first_name} required class="bg-indigo-50/50 dark:bg-white/5 border-none dark:text-white text-indigo-950 dark:text-white focus:border-primary-400 font-bold">
-									First Name
-								</FloatingLabelInput>
-							</div>
-						</div>
-
-						<div class="space-y-8">
-							<div class="relative group">
-								<FloatingLabelInput id="input-password" type="password" style="filled" bind:value={newAdmin.password} disabled={!!editingAdmin} required={!editingAdmin} class="bg-indigo-50/50 dark:bg-white/5 border-none dark:text-white text-indigo-950 dark:text-white focus:border-primary-400 font-bold">
-									{editingAdmin ? '••••••••' : 'Password'}
-								</FloatingLabelInput>
-							</div>
-							<div class="relative group">
-								<FloatingLabelInput id="input-last_name" type="text" style="filled" bind:value={newAdmin.last_name} required class="bg-indigo-50/50 dark:bg-white/5 border-none dark:text-white text-indigo-950 dark:text-white focus:border-primary-400 font-bold">
-									Last Name
-								</FloatingLabelInput>
+								<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none"></div>
+								<div class="relative bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group-focus-within:border-primary-400 transition-all duration-300">
+									<input id="input-first_name" type="text" bind:value={newAdmin.first_name} required placeholder=" " class="peer w-full px-4 pt-6 pb-2 bg-transparent text-white placeholder-transparent outline-none font-semibold text-sm tracking-wide focus:ring-0" />
+									<label for="input-first_name" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-black text-[9px] uppercase tracking-[0.3em] pointer-events-none transition-all duration-300 peer-focus:-translate-y-[1.1rem] peer-focus:scale-90 peer-[:not(:placeholder-shown)]:-translate-y-[1.1rem] peer-[:not(:placeholder-shown)]:scale-90 origin-left">First Name</label>
+								</div>
 							</div>
 						</div>
 
-						<div class="space-y-8">
+						<!-- Column 2 -->
+						<div class="space-y-6">
+							<!-- Password -->
 							<div class="relative group">
-								<FloatingLabelInput id="input-email" type="email" style="filled" bind:value={newAdmin.email} required class="bg-indigo-50/50 dark:bg-white/5 border-none dark:text-white text-indigo-950 dark:text-white focus:border-primary-400 font-bold">
-									Email Address
-								</FloatingLabelInput>
+								<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none"></div>
+								<div class="relative bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group-focus-within:border-primary-400 transition-all duration-300 {editingAdmin ? 'opacity-50' : ''}">
+									<input id="input-password" type={showPassword ? 'text' : 'password'} bind:value={newAdmin.password} disabled={!!editingAdmin} required={!editingAdmin} placeholder=" " class="peer w-full px-4 pt-6 pb-2 pr-12 bg-transparent text-white placeholder-transparent outline-none font-semibold text-sm tracking-wide focus:ring-0 disabled:cursor-not-allowed" />
+									<label for="input-password" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-black text-[9px] uppercase tracking-[0.3em] pointer-events-none transition-all duration-300 peer-focus:-translate-y-[1.1rem] peer-focus:scale-90 peer-[:not(:placeholder-shown)]:-translate-y-[1.1rem] peer-[:not(:placeholder-shown)]:scale-90 origin-left">{editingAdmin ? 'Password (locked)' : 'Password'}</label>
+									{#if !editingAdmin}
+									<button type="button" onclick={() => (showPassword = !showPassword)} class="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/70 transition-colors">
+										{#if showPassword}<EyeSlashOutline size="xs" />{:else}<EyeOutline size="xs" />{/if}
+									</button>
+									{/if}
+								</div>
 							</div>
+							<!-- Last Name -->
 							<div class="relative group">
-								<FloatingLabelInput id="input-middle_initial" type="text" style="filled" bind:value={newAdmin.middle_initial} class="bg-indigo-50/50 dark:bg-white/5 border-none dark:text-white text-indigo-950 dark:text-white focus:border-primary-400 font-bold">
-									Middle Initial (Opt)
-								</FloatingLabelInput>
+								<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none"></div>
+								<div class="relative bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group-focus-within:border-primary-400 transition-all duration-300">
+									<input id="input-last_name" type="text" bind:value={newAdmin.last_name} required placeholder=" " class="peer w-full px-4 pt-6 pb-2 bg-transparent text-white placeholder-transparent outline-none font-semibold text-sm tracking-wide focus:ring-0" />
+									<label for="input-last_name" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-black text-[9px] uppercase tracking-[0.3em] pointer-events-none transition-all duration-300 peer-focus:-translate-y-[1.1rem] peer-focus:scale-90 peer-[:not(:placeholder-shown)]:-translate-y-[1.1rem] peer-[:not(:placeholder-shown)]:scale-90 origin-left">Last Name</label>
+								</div>
+							</div>
+						</div>
+
+						<!-- Column 3 -->
+						<div class="space-y-6">
+							<!-- Email -->
+							<div class="relative group">
+								<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none"></div>
+								<div class="relative bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group-focus-within:border-primary-400 transition-all duration-300">
+									<input id="input-email" type="email" bind:value={newAdmin.email} required placeholder=" " class="peer w-full px-4 pt-6 pb-2 bg-transparent text-white placeholder-transparent outline-none font-semibold text-sm tracking-wide focus:ring-0" />
+									<label for="input-email" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-black text-[9px] uppercase tracking-[0.3em] pointer-events-none transition-all duration-300 peer-focus:-translate-y-[1.1rem] peer-focus:scale-90 peer-[:not(:placeholder-shown)]:-translate-y-[1.1rem] peer-[:not(:placeholder-shown)]:scale-90 origin-left">Email Address</label>
+								</div>
+							</div>
+							<!-- Middle Initial -->
+							<div class="relative group">
+								<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none"></div>
+								<div class="relative bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group-focus-within:border-primary-400 transition-all duration-300">
+									<input id="input-middle_initial" type="text" bind:value={newAdmin.middle_initial} maxlength="2" placeholder=" " class="peer w-full px-4 pt-6 pb-2 bg-transparent text-white placeholder-transparent outline-none font-semibold text-sm tracking-wide focus:ring-0" />
+									<label for="input-middle_initial" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-black text-[9px] uppercase tracking-[0.3em] pointer-events-none transition-all duration-300 peer-focus:-translate-y-[1.1rem] peer-focus:scale-90 peer-[:not(:placeholder-shown)]:-translate-y-[1.1rem] peer-[:not(:placeholder-shown)]:scale-90 origin-left">Middle Initial (Opt)</label>
+								</div>
 							</div>
 						</div>
 					</div>
 
-					<div class="space-y-4 pt-4">
-						<Label for="adm-dept" class="text-[10px] font-black text-indigo-900/60 dark:text-white/40 uppercase tracking-widest mb-2 block">Department</Label>
-						<Select id="adm-dept" bind:value={newAdmin.department_id} class="bg-indigo-50/50 dark:bg-white/5 border-none text-indigo-950 dark:text-white focus:border-primary-400 rounded-2xl py-3 font-bold">
-							<option value="" class="bg-gradient-to-br from-indigo-50 via-white to-cyan-50 dark:bg-none dark:bg-[#0a0f1e]">No Department / Global</option>
+					<div class="space-y-3 pt-4">
+						<label for="adm-dept" class="block text-[9px] font-black text-white/40 uppercase tracking-widest px-1">Department</label>
+						<select id="adm-dept" bind:value={newAdmin.department_id} class="w-full px-4 py-3 bg-white/[0.04] border border-white/10 rounded-2xl text-white outline-none font-semibold text-sm focus:border-primary-400 transition-all duration-300 [&>option]:bg-[#0a0f1e]">
+							<option value="">No Department / Global</option>
 							{#each departments as dept}
-								<option value={dept.id} class="bg-gradient-to-br from-indigo-50 via-white to-cyan-50 dark:bg-none dark:bg-[#0a0f1e]">{dept.name.toUpperCase()}</option>
+								<option value={dept.id}>{dept.name.toUpperCase()}</option>
 							{/each}
-						</Select>
+						</select>
 					</div>
 
 					<div class="flex justify-end gap-4 pt-10 border-t border-indigo-100 dark:border-white/5">

@@ -5,6 +5,7 @@
 	import Notification from '$lib/components/Notification.svelte';
 	import StatusBadge from '$lib/components/StatusBadge.svelte';
 	import ConfirmModal from '$lib/components/ConfirmModal.svelte';
+	import { slide } from 'svelte/transition';
 
 	/** @type {Array<any>} */
 	let elections = $state([]);
@@ -222,74 +223,67 @@
 		</div>
 	</div>
 
-	<!-- Create Election Form (collapsible) -->
+	<!-- Create Election Form -->
 	{#if showForm}
-		<div class="bento-card" style="padding:1.5rem; border-radius: 16px; margin-bottom: 1.5rem;">
-			<div
-				style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;"
-			>
-				<h2 style="font-size:0.875rem;font-weight:600;color:var(--text-main);">
-					{editingElectionId ? 'Edit Election' : 'Create New Election'}
-				</h2>
-				<button onclick={() => (showForm = false)} class="btn-icon" aria-label="Close form">
-					<svg
-						class="h-4 w-4"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						viewBox="0 0 24 24"
-						><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg
-					>
-				</button>
-			</div>
-			<form onsubmit={handleSubmit} style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
-				<div style="grid-column:1/-1;">
-					<label class="field-label" for="election_name">Election Name *</label>
-					<input
-						id="election_name"
-						class="input-base"
-						bind:value={newElection.name}
-						placeholder="e.g. Student Council 2025"
-					/>
-				</div>
-				<div>
-					<label class="field-label" for="start_date">Start Date *</label>
-					<input
-						id="start_date"
-						type="datetime-local"
-						class="input-base"
-						bind:value={newElection.start_date}
-					/>
-				</div>
-				<div>
-					<label class="field-label" for="end_date">End Date *</label>
-					<input
-						id="end_date"
-						type="datetime-local"
-						class="input-base"
-						bind:value={newElection.end_date}
-					/>
-				</div>
-				<div style="grid-column:1/-1;">
-					<label class="field-label" for="description">Description</label>
-					<input
-						id="description"
-						class="input-base"
-						bind:value={newElection.description}
-						placeholder="Optional description"
-					/>
-				</div>
-				<div
-					style="grid-column:1/-1;display:flex;gap:0.5rem;justify-content:flex-end;margin-top:0.25rem;"
-				>
-					<button type="button" onclick={() => (showForm = false)} class="btn-secondary btn-sm"
-						>Cancel</button
-					>
-					<button type="submit" disabled={isCreating} class="btn-primary btn-sm">
-						{isCreating ? 'Saving…' : editingElectionId ? 'Update Election' : 'Create Election'}
+		<div transition:slide={{ duration: 400 }}>
+			<div class="w-full bg-white/[0.04] backdrop-blur-3xl border border-white/10 p-8 rounded-[2rem] relative overflow-hidden shadow-2xl" style="margin-bottom:1.5rem;">
+				<header class="mb-8 flex items-start justify-between">
+					<div>
+						<h2 class="text-xl font-black text-white tracking-tighter uppercase mb-1">{editingElectionId ? 'Edit Election' : 'New Election'}</h2>
+						<p class="text-[10px] font-bold text-white/30 uppercase tracking-widest">{editingElectionId ? 'Update election details' : 'Create a new election event'}</p>
+					</div>
+					<button onclick={() => (showForm = false)} class="p-2 bg-white/5 border border-white/10 rounded-xl text-white/30 hover:text-white hover:bg-white/10 transition-all" aria-label="Close form">
+						<svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
 					</button>
-				</div>
-			</form>
+				</header>
+
+				<form onsubmit={handleSubmit} class="space-y-6">
+					<!-- Election Name -->
+					<div class="relative group">
+						<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none"></div>
+						<div class="relative bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group-focus-within:border-primary-400 transition-all duration-300">
+							<input id="election-name" type="text" bind:value={newElection.name} required placeholder=" " class="peer w-full px-4 pt-6 pb-2 bg-transparent text-white placeholder-transparent outline-none font-semibold text-sm tracking-wide focus:ring-0" />
+							<label for="election-name" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-black text-[9px] uppercase tracking-[0.3em] pointer-events-none transition-all duration-300 peer-focus:-translate-y-[1.1rem] peer-focus:scale-90 peer-[:not(:placeholder-shown)]:-translate-y-[1.1rem] peer-[:not(:placeholder-shown)]:scale-90 origin-left">Election Name</label>
+						</div>
+					</div>
+
+					<div class="grid md:grid-cols-2 gap-6">
+						<!-- Start Date -->
+						<div class="relative group">
+							<label class="block text-[9px] font-black text-white/40 uppercase tracking-widest mb-2 px-1">Start Date & Time</label>
+							<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none" style="top:1.5rem;"></div>
+							<input id="start-date" type="datetime-local" bind:value={newElection.start_date} required class="relative w-full px-4 py-3 bg-white/[0.04] border border-white/10 rounded-2xl text-white outline-none font-semibold text-sm focus:border-primary-400 transition-all duration-300 [color-scheme:dark]" />
+						</div>
+						<!-- End Date -->
+						<div class="relative group">
+							<label class="block text-[9px] font-black text-white/40 uppercase tracking-widest mb-2 px-1">End Date & Time</label>
+							<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none" style="top:1.5rem;"></div>
+							<input id="end-date" type="datetime-local" bind:value={newElection.end_date} required class="relative w-full px-4 py-3 bg-white/[0.04] border border-white/10 rounded-2xl text-white outline-none font-semibold text-sm focus:border-primary-400 transition-all duration-300 [color-scheme:dark]" />
+						</div>
+					</div>
+
+					<!-- Description -->
+					<div class="relative group">
+						<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none"></div>
+						<div class="relative bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group-focus-within:border-primary-400 transition-all duration-300">
+							<input id="election-desc" type="text" bind:value={newElection.description} placeholder=" " class="peer w-full px-4 pt-6 pb-2 bg-transparent text-white placeholder-transparent outline-none font-semibold text-sm tracking-wide focus:ring-0" />
+							<label for="election-desc" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-black text-[9px] uppercase tracking-[0.3em] pointer-events-none transition-all duration-300 peer-focus:-translate-y-[1.1rem] peer-focus:scale-90 peer-[:not(:placeholder-shown)]:-translate-y-[1.1rem] peer-[:not(:placeholder-shown)]:scale-90 origin-left">Description (Optional)</label>
+						</div>
+					</div>
+
+					<div class="flex justify-end gap-3 pt-4 border-t border-white/5">
+						<button type="button" onclick={() => (showForm = false)} class="px-6 py-2.5 rounded-xl font-black text-[10px] tracking-widest uppercase bg-white/5 border border-white/10 text-white/60 hover:text-white hover:bg-white/10 transition-all">Cancel</button>
+						<button type="submit" disabled={isCreating} class="px-8 py-2.5 rounded-xl font-black text-[10px] tracking-widest uppercase bg-primary-600 text-white hover:bg-primary-500 transition-all shadow-xl disabled:opacity-50 flex items-center gap-2">
+							{#if isCreating}
+								<span class="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+								Saving…
+							{:else}
+								{editingElectionId ? 'Update Election' : 'Create Election'}
+							{/if}
+						</button>
+					</div>
+				</form>
+			</div>
 		</div>
 	{/if}
 

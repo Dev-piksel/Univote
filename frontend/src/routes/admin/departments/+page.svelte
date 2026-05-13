@@ -2,7 +2,6 @@
 	import { onMount } from 'svelte';
 	import { admin as adminApi } from '$lib/api.js';
 	import { branding } from '$lib/stores/branding.js';
-	import { dataCache } from '$lib/stores/data.js';
 	import Notification from '$lib/components/Notification.svelte';
 	import ConfirmModal from '$lib/components/ConfirmModal.svelte';
 	import { fade, fly, slide } from 'svelte/transition';
@@ -17,10 +16,7 @@
 		TableBodyRow,
 		TableBodyCell,
 		Skeleton,
-		Card,
-		FloatingLabelInput,
-		Textarea,
-		Helper
+		Card
 	} from 'flowbite-svelte';
 	import {
 		PlusOutline,
@@ -30,7 +26,8 @@
 		TrashBinOutline,
 		BuildingOutline,
 		SearchOutline,
-		FilterOutline
+		FilterOutline,
+		CheckCircleOutline
 	} from 'flowbite-svelte-icons';
 
 	let departments = $state([]);
@@ -51,12 +48,6 @@
 		id: ''
 	});
 
-	$effect(() => {
-		if ($dataCache.departments.length > 0) {
-			departments = $dataCache.departments;
-			isLoading = false;
-		}
-	});
 
 	onMount(async () => {
 		await loadDepartments();
@@ -65,9 +56,7 @@
 	async function loadDepartments() {
 		try {
 			const res = await adminApi.getDepartments();
-			const data = res.data ?? [];
-			dataCache.setDepartments(data);
-			departments = data;
+			departments = res.data ?? [];
 		} catch (err) {
 			notify('Failed to load departments', 'error');
 		} finally {
@@ -123,13 +112,11 @@
 				const targetId = confirmState.id;
 				const originalDepts = [...departments];
 				departments = departments.filter(d => d.id !== targetId);
-				dataCache.setDepartments(departments);
 				try {
 					await adminApi.deleteDepartment(targetId);
 					notify('Department removed', 'success');
 				} catch (err) {
 					departments = originalDepts;
-					dataCache.setDepartments(departments);
 					notify(err.message ?? 'Failed to delete department', 'error');
 				} finally {
 					confirmState.show = false;
@@ -187,25 +174,56 @@
 
 				<form onsubmit={handleSubmit} class="space-y-8">
 					<div class="grid md:grid-cols-[1.5fr_1fr] gap-8">
-						<div class="space-y-8">
+						<div class="space-y-6">
+							<!-- Department Name -->
 							<div class="relative group">
-								<FloatingLabelInput id="input-name" type="text" style="filled" bind:value={newDept.name} required class="bg-indigo-50/50 dark:bg-white/5 border-none dark:text-white text-indigo-950 dark:text-white focus:border-primary-400 font-bold">
-									Full Department Name
-								</FloatingLabelInput>
-								<Helper class="mt-2 text-[9px] font-bold text-indigo-900/40 dark:text-white/20 tracking-widest uppercase">Official Academic Title</Helper>
+								<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none"></div>
+								<div class="relative bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group-focus-within:border-primary-400 transition-all duration-300">
+									<input
+										id="input-name"
+										type="text"
+										bind:value={newDept.name}
+										required
+										placeholder=" "
+										class="peer w-full px-4 pt-6 pb-2 bg-transparent text-white placeholder-transparent outline-none font-semibold text-sm tracking-wide focus:ring-0"
+									/>
+									<label for="input-name" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-black text-[9px] uppercase tracking-[0.3em] pointer-events-none transition-all duration-300 peer-focus:-translate-y-[1.1rem] peer-focus:scale-90 peer-[:not(:placeholder-shown)]:-translate-y-[1.1rem] peer-[:not(:placeholder-shown)]:scale-90 origin-left">
+										Full Department Name
+									</label>
+								</div>
+								<p class="mt-2 text-[9px] font-bold text-white/20 uppercase tracking-widest px-1">Official Academic Title</p>
 							</div>
-							
+
+							<!-- Institutional Code -->
 							<div class="relative group">
-								<FloatingLabelInput id="input-code" type="text" style="filled" bind:value={newDept.code} required class="bg-indigo-50/50 dark:bg-white/5 border-none dark:text-white text-indigo-950 dark:text-white focus:border-primary-400 font-bold">
-									Institutional Code
-								</FloatingLabelInput>
-								<Helper class="mt-2 text-[9px] font-bold text-indigo-900/40 dark:text-white/20 tracking-widest uppercase">E.G. CAS, CITE, CBA</Helper>
+								<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none"></div>
+								<div class="relative bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group-focus-within:border-primary-400 transition-all duration-300">
+									<input
+										id="input-code"
+										type="text"
+										bind:value={newDept.code}
+										placeholder=" "
+										class="peer w-full px-4 pt-6 pb-2 bg-transparent text-white placeholder-transparent outline-none font-semibold text-sm tracking-wide focus:ring-0"
+									/>
+									<label for="input-code" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-black text-[9px] uppercase tracking-[0.3em] pointer-events-none transition-all duration-300 peer-focus:-translate-y-[1.1rem] peer-focus:scale-90 peer-[:not(:placeholder-shown)]:-translate-y-[1.1rem] peer-[:not(:placeholder-shown)]:scale-90 origin-left">
+										Institutional Code
+									</label>
+								</div>
+								<p class="mt-2 text-[9px] font-bold text-white/20 uppercase tracking-widest px-1">E.g. CAS, CITE, CBA</p>
 							</div>
 						</div>
 
+						<!-- Description textarea -->
 						<div class="relative group h-full">
-							<Label for="dept-desc" class="text-[10px] font-black text-indigo-900/60 dark:text-white/40 uppercase tracking-widest mb-3 block">Structural Overview</Label>
-							<Textarea id="dept-desc" bind:value={newDept.description} rows={5} placeholder="Brief description of the department's role..." class="bg-indigo-50/50 dark:bg-white/5 border-none text-indigo-950 dark:text-white focus:border-primary-400 rounded-2xl resize-none" />
+							<label for="dept-desc" class="block text-[9px] font-black text-white/40 uppercase tracking-widest mb-2 px-1">Structural Overview</label>
+							<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none"></div>
+							<textarea
+								id="dept-desc"
+								bind:value={newDept.description}
+								rows="5"
+								placeholder="Brief description of the department's role..."
+								class="relative w-full px-4 py-3 bg-white/[0.04] border border-white/10 rounded-2xl text-white placeholder-white/20 outline-none font-semibold text-sm tracking-wide focus:ring-0 focus:border-primary-400 transition-all duration-300 resize-none"
+							></textarea>
 						</div>
 					</div>
 

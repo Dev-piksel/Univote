@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { auth as authApi } from '$lib/api.js';
+	import { auth as authApi, superAdmin as superAdminApi } from '$lib/api.js';
 	import { authSession } from '$lib/stores/auth.js';
 	import { theme, toggleTheme } from '$lib/stores/theme.js';
 	import { branding } from '$lib/stores/branding.js';
@@ -28,7 +28,14 @@
 	} from 'flowbite-svelte-icons';
 	import Ripples from '$lib/components/Ripples.svelte';
 
-	onMount(() => {
+	onMount(async () => {
+		// Redirect to setup if no super admin exists yet
+		try {
+			const status = await superAdminApi.getSetupStatus();
+			if (!status.configured) { goto('/super-admin/setup'); return; }
+		} catch { /* unreachable backend – let login page render normally */ }
+
+		// Redirect already-logged-in staff away from login
 		if ($authSession) goto($authSession.role === 'dept_admin' || $authSession.role === 'super_admin' ? '/admin' : '/adviser');
 	});
 

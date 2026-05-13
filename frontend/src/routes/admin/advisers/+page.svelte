@@ -5,6 +5,7 @@
 	import Notification from '$lib/components/Notification.svelte';
 	import ConfirmModal from '$lib/components/ConfirmModal.svelte';
 	import { formatFullName } from '$lib/utils.js';
+	import { slide } from 'svelte/transition';
 
 	/** @type {Array<any>} */
 	let advisers = $state([]);
@@ -310,83 +311,79 @@
 
 	<!-- Add Adviser Form -->
 	{#if showForm}
-		<div class="bento-card" style="padding:1.5rem; border-radius: 16px; margin-bottom: 1.5rem;">
-			<div
-				style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;"
-			>
-				<h2 style="font-size:0.875rem;font-weight:600;color:var(--text-main);">
-					Create Adviser Account
-				</h2>
-				<button onclick={() => (showForm = false)} class="btn-icon" aria-label="Close form">
-					<svg
-						class="h-4 w-4"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						viewBox="0 0 24 24"
-						><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg
-					>
-				</button>
-			</div>
-			<form onsubmit={handleAdd} style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
-				<div>
-					<label class="field-label" for="adviser_full_name">Full Name *</label>
-					<input
-						id="adviser_full_name"
-						class="input-base"
-						bind:value={newAdviser.full_name}
-						placeholder="e.g. Prof. Jane Doe"
-					/>
-				</div>
-				<div>
-					<label class="field-label" for="adviser_email">Email *</label>
-					<input
-						id="adviser_email"
-						type="email"
-						class="input-base"
-						bind:value={newAdviser.email}
-						placeholder="e.g. jane@school.edu"
-					/>
-				</div>
-				<div>
-					<label class="field-label" for="employee_id">Employee ID *</label>
-					<input
-						id="employee_id"
-						class="input-base"
-						bind:value={newAdviser.id_number}
-						placeholder="e.g. EMP-2024-001"
-					/>
-				</div>
-				<div>
-					<label class="field-label" for="adviser_password">Password *</label>
-					<input
-						id="adviser_password"
-						type="password"
-						class="input-base"
-						bind:value={newAdviser.password}
-						placeholder="••••••••"
-					/>
-				</div>
-				<div>
-					<label class="field-label" for="adviser_dept">Department</label>
-					<input
-						id="adviser_dept"
-						class="input-base"
-						bind:value={newAdviser.department}
-						placeholder="e.g. CITE"
-					/>
-				</div>
-				<div
-					style="grid-column:1/-1;display:flex;gap:0.5rem;justify-content:flex-end;margin-top:0.25rem;"
-				>
-					<button type="button" onclick={() => (showForm = false)} class="btn-secondary btn-sm"
-						>Cancel</button
-					>
-					<button type="submit" disabled={isAdding} class="btn-primary btn-sm">
-						{isAdding ? 'Creating…' : 'Create Adviser'}
+		<div transition:slide={{ duration: 400 }}>
+			<div class="w-full bg-white/[0.04] backdrop-blur-3xl border border-white/10 p-8 rounded-[2rem] relative overflow-hidden shadow-2xl" style="margin-bottom:1.5rem;">
+				<header class="mb-8 flex items-start justify-between">
+					<div>
+						<h2 class="text-xl font-black text-white tracking-tighter uppercase mb-1">Create Adviser Account</h2>
+						<p class="text-[10px] font-bold text-white/30 uppercase tracking-widest">Register a new adviser with login credentials</p>
+					</div>
+					<button onclick={() => (showForm = false)} class="p-2 bg-white/5 border border-white/10 rounded-xl text-white/30 hover:text-white hover:bg-white/10 transition-all" aria-label="Close form">
+						<svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
 					</button>
-				</div>
-			</form>
+				</header>
+
+				<form onsubmit={handleAdd} class="space-y-6">
+					<div class="grid md:grid-cols-2 gap-6">
+						<!-- Full Name -->
+						<div class="relative group">
+							<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none"></div>
+							<div class="relative bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group-focus-within:border-primary-400 transition-all duration-300">
+								<input id="adviser-full-name" type="text" bind:value={newAdviser.full_name} required placeholder=" " class="peer w-full px-4 pt-6 pb-2 bg-transparent text-white placeholder-transparent outline-none font-semibold text-sm tracking-wide focus:ring-0" />
+								<label for="adviser-full-name" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-black text-[9px] uppercase tracking-[0.3em] pointer-events-none transition-all duration-300 peer-focus:-translate-y-[1.1rem] peer-focus:scale-90 peer-[:not(:placeholder-shown)]:-translate-y-[1.1rem] peer-[:not(:placeholder-shown)]:scale-90 origin-left">Full Name</label>
+							</div>
+						</div>
+
+						<!-- Email -->
+						<div class="relative group">
+							<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none"></div>
+							<div class="relative bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group-focus-within:border-primary-400 transition-all duration-300">
+								<input id="adviser-email" type="email" bind:value={newAdviser.email} required placeholder=" " class="peer w-full px-4 pt-6 pb-2 bg-transparent text-white placeholder-transparent outline-none font-semibold text-sm tracking-wide focus:ring-0" />
+								<label for="adviser-email" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-black text-[9px] uppercase tracking-[0.3em] pointer-events-none transition-all duration-300 peer-focus:-translate-y-[1.1rem] peer-focus:scale-90 peer-[:not(:placeholder-shown)]:-translate-y-[1.1rem] peer-[:not(:placeholder-shown)]:scale-90 origin-left">Email Address</label>
+							</div>
+						</div>
+
+						<!-- Employee ID -->
+						<div class="relative group">
+							<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none"></div>
+							<div class="relative bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group-focus-within:border-primary-400 transition-all duration-300">
+								<input id="adviser-id" type="text" bind:value={newAdviser.id_number} required placeholder=" " class="peer w-full px-4 pt-6 pb-2 bg-transparent text-white placeholder-transparent outline-none font-semibold text-sm tracking-wide focus:ring-0" />
+								<label for="adviser-id" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-black text-[9px] uppercase tracking-[0.3em] pointer-events-none transition-all duration-300 peer-focus:-translate-y-[1.1rem] peer-focus:scale-90 peer-[:not(:placeholder-shown)]:-translate-y-[1.1rem] peer-[:not(:placeholder-shown)]:scale-90 origin-left">Employee ID</label>
+							</div>
+						</div>
+
+						<!-- Password -->
+						<div class="relative group">
+							<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none"></div>
+							<div class="relative bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group-focus-within:border-primary-400 transition-all duration-300">
+								<input id="adviser-pass" type="password" bind:value={newAdviser.password} required placeholder=" " class="peer w-full px-4 pt-6 pb-2 bg-transparent text-white placeholder-transparent outline-none font-semibold text-sm tracking-wide focus:ring-0" />
+								<label for="adviser-pass" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-black text-[9px] uppercase tracking-[0.3em] pointer-events-none transition-all duration-300 peer-focus:-translate-y-[1.1rem] peer-focus:scale-90 peer-[:not(:placeholder-shown)]:-translate-y-[1.1rem] peer-[:not(:placeholder-shown)]:scale-90 origin-left">Password</label>
+							</div>
+						</div>
+
+						<!-- Department -->
+						<div class="relative group md:col-span-2">
+							<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none"></div>
+							<div class="relative bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group-focus-within:border-primary-400 transition-all duration-300">
+								<input id="adviser-dept" type="text" bind:value={newAdviser.department} placeholder=" " class="peer w-full px-4 pt-6 pb-2 bg-transparent text-white placeholder-transparent outline-none font-semibold text-sm tracking-wide focus:ring-0" />
+								<label for="adviser-dept" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-black text-[9px] uppercase tracking-[0.3em] pointer-events-none transition-all duration-300 peer-focus:-translate-y-[1.1rem] peer-focus:scale-90 peer-[:not(:placeholder-shown)]:-translate-y-[1.1rem] peer-[:not(:placeholder-shown)]:scale-90 origin-left">Department (Optional)</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="flex justify-end gap-3 pt-4 border-t border-white/5">
+						<button type="button" onclick={() => (showForm = false)} class="px-6 py-2.5 rounded-xl font-black text-[10px] tracking-widest uppercase bg-white/5 border border-white/10 text-white/60 hover:text-white hover:bg-white/10 transition-all">Cancel</button>
+						<button type="submit" disabled={isAdding} class="px-8 py-2.5 rounded-xl font-black text-[10px] tracking-widest uppercase bg-primary-600 text-white hover:bg-primary-500 transition-all shadow-xl disabled:opacity-50 flex items-center gap-2">
+							{#if isAdding}
+								<span class="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+								Creating…
+							{:else}
+								Create Adviser
+							{/if}
+						</button>
+					</div>
+				</form>
+			</div>
 		</div>
 	{/if}
 

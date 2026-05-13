@@ -73,10 +73,11 @@
 
 		isSubmitting = true;
 		try {
-			const fullName = [firstName, middleInitial, lastName].filter(Boolean).join(' ');
 			const res = await superAdminApi.setup({
 				id_number: idNumber,
-				full_name: fullName,
+				first_name: firstName,
+				last_name: lastName,
+				middle_initial: middleInitial || undefined,
 				password
 			});
 			successMsg = res.message;

@@ -1,4 +1,5 @@
 // Stores are resolved dynamically to avoid circular dependencies
+import { getCached, setCached, invalidate } from '$lib/cache.js';
 
 
 export const BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
@@ -11,6 +12,15 @@ export const BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
  * @param {RequestInit} [options]
  */
 async function request(path, options = {}) {
+	const method = (options.method ?? 'GET').toUpperCase();
+	const isGet = method === 'GET' && !options.body;
+
+	// Serve from cache for GET requests
+	if (isGet) {
+		const hit = getCached(path);
+		if (hit !== null) return hit;
+	}
+
 	const headers = new Headers(options.headers || {});
 
 	// Resolve the appropriate token based on the path
@@ -47,6 +57,19 @@ async function request(path, options = {}) {
 		if (data?.retry_after) error.retryAfter = data.retry_after;
 		throw error;
 	}
+
+	if (isGet) {
+		// Cache the successful response
+		setCached(path, data);
+	} else {
+		// Mutation — invalidate cache for this resource's base path so the
+		// next GET re-fetches fresh data.
+		const basePath = path.split('?')[0].replace(/\/[^/]+$/, '');
+		invalidate(basePath);
+		// Also invalidate the exact path (e.g. collection endpoints)
+		invalidate(path.split('?')[0]);
+	}
+
 	return data;
 }
 
