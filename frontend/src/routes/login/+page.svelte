@@ -208,7 +208,8 @@
 						type="submit"
 						color="alternative"
 						disabled={isSubmitting}
-						class="login-btn w-full py-5 rounded-[1.25rem] font-black text-[11px] tracking-[0.3em] uppercase active:scale-[0.98] group flex items-center justify-center gap-3 shadow-[0_15px_40px_-10px_var(--brand-glow)] border border-white/20 hover:border-[var(--brand-primary)] transition-all duration-300"
+						class="w-full py-5 rounded-[1.25rem] font-black text-[11px] tracking-[0.3em] uppercase active:scale-[0.98] group flex items-center justify-center gap-3 shadow-[0_15px_40px_-10px_var(--brand-glow)] border border-white/20 hover:border-[var(--brand-primary)] transition-all duration-300"
+						style="background: var(--brand-gradient); border: 2px solid rgba(255,255,255,0.2);"
 					>
 						{#if isSubmitting}
 							<Spinner size="4" color="white" />
@@ -245,10 +246,7 @@
 		100% { transform: translate(0, 0) scale(1); }
 	}
 
-	.login-btn {
-		background: var(--brand-gradient) !important;
-		border: 2px solid rgba(255, 255, 255, 0.2) !important;
-	}
+
 	
 	.text-glow {
 		text-shadow: 0 0 30px var(--brand-glow);

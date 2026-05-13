@@ -460,7 +460,8 @@
 							</div>
 
 							<div class="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
-								{#each candidatesGrouped[position] as cand									<button
+								{#each candidatesGrouped[position] as cand}
+								<button
 										class="relative flex flex-col items-center p-3 md:p-4 transition-all duration-300 border-2 cursor-pointer rounded-2xl md:rounded-3xl active:scale-95 text-center {selectedVotes[position] === cand.id ? 'border-[var(--brand-primary)] shadow-[0_0_15px_var(--brand-glow)]' : 'border-[var(--border-main)] hover:border-[var(--text-subtle)]'}"
 										style={selectedVotes[position] === cand.id ? 'background-color: var(--brand-primary-alpha-5); backdrop-filter: blur(16px);' : 'background-color: var(--bg-card); opacity: 0.9; backdrop-filter: blur(16px);'}
 										onclick={() => selectCandidate(position, cand.id)}
