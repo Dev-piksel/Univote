@@ -31,7 +31,7 @@
 </script>
 
 {#if !isChecking}
-	<div class="min-h-screen transition-all duration-700 relative" style="background-color: {$branding.showBgAnims ? 'transparent' : 'var(--bg-main)'}">
+	<div class="min-h-screen transition-all duration-700 relative" style="background-color: var(--bg-main)">
 		<!-- Background Layer (Fixed) -->
 		<div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
 			<!-- Optimized Liquid Blobs -->
@@ -40,8 +40,12 @@
 				<div class="absolute bottom-[-15%] right-[-15%] w-[80%] h-[80%] rounded-full blur-[80px] opacity-10 animate-blob animation-delay-4000" style="background-color: var(--brand-secondary); will-change: transform, border-radius;"></div>
 			{/if}
 			
-			<!-- Grid Overlay -->
-			<div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_20%,#000_60%,transparent_100%)]"></div>
+			<!-- Grid Overlay — dark lines in light mode, white lines in dark -->
+			<div class="absolute inset-0
+				 dark:bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)]
+				 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)]
+				 bg-[size:48px_48px]
+				 [mask-image:radial-gradient(ellipse_80%_80%_at_50%_20%,#000_60%,transparent_100%)]"></div>
 
 			<!-- Water Ripple Effect (Global Component) -->
 			<Ripples />
@@ -59,11 +63,11 @@
 		</div>
 	</div>
 {:else}
-	<div class="flex min-h-screen items-center justify-center bg-[#02040a]">
+	<div class="flex min-h-screen items-center justify-center" style="background-color: var(--bg-main)">
 		<div class="relative">
-			<div class="h-16 w-16 animate-spin rounded-full border-4 border-white/5 border-t-[var(--brand-primary)] shadow-[0_0_20px_var(--brand-glow)]"></div>
+			<div class="h-16 w-16 animate-spin rounded-full border-4 border-black/5 dark:border-white/5 border-t-[var(--brand-primary)] shadow-[0_0_20px_var(--brand-glow)]"></div>
 			<div class="absolute inset-0 flex items-center justify-center">
-				<div class="h-8 w-8 rounded-full bg-white/5 backdrop-blur-xl animate-pulse"></div>
+				<div class="h-8 w-8 rounded-full bg-black/5 dark:bg-white/5 backdrop-blur-xl animate-pulse"></div>
 			</div>
 		</div>
 	</div>

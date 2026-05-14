@@ -170,7 +170,14 @@
 <!-- Sidebar container -->
 <aside 
 	aria-label="Sidebar navigation"
-	class="transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] fixed top-0 left-0 h-screen z-[100] bg-white/[0.04] dark:bg-white/[0.02] backdrop-blur-3xl border-r border-black/[0.08] dark:border-white/20 shadow-[1px_0_0_rgba(0,0,0,0.05)] dark:shadow-[1px_0_0_rgba(255,255,255,0.15)] text-slate-900 dark:text-white {collapsed ? 'w-[88px]' : 'w-[280px]'} {mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}"
+	class="transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] fixed top-0 left-0 h-screen z-[100]
+		bg-white/90 dark:bg-white/[0.02]
+		backdrop-blur-3xl
+		border-r border-black/[0.08] dark:border-white/20
+		shadow-[1px_0_0_rgba(0,0,0,0.05)] dark:shadow-[1px_0_0_rgba(255,255,255,0.15)]
+		text-slate-900 dark:text-white
+		{collapsed ? 'w-[88px]' : 'w-[280px]'}
+		{mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}"
 >
 	<div class="flex flex-col h-full px-4 py-8 relative overflow-y-auto custom-scrollbar">
 		<!-- Internal Glow -->

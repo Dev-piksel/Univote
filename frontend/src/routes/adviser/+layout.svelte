@@ -46,7 +46,7 @@
 			{@render children()}
 		</main>
 	{:else}
-		<div class="min-h-screen transition-all duration-700 relative" style="background-color: {$branding.showBgAnims ? 'transparent' : 'var(--bg-main)'}">
+		<div class="min-h-screen transition-all duration-700 relative" style="background-color: var(--bg-main)">
 			<!-- Background Layer (Fixed) -->
 			<div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
 				<!-- Optimized Liquid Blobs -->
@@ -56,7 +56,11 @@
 				{/if}
 				
 				<!-- Grid Overlay -->
-				<div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_20%,#000_60%,transparent_100%)]"></div>
+				<div class="absolute inset-0
+					dark:bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)]
+					bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)]
+					bg-[size:48px_48px]
+					[mask-image:radial-gradient(ellipse_80%_80%_at_50%_20%,#000_60%,transparent_100%)]"></div>
 
 				<!-- Water Ripple Effect (Global Component) -->
 				<Ripples />
