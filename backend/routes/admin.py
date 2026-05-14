@@ -191,6 +191,16 @@ async def update_student(
     # Only allow specific fields via StudentUpdate model
     update_data = {k: v for k, v in payload.model_dump(exclude_unset=True).items() if v is not None and v != ''}
     
+    if "full_name" in update_data:
+        fname = update_data.pop("full_name")
+        if not update_data.get("first_name") and not update_data.get("last_name"):
+            parts = fname.strip().split()
+            if parts:
+                update_data["first_name"] = parts[0]
+                update_data["last_name"] = parts[-1] if len(parts) > 1 else ""
+                if len(parts) >= 3:
+                    update_data["middle_initial"] = parts[1][0].upper()
+    
     # Security: If not super_admin, force scoping and prevent department changes
     if user.role != "super_admin":
         update_data.pop("department_id", None)  # Prevent changing department

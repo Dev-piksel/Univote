@@ -185,7 +185,8 @@ async def get_available_elections() -> list:
 
 async def import_students_from_rows(rows: list[dict]) -> list:
     """
-    Expects rows to be dicts with at least 'student_id' and 'name' keys.
+    Expects rows to be dicts with at least 'student_id' and name keys.
+    Accepts full_name, or first_name + last_name separately.
     Returns the inserted data.
     """
     to_insert = []
@@ -194,21 +195,25 @@ async def import_students_from_rows(rows: list[dict]) -> list:
         first_name = (row.get("first_name") or "").strip()
         last_name = (row.get("last_name") or "").strip()
         middle_initial = (row.get("middle_initial") or "").strip() or None
+        full_name_raw = (row.get("full_name") or row.get("name") or "").strip()
 
-        # Legacy fallback: split full_name if new fields aren't present
-        if not first_name and not last_name:
-            fname = row.get("full_name") or row.get("name") or ""
-            parts = fname.strip().split()
+        # Derive first/last from full_name when not explicitly provided
+        if not first_name and not last_name and full_name_raw:
+            parts = full_name_raw.split()
             first_name = parts[0] if parts else ""
-            last_name = parts[-1] if len(parts) > 1 else ""
-            middle_initial = parts[1][0] if len(parts) >= 3 else None
+            # Allow single-word names (alias/mononym) by reusing first as last
+            last_name = parts[-1] if len(parts) > 1 else first_name
+            middle_initial = parts[1][0] if len(parts) >= 3 else middle_initial
 
-        if sid and first_name and last_name:
+        if sid and first_name:
             student_data = {
                 "student_id": sid,
                 "first_name": first_name,
-                "last_name": last_name,
+                "last_name": last_name or first_name,
             }
+            # Store full_name directly so the frontend can display it as entered
+            if full_name_raw:
+                student_data["full_name"] = full_name_raw
             if middle_initial:
                 student_data["middle_initial"] = middle_initial[0].upper()
             if "email" in row and row["email"]:
@@ -229,7 +234,7 @@ async def import_students_from_rows(rows: list[dict]) -> list:
     if not to_insert:
         raise HTTPException(
             status_code=400,
-            detail="Invalid CSV format. Need student_id, first_name, last_name columns.",
+            detail="Invalid data. Each student needs at least a student_id and a name.",
         )
 
     supabase = await get_async_supabase()

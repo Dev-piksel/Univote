@@ -47,7 +47,7 @@ class StudentManualCreate(BaseModel):
     last_name: Optional[str] = None
     middle_initial: Optional[str] = None
     full_name: Optional[str] = None
-    email: str
+    email: Optional[str] = None
     department_id: Optional[str] = None
     program: Optional[str] = None
     year_level: Optional[int] = None

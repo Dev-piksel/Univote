@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { admin as adminApi } from '$lib/api.js';
 	import { branding } from '$lib/stores/branding.js';
+	import { authSession } from '$lib/stores/auth.js';
 	import Notification from '$lib/components/Notification.svelte';
 	import ConfirmModal from '$lib/components/ConfirmModal.svelte';
 	import { formatFullName } from '$lib/utils.js';
@@ -18,11 +19,11 @@
 	let departments = $state([]);
 	let newStudent = $state({
 		student_id: '',
-		full_name: '',
-		program: '',
+		first_name: '',
+		last_name: '',
+		middle_initial: '',
 		year_level: '',
-		email: '',
-		department_id: ''
+		email: ''
 	});
 	let isAddingStudent = $state(false);
 	let editingStudent = $state(/** @type {any} */ (null));
@@ -42,6 +43,15 @@
 
 	onMount(async () => {
 		await Promise.all([loadStudents(), loadDepartments()]);
+	});
+
+	// Resolve the dept_admin's own department name for display in the form.
+	// super_admin has no fixed department so we show a dash.
+	const adminDeptName = $derived(() => {
+		const session = $authSession;
+		if (!session?.department_id) return '— (Super Admin)';
+		const match = departments.find(/** @param {any} d */ (d) => d.id === session.department_id);
+		return match?.name ?? 'Loading…';
 	});
 
 	/** @param {string | null} token */
@@ -91,18 +101,30 @@
 
 	async function handleAddStudent(/** @type {SubmitEvent} */ e) {
 		e.preventDefault();
-		if (!newStudent.student_id || !newStudent.full_name) {
-			notify('Student ID and Full Name are required.', 'error');
+		if (!newStudent.student_id || !newStudent.first_name || !newStudent.last_name) {
+			notify('Student ID, First Name, and Last Name are required.', 'error');
+			return;
+		}
+		if (!newStudent.email || !newStudent.email.trim()) {
+			notify('Email is required.', 'error');
 			return;
 		}
 		isAddingStudent = true;
 		try {
+			// Build payload explicitly — never use `|| undefined` for required
+			// backend fields, as JSON.stringify drops `undefined` values which
+			// causes Pydantic to raise a 422 validation error.
+			/** @type {Record<string, any>} */
 			const payload = {
-				...newStudent,
-				year_level: newStudent.year_level ? parseInt(newStudent.year_level) : undefined,
-				email: newStudent.email || undefined,
-				department_id: newStudent.department_id || undefined
+				student_id: newStudent.student_id.trim(),
+				first_name: newStudent.first_name.trim(),
+				last_name: newStudent.last_name.trim(),
+				email: newStudent.email.trim()
 			};
+			if (newStudent.middle_initial) payload.middle_initial = newStudent.middle_initial.trim().charAt(0).toUpperCase();
+			if (newStudent.year_level) payload.year_level = parseInt(newStudent.year_level);
+			// department_id is NOT sent — the backend auto-assigns the dept_admin's own department.
+
 			if (editingStudent) {
 				await adminApi.updateStudent(editingStudent.student_id, payload);
 				notify('Student updated', 'success');
@@ -110,7 +132,7 @@
 				await adminApi.addStudent(payload);
 				notify('Student added', 'success');
 			}
-			newStudent = { student_id: '', full_name: '', program: '', year_level: '', email: '', department_id: '' };
+			newStudent = { student_id: '', first_name: '', last_name: '', middle_initial: '', year_level: '', email: '' };
 			editingStudent = null;
 			showForm = false;
 			await loadStudents();
@@ -124,17 +146,19 @@
 	function startEdit(/** @type {any} */ student) {
 		editingStudent = student;
 		newStudent = {
-			...student,
+			student_id: student.student_id ?? '',
+			first_name: student.first_name ?? '',
+			last_name: student.last_name ?? '',
+			middle_initial: student.middle_initial ?? '',
 			year_level: student.year_level?.toString() ?? '',
-			email: student.email ?? '',
-			department_id: student.department_id ?? ''
+			email: student.email ?? ''
 		};
 		showForm = true;
 	}
 
 	function cancelEdit() {
 		editingStudent = null;
-		newStudent = { student_id: '', full_name: '', program: '', year_level: '', email: '', department_id: '' };
+		newStudent = { student_id: '', first_name: '', last_name: '', middle_initial: '', year_level: '', email: '' };
 		showForm = false;
 	}
 
@@ -273,22 +297,6 @@
 					/>
 				</div>
 				<div>
-					<label class="field-label" for="student_full_name">Full Name *</label>
-					<input
-						id="student_full_name"
-						class="input-base"
-						bind:value={newStudent.full_name}
-						placeholder="Juan Dela Cruz"
-					/>
-				</div>
-				<div>
-					<label class="field-label" for="student_program">Program</label>
-					<input
-						id="student_program"
-						class="input-base"
-						bind:value={newStudent.program}
-						placeholder="BSIT"
-					/>
 					<label class="field-label" for="student_email">Email *</label>
 					<input
 						id="student_email"
@@ -298,13 +306,36 @@
 						placeholder="student@example.com"
 						required
 					/>
-					<label class="field-label" for="student_department">Department</label>
-					<select id="student_department" class="input-base" bind:value={newStudent.department_id}>
-						<option value="">— Select Department —</option>
-						{#each departments as dept}
-							<option value={dept.id}>{dept.name}</option>
-						{/each}
-					</select>
+				</div>
+				<div>
+					<label class="field-label" for="student_first_name">First Name *</label>
+					<input
+						id="student_first_name"
+						class="input-base"
+						bind:value={newStudent.first_name}
+						placeholder="Juan"
+						required
+					/>
+				</div>
+				<div>
+					<label class="field-label" for="student_last_name">Last Name *</label>
+					<input
+						id="student_last_name"
+						class="input-base"
+						bind:value={newStudent.last_name}
+						placeholder="Dela Cruz"
+						required
+					/>
+				</div>
+				<div>
+					<label class="field-label" for="student_mi">Middle Initial</label>
+					<input
+						id="student_mi"
+						class="input-base"
+						bind:value={newStudent.middle_initial}
+						placeholder="M"
+						maxlength="1"
+					/>
 				</div>
 				<div>
 					<label class="field-label" for="student_year">Year Level</label>
@@ -314,6 +345,8 @@
 						class="input-base"
 						bind:value={newStudent.year_level}
 						placeholder="1"
+						min="1"
+						max="6"
 					/>
 				</div>
 				<div
