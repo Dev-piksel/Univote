@@ -15,7 +15,15 @@
 	let studentSearch = $state('');
 	let csvFile = $state(/** @type {File | null} */ (null));
 	let isUploading = $state(false);
-	let newStudent = $state({ student_id: '', full_name: '', program: '', year_level: '' });
+	let departments = $state([]);
+	let newStudent = $state({
+		student_id: '',
+		full_name: '',
+		program: '',
+		year_level: '',
+		email: '',
+		department_id: ''
+	});
 	let isAddingStudent = $state(false);
 	let editingStudent = $state(/** @type {any} */ (null));
 	let showForm = $state(false);
@@ -33,7 +41,7 @@
 	let notification = $state({ text: '', type: 'info' });
 
 	onMount(async () => {
-		await loadStudents();
+		await Promise.all([loadStudents(), loadDepartments()]);
 	});
 
 	/** @param {string | null} token */
@@ -48,6 +56,16 @@
 			notify('Failed to load students', 'error');
 		} finally {
 			isLoading = false;
+		}
+	}
+
+	async function loadDepartments() {
+		try {
+			const res = await adminApi.getDepartments();
+			departments = res ?? [];
+		} catch (err) {
+			console.error('Failed to load departments:', err);
+			notify('Failed to load departments', 'error');
 		}
 	}
 
@@ -81,7 +99,9 @@
 		try {
 			const payload = {
 				...newStudent,
-				year_level: newStudent.year_level ? parseInt(newStudent.year_level) : undefined
+				year_level: newStudent.year_level ? parseInt(newStudent.year_level) : undefined,
+				email: newStudent.email || undefined,
+				department_id: newStudent.department_id || undefined
 			};
 			if (editingStudent) {
 				await adminApi.updateStudent(editingStudent.student_id, payload);
@@ -90,7 +110,7 @@
 				await adminApi.addStudent(payload);
 				notify('Student added', 'success');
 			}
-			newStudent = { student_id: '', full_name: '', program: '', year_level: '' };
+			newStudent = { student_id: '', full_name: '', program: '', year_level: '', email: '', department_id: '' };
 			editingStudent = null;
 			showForm = false;
 			await loadStudents();
@@ -103,13 +123,18 @@
 
 	function startEdit(/** @type {any} */ student) {
 		editingStudent = student;
-		newStudent = { ...student, year_level: student.year_level?.toString() ?? '' };
+		newStudent = {
+			...student,
+			year_level: student.year_level?.toString() ?? '',
+			email: student.email ?? '',
+			department_id: student.department_id ?? ''
+		};
 		showForm = true;
 	}
 
 	function cancelEdit() {
 		editingStudent = null;
-		newStudent = { student_id: '', full_name: '', program: '', year_level: '' };
+		newStudent = { student_id: '', full_name: '', program: '', year_level: '', email: '', department_id: '' };
 		showForm = false;
 	}
 
@@ -264,6 +289,22 @@
 						bind:value={newStudent.program}
 						placeholder="BSIT"
 					/>
+					<label class="field-label" for="student_email">Email *</label>
+					<input
+						id="student_email"
+						type="email"
+						class="input-base"
+						bind:value={newStudent.email}
+						placeholder="student@example.com"
+						required
+					/>
+					<label class="field-label" for="student_department">Department</label>
+					<select id="student_department" class="input-base" bind:value={newStudent.department_id}>
+						<option value="">— Select Department —</option>
+						{#each departments as dept}
+							<option value={dept.id}>{dept.name}</option>
+						{/each}
+					</select>
 				</div>
 				<div>
 					<label class="field-label" for="student_year">Year Level</label>
@@ -351,6 +392,8 @@
 							<th>Student ID</th>
 							<th>Full Name</th>
 							<th>Program</th>
+							<th>Email</th>
+							<th>Department</th>
 							<th>Year</th>
 							<th style="text-align:right;">Actions</th>
 						</tr>
@@ -364,6 +407,8 @@
 								>
 								<td style="font-weight:500;color:var(--text-main);">{student.full_name || formatFullName(student)}</td>
 								<td style="color:var(--text-muted);">{student.program || '—'}</td>
+								<td style="color:var(--text-muted);">{student.email || '—'}</td>
+								<td style="color:var(--text-muted);">{student.department_id || '—'}</td>
 								<td>
 									{#if student.year_level}
 										<span class="pill pill-neutral">Yr {student.year_level}</span>
