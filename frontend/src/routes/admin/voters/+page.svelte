@@ -47,11 +47,11 @@
 
 	// Resolve the dept_admin's own department name for display in the form.
 	// super_admin has no fixed department so we show a dash.
-	const adminDeptName = $derived(() => {
+	const adminDeptName = $derived.by(() => {
 		const session = $authSession;
-		if (!session?.department_id) return '— (Super Admin)';
+		if (!session?.department_id) return '';
 		const match = departments.find(/** @param {any} d */ (d) => d.id === session.department_id);
-		return match?.name ?? 'Loading…';
+		return match?.name ?? '';
 	});
 
 	/** @param {string | null} token */
@@ -123,6 +123,8 @@
 			};
 			if (newStudent.middle_initial) payload.middle_initial = newStudent.middle_initial.trim().charAt(0).toUpperCase();
 			if (newStudent.year_level) payload.year_level = parseInt(newStudent.year_level);
+			// program = dept_admin's department name (auto-inherited, not editable)
+			if (adminDeptName) payload.program = adminDeptName;
 			// department_id is NOT sent — the backend auto-assigns the dept_admin's own department.
 
 			if (editingStudent) {
@@ -349,6 +351,21 @@
 						max="6"
 					/>
 				</div>
+				{#if adminDeptName}
+				<div style="grid-column:1/-1;">
+					<label class="field-label" for="student_program">
+						Program
+						<span style="font-weight:400;color:var(--text-subtle);font-size:0.7rem;">(auto-assigned from your department)</span>
+					</label>
+					<input
+						id="student_program"
+						class="input-base"
+						value={adminDeptName}
+						disabled
+						style="opacity:0.65;cursor:not-allowed;"
+					/>
+				</div>
+				{/if}
 				<div
 					style="grid-column:1/-1;display:flex;gap:0.5rem;justify-content:flex-end;margin-top:0.25rem;"
 				>
