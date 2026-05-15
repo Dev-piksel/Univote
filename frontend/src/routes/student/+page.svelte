@@ -239,7 +239,7 @@
 												<code class="text-[9px] font-mono text-[var(--brand-primary)] break-all leading-tight">{receiptData.receipt_id}</code>
 											</div>
 											<div class="flex justify-center">
-												<Button size="xs" color="alternative" class="rounded-xl font-black text-[9px] uppercase tracking-widest gap-2" onclick={() => window.print()}>
+												<Button size="xs" color="light" class="rounded-xl font-black text-[9px] uppercase tracking-widest gap-2" onclick={() => window.print()}>
 													<ClipboardCheckOutline size="xs" /> Generate Print Record
 												</Button>
 											</div>

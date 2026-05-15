@@ -40,7 +40,7 @@
 
 	function handleLogout() {
 		voterSession.logout();
-		goto('/student/validate');
+		goto('/student/validate', { replaceState: true });
 	}
 
 	const initials = $derived(
@@ -102,10 +102,11 @@
 				<div class="avatar-ring">
 					<Avatar 
 						src={student_info?.photo_url} 
-						initials={initials} 
 						size={collapsed ? "xs" : "md"}
-						class="rounded-2xl transition-all duration-500"
-					/>
+						class="rounded-full transition-all duration-500"
+					>
+						{initials}
+					</Avatar>
 				</div>
 			</div>
 			

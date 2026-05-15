@@ -56,7 +56,7 @@
 		}
 	}
 
-	const filteredLogs = $derived(() => {
+	const filteredLogs = $derived.by(() => {
 		let logs = [...auditLogs];
 
 		// Role filter
@@ -139,7 +139,7 @@
 	<div class="bento-card" style="overflow:hidden; border-radius: 16px;">
 		<div style="padding:0.75rem 1rem;border-bottom:1px solid var(--border-main);display:flex;align-items:center;justify-content:space-between;">
 			<p class="section-label">
-				Listing {filteredLogs().length} operational events
+				Listing {filteredLogs.length} operational events
 			</p>
 			<button onclick={() => loadLogs()} class="btn-icon" title="Refresh logs">
 				<svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg>
@@ -152,7 +152,7 @@
 					<div class="skeleton" style="height:3rem;"></div>
 				{/each}
 			</div>
-		{:else if filteredLogs().length === 0}
+		{:else if filteredLogs.length === 0}
 			<div class="empty-state">
 				{searchQuery || roleFilter !== 'all' ? 'No logs match your current filters.' : 'No data recorded.'}
 			</div>
@@ -173,7 +173,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						{#each filteredLogs() as log (log.id || Math.random())}
+						{#each filteredLogs as log (log.id || Math.random())}
 							<tr>
 								<td style="padding:1rem;font-size:0.8125rem;color:var(--text-subtle);white-space:nowrap;">
 									<span style="font-family:monospace;font-weight:600;color:var(--text-main);">

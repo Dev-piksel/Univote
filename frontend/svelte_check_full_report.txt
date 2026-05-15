@@ -1,0 +1,918 @@
+Loading svelte-check in workspace: /media/piksel/Piksel M.2/v1/univote/frontend
+Getting Svelte diagnostics...
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/api.js:144:21
+Error: JSDoc '@param' tag has name 'voting_pin', but there is no parameter with that name. 
+	 * @param {Array<{candidate_id: string, position: string}>} votes
+	 * @param {string} voting_pin
+	 * @param {string} session_passcode
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/api.js:389:20
+Error: Parameter 'candidate_id' implicitly has an 'any' type. 
+
+	updateCandidate: (candidate_id, payload) =>
+		request(`/api/adviser/candidates/${candidate_id}`, { ...json(payload), method: 'PUT' }),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/api.js:389:34
+Error: Parameter 'payload' implicitly has an 'any' type. 
+
+	updateCandidate: (candidate_id, payload) =>
+		request(`/api/adviser/candidates/${candidate_id}`, { ...json(payload), method: 'PUT' }),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/image-utils.js:1:37
+Error: Parameter 'dataUrl' implicitly has an 'any' type. 
+export async function compressImage(dataUrl, maxWidth = 300, maxHeight = 300, quality = 0.5) {
+    return new Promise((resolve, reject) => {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/utils.js:11:24
+Error: Property 'first_name' does not exist on type 'Object'. 
+    
+    const fn = student.first_name || '';
+    const ln = student.last_name || '';
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/utils.js:12:24
+Error: Property 'last_name' does not exist on type 'Object'. 
+    const fn = student.first_name || '';
+    const ln = student.last_name || '';
+    const mi = student.middle_initial || '';
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/utils.js:13:24
+Error: Property 'middle_initial' does not exist on type 'Object'. 
+    const ln = student.last_name || '';
+    const mi = student.middle_initial || '';
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/stores/branding.js:137:4
+Error: Object literal may only specify known properties, and 'showBgAnims' does not exist in type '{ appName: string; primaryColor: string; accentColor: string; logoUrl: string | null; }'. 
+			logoUrl: d.logo_url || null,
+			showBgAnims: d.show_bg_anims ?? DEFAULTS.showBgAnims,
+			theme: d.theme || DEFAULTS.theme
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/stores/data.js:25:18
+Error: Parameter 'data' implicitly has an 'any' type. 
+		subscribe,
+		setElections: (data) => update(s => ({ ...s, elections: data, lastUpdated: new Date() })),
+		setDepartments: (data) => update(s => ({ ...s, departments: data, lastUpdated: new Date() })),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/stores/data.js:25:65
+Error: Type 'Date' is not assignable to type 'null'. 
+		subscribe,
+		setElections: (data) => update(s => ({ ...s, elections: data, lastUpdated: new Date() })),
+		setDepartments: (data) => update(s => ({ ...s, departments: data, lastUpdated: new Date() })),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/stores/data.js:26:20
+Error: Parameter 'data' implicitly has an 'any' type. 
+		setElections: (data) => update(s => ({ ...s, elections: data, lastUpdated: new Date() })),
+		setDepartments: (data) => update(s => ({ ...s, departments: data, lastUpdated: new Date() })),
+		setAdvisers: (data) => update(s => ({ ...s, advisers: data, lastUpdated: new Date() })),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/stores/data.js:26:69
+Error: Type 'Date' is not assignable to type 'null'. 
+		setElections: (data) => update(s => ({ ...s, elections: data, lastUpdated: new Date() })),
+		setDepartments: (data) => update(s => ({ ...s, departments: data, lastUpdated: new Date() })),
+		setAdvisers: (data) => update(s => ({ ...s, advisers: data, lastUpdated: new Date() })),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/stores/data.js:27:17
+Error: Parameter 'data' implicitly has an 'any' type. 
+		setDepartments: (data) => update(s => ({ ...s, departments: data, lastUpdated: new Date() })),
+		setAdvisers: (data) => update(s => ({ ...s, advisers: data, lastUpdated: new Date() })),
+		setVoters: (data) => update(s => ({ ...s, voters: data, lastUpdated: new Date() })),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/stores/data.js:27:63
+Error: Type 'Date' is not assignable to type 'null'. 
+		setDepartments: (data) => update(s => ({ ...s, departments: data, lastUpdated: new Date() })),
+		setAdvisers: (data) => update(s => ({ ...s, advisers: data, lastUpdated: new Date() })),
+		setVoters: (data) => update(s => ({ ...s, voters: data, lastUpdated: new Date() })),
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/stores/data.js:28:15
+Error: Parameter 'data' implicitly has an 'any' type. 
+		setAdvisers: (data) => update(s => ({ ...s, advisers: data, lastUpdated: new Date() })),
+		setVoters: (data) => update(s => ({ ...s, voters: data, lastUpdated: new Date() })),
+		clear: () => set(initialState)
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/stores/data.js:28:59
+Error: Type 'Date' is not assignable to type 'null'. 
+		setAdvisers: (data) => update(s => ({ ...s, advisers: data, lastUpdated: new Date() })),
+		setVoters: (data) => update(s => ({ ...s, voters: data, lastUpdated: new Date() })),
+		clear: () => set(initialState)
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/Ripples.svelte:3:34
+Error: Property 'showBgAnims' does not exist on type '{ appName: string; primaryColor: string; accentColor: string; logoUrl: string | null; }'. (js)
+	import { branding } from '$lib/stores/branding.js';
+	const show = $derived($branding.showBgAnims);
+</script>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/Sidebar.svelte:143:31
+Error: Type '{ student: any; id?: string | undefined; student_id?: string | undefined; first_name?: string | undefined; last_name?: string | undefined; middle_initial?: string | undefined; full_name?: string | undefined; ... 4 more ...; elections?: { ...; }[] | undefined; }' is not assignable to type 'StudentSession'.
+  Types of property 'id' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'. (js)
+					await studentApi.uploadProfilePhoto(base64);
+					voterSession.update(s => ({ ...s, student: { ...s.student, photo_url: base64 } }));
+				} else {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/Sidebar.svelte:143:54
+Error: 's' is possibly 'null'. (js)
+					await studentApi.uploadProfilePhoto(base64);
+					voterSession.update(s => ({ ...s, student: { ...s.student, photo_url: base64 } }));
+				} else {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/Sidebar.svelte:143:56
+Error: Property 'student' does not exist on type 'StudentSession'. (js)
+					await studentApi.uploadProfilePhoto(base64);
+					voterSession.update(s => ({ ...s, student: { ...s.student, photo_url: base64 } }));
+				} else {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/Sidebar.svelte:146:30
+Error: Type '{ photo_url: string; access_token?: string | undefined; role?: string | undefined; full_name?: string | undefined; first_name?: string | undefined; last_name?: string | undefined; middle_initial?: string | undefined; email?: string | undefined; user_id?: string | undefined; id_number?: string | undefined; must_chang...' is not assignable to type 'AdminAdviserSession'.
+  Types of property 'access_token' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'. (js)
+					await auth.updateProfile({ photo_url: base64 });
+					authSession.update(s => ({ ...s, photo_url: base64 }));
+				}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/Sidebar.svelte:213:42
+Error: Type '(e: Event & { target: HTMLInputElement; }) => Promise<void>' is not assignable to type 'ChangeEventHandler<HTMLInputElement>'.
+  Types of parameters 'e' and 'event' are incompatible.
+    Type 'Event & { currentTarget: EventTarget & HTMLInputElement; }' is not assignable to type 'Event & { target: HTMLInputElement; }'.
+      Type 'Event & { currentTarget: EventTarget & HTMLInputElement; }' is not assignable to type '{ target: HTMLInputElement; }'.
+        Types of property 'target' are incompatible.
+          Type 'EventTarget | null' is not assignable to type 'HTMLInputElement'.
+            Type 'null' is not assignable to type 'HTMLInputElement'. (js)
+				<label class="relative cursor-pointer shrink-0" title="Click to upload photo">
+					<input type="file" accept="image/*" onchange={handlePhotoUpload} hidden disabled={isUploading} />
+					<div class="relative group/avatar">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/Sidebar.svelte:217:8
+Error: Object literal may only specify known properties, and '"rounded"' does not exist in type 'AvatarProps'. (js)
+							src={student_info?.photo_url} 
+							rounded 
+							size={collapsed ? "sm" : "md"}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/Sidebar.svelte:227:26
+Error: Type '"white"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+						<div class="absolute inset-0 bg-black/60 rounded-full flex items-center justify-center backdrop-blur-sm">
+							<Spinner size="4" color="white" />
+						</div>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/Sidebar.svelte:237:56
+Error: Property 'showBgAnims' does not exist on type '{ appName: string; primaryColor: string; accentColor: string; logoUrl: string | null; }'. (js)
+						<div class="flex items-center gap-2 mt-1.5">
+							<div class="w-1.5 h-1.5 rounded-full {$branding.showBgAnims ? 'animate-pulse' : ''} shadow-[0_0_8px_var(--brand-glow)]" style="background: {roleBadge[role]?.color}"></div>
+							<span class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-900/40 dark:text-white/40">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/Sidebar.svelte:354:41
+Error: Object literal may only specify known properties, and '"rounded"' does not exist in type 'AvatarProps'. (js)
+		</div>
+		<Avatar src={student_info?.photo_url} rounded size="sm" border class="border-white/10 shadow-2xl ring-1 ring-white/5">
+			{initials}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/StudentSidebar.svelte:105:7
+Error: Object literal may only specify known properties, and '"initials"' does not exist in type 'AvatarProps'. (js)
+						src={student_info?.photo_url} 
+						initials={initials} 
+						size={collapsed ? "xs" : "md"}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/StudentTopbar.svelte:30:5
+Error: Object literal may only specify known properties, and '"rounded"' does not exist in type 'AvatarProps'. (js)
+				class="topbar-avatar"
+				rounded
+			/>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/lib/components/StudentTopbar.svelte:33:53
+Error: Object literal may only specify known properties, and '"rounded"' does not exist in type 'AvatarProps'. (js)
+		{:else}
+			<Avatar size="sm" class="topbar-avatar-fallback" rounded>{initials}</Avatar>
+		{/if}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/+layout.svelte:25:4
+Error: Expected 1 arguments, but got 24. (js)
+			'/admin',
+			'/admin/elections',
+			'/admin/voters',
+			'/admin/advisers',
+			'/admin/audit',
+			'/admin/departments',
+			'/admin/dept-admins',
+			'/admin/results',
+			'/admin/settings',
+			'/admin/profile',
+			'/adviser',
+			'/adviser/candidates',
+			'/adviser/partylists',
+			'/adviser/results',
+			'/adviser/audit',
+			'/adviser/change-password',
+			'/adviser/profile',
+			'/student',
+			'/student/ballot',
+			'/student/results',
+			'/student/profile',
+			'/student/validate',
+			'/login',
+			'/super-admin/setup'
+		);
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/+page.svelte:27:50
+Error: Property 'showBgAnims' does not exist on type '{ appName: string; primaryColor: string; accentColor: string; logoUrl: string | null; }'. (js)
+<!-- Full-viewport shell — no scroll on desktop -->
+<div class="shell" style="background: {$branding.showBgAnims ? '' : 'color-mix(in srgb, var(--landing-bg-start) 85%, white)'};">
+	<!-- Background blobs -->
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/+page.svelte:29:28
+Error: Property 'showBgAnims' does not exist on type '{ appName: string; primaryColor: string; accentColor: string; logoUrl: string | null; }'. (js)
+	<!-- Background blobs -->
+	<div class="bg {$branding.showBgAnims ? 'animate' : ''}" aria-hidden="true">
+		{#if $branding.showBgAnims}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/+page.svelte:30:18
+Error: Property 'showBgAnims' does not exist on type '{ appName: string; primaryColor: string; accentColor: string; logoUrl: string | null; }'. (js)
+	<div class="bg {$branding.showBgAnims ? 'animate' : ''}" aria-hidden="true">
+		{#if $branding.showBgAnims}
+			<div class="blob b1"></div>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/+layout.svelte:38:19
+Error: Property 'showBgAnims' does not exist on type '{ appName: string; primaryColor: string; accentColor: string; logoUrl: string | null; }'. (js)
+			<!-- Optimized Liquid Blobs -->
+			{#if $branding.showBgAnims}
+				<div class="absolute top-[-15%] left-[-15%] w-[80%] h-[80%] rounded-full blur-[80px] opacity-15 animate-blob" style="background-color: var(--brand-primary); will-change: transform, border-radius;"></div>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/+layout.svelte:56:13
+Error: Type 'string | undefined' is not assignable to type '"student" | "super_admin" | "dept_admin" | "adviser"'.
+  Type 'undefined' is not assignable to type '"student" | "super_admin" | "dept_admin" | "adviser"'. (js)
+		<div class="relative z-10">
+			<Sidebar role={$authSession?.role} student_info={$authSession}>
+				<div
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/audit/+page.svelte:50:22
+Error: Parameter 'key' implicitly has an 'any' type. (js)
+
+	function toggleSort(key) {
+		if (sortKey === key) {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:33:6
+Error: Variable 'departments' implicitly has an 'any[]' type. (js)
+
+	let departments = $state([]);
+	let isLoading = $state(true);
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:68:26
+Error: Type 'string' is not assignable to type '"error" | "success" | "info"'. (js)
+	function notify(text = '', type = 'info') {
+		notification = { text, type };
+		setTimeout(() => (notification = { text: '', type: 'info' }), 3500);
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:72:30
+Error: Parameter 'e' implicitly has an 'any' type. (js)
+
+	async function handleSubmit(e) {
+		e.preventDefault();
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:78:49
+Error: Property 'id' does not exist on type 'never'. (js)
+			if (editingDept) {
+				await adminApi.updateDepartment(editingDept.id, newDept);
+				notify('Department updated', 'success');
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:87:11
+Error: 'err' is of type 'unknown'. (js)
+		} catch (err) {
+			notify(err.message ?? 'Failed to save department', 'error');
+		} finally {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:93:21
+Error: Parameter 'dept' implicitly has an 'any' type. (js)
+
+	function startEdit(dept) {
+		editingDept = dept;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:105:24
+Error: Parameter 'dept' implicitly has an 'any' type. (js)
+
+	function promptDelete(dept) {
+		confirmState = {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:120:13
+Error: 'err' is of type 'unknown'. (js)
+					departments = originalDepts;
+					notify(err.message ?? 'Failed to delete department', 'error');
+				} finally {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:142:12
+Error: Type '"none"' is not assignable to type '"light" | "dark" | "primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | ... 5 more ... | undefined'. (js)
+		<div class="flex items-center gap-3">
+			<Button color="none" class="bg-indigo-50/50 dark:bg-white/5 border border-indigo-200 dark:border-white/10 text-indigo-900/80 dark:text-white/60 hover:text-indigo-950 dark:text-white hover:bg-indigo-100/50 dark:bg-white/10 px-4 py-2 rounded-xl transition-all font-bold text-[10px] tracking-widest uppercase" onclick={loadDepartments}>
+				<RefreshOutline size="xs" class="mr-2" />
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:161:10
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+		<div transition:slide={{ duration: 400 }}>
+			<Card size="none" class="w-full max-w-full bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 p-8 rounded-[2rem] border relative overflow-hidden shadow-2xl">
+				<div class="absolute top-0 right-0 p-6 opacity-5">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:234:27
+Error: Type '"current"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+							{#if isSaving}
+								<Spinner size="4" color="current" />
+								PROCESS...
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:248:8
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+	<!-- Data Registry Table -->
+	<Card size="none" class="w-full max-w-full bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 rounded-[2rem] border overflow-hidden shadow-2xl relative">
+		<header class="p-8 border-b border-indigo-100 dark:border-white/5 flex items-center justify-between bg-indigo-50/30 dark:bg-white/[0.02]">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/departments/+page.svelte:259:13
+Error: Type '"none"' is not assignable to type '"light" | "dark" | "primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | ... 5 more ... | undefined'. (js)
+				</div>
+				<Button color="none" class="p-2 bg-indigo-50/50 dark:bg-white/5 border border-indigo-200 dark:border-white/10 text-indigo-900/60 dark:text-white/40 hover:text-indigo-950 dark:text-white rounded-xl transition-all">
+					<FilterOutline size="xs" />
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/dept-admins/+page.svelte:79:49
+Error: Argument of type 'string | null' is not assignable to parameter of type 'null | undefined'.
+  Type 'string' is not assignable to type 'null | undefined'. (js)
+		try {
+			const res = await adminApi.getDeptAdmins(15, token);
+			deptAdmins = res.data ?? [];
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/dept-admins/+page.svelte:270:9
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+	<div class="dash flex items-center justify-center min-h-[60vh]">
+		<Card size="none" class="w-full max-w-full bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 p-12 rounded-[2.5rem] text-center border max-w-md">
+			<div class="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 mx-auto mb-6">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/dept-admins/+page.svelte:294:12
+Error: Type '"none"' is not assignable to type '"light" | "dark" | "primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | ... 5 more ... | undefined'. (js)
+			</div>
+			<Button color="none" class="bg-indigo-50/50 dark:bg-white/5 border border-indigo-200 dark:border-white/10 text-indigo-900/80 dark:text-white/60 hover:text-indigo-950 dark:text-white hover:bg-indigo-100/50 dark:bg-white/10 px-4 py-2 rounded-xl transition-all font-bold text-[10px] tracking-widest uppercase shadow-xl" onclick={() => loadDeptAdmins()}>
+				<RefreshOutline size="xs" class="mr-2" />
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/dept-admins/+page.svelte:298:12
+Error: Type '"none"' is not assignable to type '"light" | "dark" | "primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | ... 5 more ... | undefined'. (js)
+			</Button>
+			<Button color="none" class="bg-indigo-50/50 dark:bg-white/5 border border-indigo-200 dark:border-white/10 text-indigo-900/80 dark:text-white/60 hover:text-indigo-950 dark:text-white hover:bg-indigo-100/50 dark:bg-white/10 px-4 py-2 rounded-xl transition-all font-bold text-[10px] tracking-widest uppercase shadow-xl" onclick={() => { showImport = !showImport; resetForm(); }}>
+				<CloudArrowUpOutline size="xs" class="mr-2" />
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/dept-admins/+page.svelte:317:10
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+		<div transition:slide={{ duration: 400 }}>
+			<Card size="none" class="w-full max-w-full bg-indigo-500/5 backdrop-blur-3xl border-indigo-500/10 p-8 rounded-[2rem] border relative overflow-hidden shadow-2xl">
+				<div class="absolute top-0 right-0 p-6 opacity-5 text-indigo-400">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/dept-admins/+page.svelte:334:27
+Error: Type '"current"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+							{#if isImporting}
+								<Spinner size="4" color="current" />
+								INGESTING...
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/dept-admins/+page.svelte:356:16
+Error: Type '"none"' is not assignable to type '"light" | "dark" | "primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | ... 5 more ... | undefined'. (js)
+							</Badge>
+							<Button color="none" class="text-[10px] font-black text-primary-400 hover:text-primary-300 uppercase tracking-widest" onclick={() => {
+								const list = importResults.map(r => `Name: ${r.full_name}\nID: ${r.employee_id}\nPassword: ${r.default_password}\nDept: ${r.department}`).join('\n\n---\n\n');
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/dept-admins/+page.svelte:395:10
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+		<div transition:slide={{ duration: 400 }}>
+			<Card size="none" class="w-full max-w-full bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 p-10 rounded-[2.5rem] border relative overflow-hidden shadow-2xl">
+				<div class="absolute top-0 right-0 p-8 opacity-5">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/dept-admins/+page.svelte:517:27
+Error: Type '"current"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+							{#if isSaving}
+								<Spinner size="4" color="current" />
+								SYNCING...
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/dept-admins/+page.svelte:531:8
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+	<!-- Data Registry Table -->
+	<Card size="none" class="w-full max-w-full bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 rounded-[2.5rem] border overflow-hidden shadow-2xl relative">
+		<header class="p-8 border-b border-indigo-100 dark:border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 bg-indigo-50/30 dark:bg-white/[0.02]">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/dept-admins/+page.svelte:569:145
+Error: Object literal may only specify known properties, and '"rounded"' does not exist in type 'AvatarProps'. (js)
+									<div class="flex items-center gap-4">
+										<Avatar src={admin.photo_url} alt={admin.full_name} border class="bg-primary-500/10 border-indigo-200 dark:border-white/10" size="sm" rounded />
+										<div class="flex flex-col">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/profile/+page.svelte:25:35
+Error: Parameter 'e' implicitly has an 'any' type. (js)
+
+	async function handlePhotoUpload(e) {
+		const file = e.target.files[0];
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/profile/+page.svelte:38:20
+Error: 'event.target' is possibly 'null'. (js)
+			reader.onload = async (event) => {
+				const base64 = event.target.result;
+				const res = await auth.updateProfile({ photo_url: base64 });
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/profile/+page.svelte:41:38
+Error: Type 'string | ArrayBuffer | null' is not assignable to type 'string | undefined'.
+  Type 'null' is not assignable to type 'string | undefined'. (js)
+				// Update local session store
+				authSession.update(s => ({ ...s, photo_url: base64 }));
+				notify('Profile photo updated!');
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/profile/+page.svelte:46:11
+Error: 'err' is of type 'unknown'. (js)
+		} catch (err) {
+			notify(err.message, 'error');
+		} finally {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/profile/+page.svelte:55:13
+Error: Type '{ text: string; type: string; }' is not assignable to type '$$ComponentProps'.
+  Types of property 'type' are incompatible.
+    Type 'string' is not assignable to type '"error" | "success" | "info" | "warning" | undefined'. (js)
+
+<Notification {...notification} />
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/profile/+page.svelte:122:37
+Error: Property 'department_name' does not exist on type 'AdminAdviserSession'. (js)
+						<span class="field-label">Jurisdiction</span>
+						<p class="info-val">{session?.department_name || 'System Level (Global)'}</p>
+					</div>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/settings/+page.svelte:13:37
+Error: Property 'showBgAnims' does not exist on type '{ appName: string; primaryColor: string; accentColor: string; logoUrl: string | null; }'. (js)
+	let logoPreview = $state($branding.logoUrl || null);
+	let showBgAnims = $state($branding.showBgAnims);
+	let appTheme = $state($branding.theme || 'light');
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/settings/+page.svelte:14:34
+Error: Property 'theme' does not exist on type '{ appName: string; primaryColor: string; accentColor: string; logoUrl: string | null; }'. (js)
+	let showBgAnims = $state($branding.showBgAnims);
+	let appTheme = $state($branding.theme || 'light');
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/settings/+page.svelte:23:6
+Error: Variable 'toastTimer' implicitly has type 'any' in some locations where its type cannot be determined. (js)
+	let toast = $state({ msg: '', type: 'success', visible: false });
+	let toastTimer;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/settings/+page.svelte:25:21
+Error: Parameter 'msg' implicitly has an 'any' type. (js)
+
+	function showToast(msg, type = 'success') {
+		if (toastTimer) clearTimeout(toastTimer);
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/settings/+page.svelte:26:7
+Error: Variable 'toastTimer' implicitly has an 'any' type. (js)
+	function showToast(msg, type = 'success') {
+		if (toastTimer) clearTimeout(toastTimer);
+		toast.msg = msg;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/settings/+page.svelte:81:5
+Error: Object literal may only specify known properties, and 'show_bg_anims' does not exist in type '{ app_name?: string | undefined; primary_color?: string | undefined; accent_color?: string | undefined; logo_url?: string | undefined; }'. (js)
+				logo_url: logoPreview || undefined,
+				show_bg_anims: showBgAnims,
+				theme: appTheme
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/settings/+page.svelte:91:5
+Error: Object literal may only specify known properties, and 'showBgAnims' does not exist in type '{ appName: string; primaryColor: string; accentColor: string; logoUrl: string | null; }'. (js)
+				logoUrl: logoPreview || null,
+				showBgAnims,
+				theme: appTheme
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/settings/+page.svelte:118:4
+Error: Object literal may only specify known properties, and 'showBgAnims' does not exist in type '{ appName: string; primaryColor: string; accentColor: string; logoUrl: string | null; }'. (js)
+			logoUrl: null,
+			showBgAnims: true,
+			theme: 'light'
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/voters/+page.svelte:19:6
+Error: Variable 'departments' implicitly has an 'any[]' type. (js)
+	let isUploading = $state(false);
+	let departments = $state([]);
+	let newStudent = $state({
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/voters/+page.svelte:52:17
+Error: Property 'department_id' does not exist on type 'AdminAdviserSession'. (js)
+		const session = $authSession;
+		if (!session?.department_id) return '';
+		const match = departments.find(/** @param {any} d */ (d) => d.id === session.department_id);
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/voters/+page.svelte:53:80
+Error: Property 'department_id' does not exist on type 'AdminAdviserSession'. (js)
+		if (!session?.department_id) return '';
+		const match = departments.find(/** @param {any} d */ (d) => d.id === session.department_id);
+		return match?.name ?? '';
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/admin/voters/+page.svelte:134:31
+Error: Argument of type 'Record<string, any>' is not assignable to parameter of type '{ student_id: string; full_name: string; program?: string | undefined; year_level?: number | undefined; }'.
+  Type 'Record<string, any>' is missing the following properties from type '{ student_id: string; full_name: string; program?: string | undefined; year_level?: number | undefined; }': student_id, full_name (js)
+			} else {
+				await adminApi.addStudent(payload);
+				notify('Student added', 'success');
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/+layout.svelte:24:10
+Error: Cannot find name 'page'. (js)
+				if (session.must_change_password) {
+					if (page.url.pathname !== '/adviser/change-password') {
+						goto('/adviser/change-password');
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/+layout.svelte:44:7
+Error: '$authSession' is possibly 'null'. (js)
+{#if !isChecking}
+	{#if $authSession.must_change_password}
+		<main class="flex min-h-screen items-center justify-center p-6">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/+layout.svelte:53:20
+Error: Property 'showBgAnims' does not exist on type '{ appName: string; primaryColor: string; accentColor: string; logoUrl: string | null; }'. (js)
+				<!-- Optimized Liquid Blobs -->
+				{#if $branding.showBgAnims}
+					<div class="absolute top-[-15%] left-[-15%] w-[80%] h-[80%] rounded-full blur-[80px] opacity-15 animate-blob" style="background-color: var(--brand-primary); will-change: transform, border-radius;"></div>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/candidates/+page.svelte:98:38
+Error: Argument of type 'File | undefined' is not assignable to parameter of type 'File'.
+  Type 'undefined' is not assignable to type 'File'. (js)
+		try {
+			const base64 = await fileToBase64(file);
+			// Optimal balance: 400px is enough for thumbnails, keeps file size ~30KB
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/candidates/+page.svelte:289:39
+Error: Parameter 'id' implicitly has an 'any' type. (js)
+
+	async function handleDeleteCandidate(id) {
+		if (!confirm('Are you sure you want to delete this candidate?')) return;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/candidates/+page.svelte:633:44
+Error: Property 'src' does not exist on type 'EventTarget & Element'. (js)
+									style="width:64px;height:64px;border-radius:12px;object-fit:cover;border:2px solid var(--border-main);"
+									onerror={(e) => { e.currentTarget.src = 'https://ui-avatars.com/api/?name=' + formatFullName(editingCandidate.students); }}
+								/>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/partylists/+page.svelte:110:7
+Error: Cannot find name 'loadData'. (js)
+						toast.success('Logo uploaded!');
+						loadData();
+					})
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/profile/+page.svelte:36:38
+Error: Parameter 'e' implicitly has an 'any' type. (js)
+
+	async function handleChangePassword(e) {
+		e.preventDefault();
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/profile/+page.svelte:49:11
+Error: 'err' is of type 'unknown'. (js)
+		} catch (err) {
+			notify(err.message || 'Failed to change password', 'error');
+		} finally {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/profile/+page.svelte:55:18
+Error: Parameter 'text' implicitly has an 'any' type. (js)
+
+	function notify(text, type = 'info') {
+		notification = { text, type };
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/profile/+page.svelte:79:9
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+		<!-- Profile Identity Card -->
+		<Card size="none" class="w-full max-w-full bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 p-10 rounded-[2rem] text-center border relative overflow-hidden">
+			<div class="absolute top-0 right-0 p-4 opacity-10">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/profile/+page.svelte:109:95
+Error: Property 'department_name' does not exist on type 'AdminAdviserSession'. (js)
+					<span class="text-[9px] font-black text-indigo-900/40 dark:text-white/20 uppercase tracking-widest">Departmental Link</span>
+					<span class="text-sm font-bold text-indigo-950 dark:text-white tracking-tight">{session?.department_name || 'Assigned Department'}</span>
+				</div>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/profile/+page.svelte:115:9
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+		<!-- Security Management -->
+		<Card size="none" class="w-full max-w-full bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 p-10 rounded-[2rem] border overflow-hidden relative">
+			<div class="absolute top-0 right-0 p-4 opacity-5">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/profile/+page.svelte:148:26
+Error: Type '"current"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+						{#if isChanging}
+							<Spinner size="4" color="current" />
+							SYNCING...
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/adviser/profile/+page.svelte:161:40
+Error: Type 'string' is not assignable to type '"error" | "success" | "info" | "warning" | undefined'. (js)
+
+<Notification text={notification.text} type={notification.type} />
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/login/+page.svelte:63:156
+Error: Property 'showBgAnims' does not exist on type '{ appName: string; primaryColor: string; accentColor: string; logoUrl: string | null; }'. (js)
+
+<div class="min-h-screen flex items-center justify-center p-6 overflow-hidden relative transition-colors duration-700" style="background-color: {$branding.showBgAnims ? '#050a1b' : 'color-mix(in srgb, #050a1b 92%, white)'}">
+	<!-- Decorative background elements (Global Ripples) -->
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/login/+page.svelte:67:8
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+
+	<Card size="none" class="w-full max-w-5xl bg-white/[0.03] backdrop-blur-3xl border border-white/10 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)] rounded-[2.5rem] overflow-hidden grid grid-cols-1 lg:grid-cols-[42%_1fr] min-h-[600px] relative z-10">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/login/+page.svelte:221:26
+Error: Type '"white"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+						{#if isSubmitting}
+							<Spinner size="4" color="white" />
+							<span class="text-white drop-shadow-sm">Validating Access...</span>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/register/+page.svelte:54:40
+Error: Argument of type '{ department?: string | undefined; id: string; password: string; first_name: string; last_name: string; middle_initial: string | undefined; role: "dept_admin" | "adviser"; }' is not assignable to parameter of type '{ id: string; password: string; full_name: string; role: string; department?: string | undefined; }'.
+  Property 'full_name' is missing in type '{ department?: string | undefined; id: string; password: string; first_name: string; last_name: string; middle_initial: string | undefined; role: "dept_admin" | "adviser"; }' but required in type '{ id: string; password: string; full_name: string; role: string; department?: string | undefined; }'. (js)
+			};
+			const data = await authApi.register(payload);
+			successMessage = data.message;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/register/+page.svelte:70:8
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+
+	<Card size="none" class="w-full max-w-5xl bg-white/95 dark:bg-gray-900/95 border-indigo-300 dark:border-white/20 shadow-2xl rounded-[2.5rem] overflow-hidden grid lg:grid-cols-[40%_1fr] min-h-[650px] relative z-10">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/register/+page.svelte:194:26
+Error: Type '"current"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+						{#if isSubmitting}
+							<Spinner size="4" color="current" />
+							ESTABLISHING NODE...
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/register/+page.svelte:203:22
+Error: Object literal may only specify known properties, and '"labelClass"' does not exist in type 'HrProps'. (js)
+
+				<Hr class="my-8" labelClass="bg-white dark:bg-gray-900 px-4 text-[10px] font-black tracking-[0.3em] text-gray-300 dark:text-gray-600 uppercase">OR</Hr>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/+layout.svelte:34:82
+Error: Property 'showBgAnims' does not exist on type '{ appName: string; primaryColor: string; accentColor: string; logoUrl: string | null; }'. (js)
+	<!-- Fixed Immersive Background Layer -->
+	<div class="bg-fixed-layer overflow-hidden" style="background-color: {$branding.showBgAnims ? 'var(--bg-main)' : 'color-mix(in srgb, var(--bg-main) 94%, white)'}">
+		<!-- Optimized Flowing Waves -->
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/+layout.svelte:36:18
+Error: Property 'showBgAnims' does not exist on type '{ appName: string; primaryColor: string; accentColor: string; logoUrl: string | null; }'. (js)
+		<!-- Optimized Flowing Waves -->
+		{#if $branding.showBgAnims}
+			<!-- Top Left Blob (Primary) -->
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/+layout.svelte:54:19
+Error: Type 'StudentSession | null' is not assignable to type 'never'.
+  Type 'null' is not assignable to type 'never'. (js)
+	{#if showNav}
+		<StudentSidebar student_info={$voterSession} />
+		<StudentTopbar {initials} />
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/+page.svelte:34:42
+Error: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'. (js)
+	let voterName = $derived($voterSession?.full_name || 'Student');
+	let program = $derived(formatDepartment($voterSession?.program) || 'General Program');
+	let yearLevel = $derived($voterSession?.year_level ? `${$voterSession.year_level}th Year` : 'Academic Level');
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/+page.svelte:53:22
+Error: JSDoc '@param' tag has name 'name', but there is no parameter with that name. (js)
+
+	/** @param {string} name */
+	function getGreetingText() {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/+page.svelte:221:233
+Error: Cannot find name 'goto'. (js)
+									{/if}
+									<button class="text-[var(--text-subtle)] hover:text-[var(--text-main)] font-black text-[9px] uppercase tracking-widest flex items-center gap-1 p-0 transition-colors bg-transparent border-none cursor-pointer" onclick={() => goto(`/student/results?election=${election.id}`)}>
+										Results <ChartPieOutline size="xs" />
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:69:27
+Error: Parameter 'position' implicitly has an 'any' type. (js)
+
+	function selectCandidate(position, candidateId) {
+		selectedVotes[position] = candidateId;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:69:37
+Error: Parameter 'candidateId' implicitly has an 'any' type. (js)
+
+	function selectCandidate(position, candidateId) {
+		selectedVotes[position] = candidateId;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:131:18
+Error: Parameter 'c' implicitly has an 'any' type. (js)
+			const grouped = {};
+			data.forEach((c) => {
+				if (!grouped[c.position]) grouped[c.position] = [];
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:132:10
+Error: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{}'. (js)
+			data.forEach((c) => {
+				if (!grouped[c.position]) grouped[c.position] = [];
+				grouped[c.position].push({
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:132:31
+Error: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{}'. (js)
+			data.forEach((c) => {
+				if (!grouped[c.position]) grouped[c.position] = [];
+				grouped[c.position].push({
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:133:5
+Error: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{}'. (js)
+				if (!grouped[c.position]) grouped[c.position] = [];
+				grouped[c.position].push({
+					id: c.id,
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:139:4
+Error: Type '{}' is not assignable to type 'Record<string, any[]>'.
+  Index signature for type 'string' is missing in type '{}'. (js)
+			});
+			candidatesGrouped = grouped;
+			const initialVotes = {};
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:142:5
+Error: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type '{}'.
+  No index signature with a parameter of type 'string' was found on type '{}'. (js)
+			Object.keys(grouped).forEach((pos) => { 
+				initialVotes[pos] = null; 
+			});
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:144:4
+Error: Type '{}' is not assignable to type 'Record<string, string | null>'.
+  Index signature for type 'string' is missing in type '{}'. (js)
+			});
+			selectedVotes = initialVotes;
+		}).catch((err) => {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:162:19
+Error: 'err' is of type 'unknown'. (js)
+		} catch (err) { 
+			errorMessage = err.message || 'INVALID PIN'; 
+		} finally {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:187:5
+Error: Argument of type '{ candidate_id: string | null; position: string; }[]' is not assignable to parameter of type '{ candidate_id: string; position: string; }[]'.
+  Type '{ candidate_id: string | null; position: string; }' is not assignable to type '{ candidate_id: string; position: string; }'.
+    Types of property 'candidate_id' are incompatible.
+      Type 'string | null' is not assignable to type 'string'.
+        Type 'null' is not assignable to type 'string'. (js)
+				adviserId, 
+				votes, 
+				sessionPasscode.trim()
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:201:19
+Error: 'err' is of type 'unknown'. (js)
+		} catch (err) { 
+			errorMessage = err.message || 'Voting failure. Please retry.'; 
+		} finally {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:257:6
+Error: Cannot find name 'Card'. (js)
+			<div class="flex-1 flex items-center justify-center" in:scale={{ duration: 800, start: 0.95 }}>
+				<Card size="xl" class="w-full max-w-xl bg-[var(--bg-card)]/40 backdrop-blur-3xl border border-[var(--border-main)] p-16 rounded-[4rem] text-center shadow-2xl relative overflow-hidden border-t-8 border-t-emerald-500">
+					<div class="absolute -top-24 -right-24 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl"></div>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:291:7
+Error: Cannot find name 'Card'. (js)
+					</div>
+				</Card>
+			</div>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:331:27
+Error: 'e.target' is possibly 'null'. (js)
+													oninput={(e) => {
+														const val = e.target.value.replace(/[^0-9]/g, '');
+														if (val) {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:331:36
+Error: Property 'value' does not exist on type 'EventTarget'. (js)
+													oninput={(e) => {
+														const val = e.target.value.replace(/[^0-9]/g, '');
+														if (val) {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:337:27
+Error: 'e.target' is possibly 'null'. (js)
+															adviserPin = pinArr.join('');
+															if (i < 5) e.target.closest('.pin-grid').querySelectorAll('input')[i + 1].focus();
+														}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:337:36
+Error: Property 'closest' does not exist on type 'EventTarget'. (js)
+															adviserPin = pinArr.join('');
+															if (i < 5) e.target.closest('.pin-grid').querySelectorAll('input')[i + 1].focus();
+														}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:342:16
+Error: 'e.target' is possibly 'null'. (js)
+														if (e.key === 'Backspace' && !adviserPin[i] && i > 0) {
+															e.target.closest('.pin-grid').querySelectorAll('input')[i - 1].focus();
+														} else if (e.key === 'Backspace') {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:342:25
+Error: Property 'closest' does not exist on type 'EventTarget'. (js)
+														if (e.key === 'Backspace' && !adviserPin[i] && i > 0) {
+															e.target.closest('.pin-grid').querySelectorAll('input')[i - 1].focus();
+														} else if (e.key === 'Backspace') {
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:376:31
+Error: Type '"white"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+											{#if isVerifyingPasscode}
+												<Spinner size="4" color="white" />
+												<span>Authenticating...</span>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:476:48
+Error: Property 'style' does not exist on type 'EventTarget & Element'. (js)
+													class="w-full h-full object-cover {selectedVotes[position] === cand.id ? '' : 'grayscale-[0.4]'} transition-all duration-500"
+													onerror={(e) => { e.currentTarget.style.display='none'; e.currentTarget.nextElementSibling.style.display='flex'; }}
+												/>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:476:70
+Error: 'e.currentTarget.nextElementSibling' is possibly 'null'. (js)
+													class="w-full h-full object-cover {selectedVotes[position] === cand.id ? '' : 'grayscale-[0.4]'} transition-all duration-500"
+													onerror={(e) => { e.currentTarget.style.display='none'; e.currentTarget.nextElementSibling.style.display='flex'; }}
+												/>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:476:105
+Error: Property 'style' does not exist on type 'Element'. (js)
+													class="w-full h-full object-cover {selectedVotes[position] === cand.id ? '' : 'grayscale-[0.4]'} transition-all duration-500"
+													onerror={(e) => { e.currentTarget.style.display='none'; e.currentTarget.nextElementSibling.style.display='flex'; }}
+												/>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:526:6
+Error: Cannot find name 'Card'. (js)
+			<div in:scale={{ duration: 600, start: 0.9 }} class="w-full max-w-2xl">
+				<Card size="none" class="w-full bg-[var(--bg-card)]/50 border-2 border-[var(--border-main)] p-6 md:p-16 rounded-[2rem] md:rounded-[5rem] shadow-[0_100px_150px_-30px_rgba(0,0,0,0.7)] relative overflow-hidden group">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:587:19
+Error: Type '"3"' is not assignable to type '"12" | "4" | "5" | "6" | "8" | "10" | "16" | undefined'. (js)
+								{#if isSubmitting}
+									<Spinner size="3" color="current" /> Processing...
+								{:else}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:587:28
+Error: Type '"current"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+								{#if isSubmitting}
+									<Spinner size="3" color="current" /> Processing...
+								{:else}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/ballot/+page.svelte:594:7
+Error: Cannot find name 'Card'. (js)
+					</div>
+				</Card>
+			</div>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/profile/+page.svelte:36:5
+Error: Property 'email' is missing in type '{ id: string; student_id: string; first_name: string; last_name: string; middle_initial?: string | undefined; full_name: string; access_token: string; program: string; year_level: number; photo_url?: string | undefined; elections?: { ...; }[] | undefined; }' but required in type '{ full_name: string; student_id: string; photo_url: string; email: string; program: string; year_level: string; }'. (js)
+				// Fallback to session data if API fails
+				student = { ...$voterSession };
+			}
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/profile/+page.svelte:43:35
+Error: Parameter 'e' implicitly has an 'any' type. (js)
+
+	async function handlePhotoUpload(e) {
+		const file = e.target.files[0];
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/profile/+page.svelte:56:43
+Error: 'event.target' is possibly 'null'. (js)
+			reader.onload = async (event) => {
+				const base64 = /** @type {string} */ (event.target.result);
+				await api.student.uploadProfilePhoto(base64);
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/profile/+page.svelte:59:30
+Error: Type '{ photo_url: string; id?: string | undefined; student_id?: string | undefined; first_name?: string | undefined; last_name?: string | undefined; middle_initial?: string | undefined; ... 4 more ...; elections?: { ...; }[] | undefined; }' is not assignable to type 'StudentSession'.
+  Types of property 'id' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'. (js)
+				student.photo_url = base64;
+				voterSession.update(s => ({ ...s, photo_url: base64 }));
+				toast.success('Profile photo updated!');
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/results/+page.svelte:59:29
+Error: Parameter 'targetId' implicitly has an 'any' type. (js)
+
+	async function loadResults(targetId) {
+		if (!targetId) return;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/results/+page.svelte:90:32
+Error: Parameter 'e' implicitly has an 'any' type. (js)
+
+	function handleElectionChange(e) {
+		const newId = e.target.value;
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/results/+page.svelte:96:30
+Error: Parameter 'position' implicitly has an 'any' type. (js)
+
+	function getPositionResults(position) {
+		const posVotes = results[position] || {};
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/validate/+page.svelte:68:175
+Error: Property 'showBgAnims' does not exist on type '{ appName: string; primaryColor: string; accentColor: string; logoUrl: string | null; }'. (js)
+
+<div class="min-h-screen flex items-center justify-center p-4 md:p-6 relative selection:bg-primary-500/30 transition-colors duration-700" style="background-color: {$branding.showBgAnims ? '#050a1b' : 'color-mix(in srgb, #050a1b 92%, white)'}">
+	<!-- Background layers (Global Ripples) -->
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/validate/+page.svelte:75:8
+Error: Type '"none"' is not assignable to type '"xs" | "sm" | "md" | "lg" | "xl" | undefined'. (js)
+
+	<Card size="none" class="w-full max-w-5xl bg-white/[0.03] backdrop-blur-3xl border border-white/10 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden grid grid-cols-1 lg:grid-cols-[42%_1fr] relative z-10">
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/student/validate/+page.svelte:192:26
+Error: Type '"white"' is not assignable to type '"primary" | "secondary" | "gray" | "red" | "orange" | "amber" | "yellow" | "lime" | "green" | "emerald" | "teal" | "cyan" | "sky" | "blue" | "indigo" | "violet" | "purple" | "fuchsia" | "pink" | "rose" | undefined'. (js)
+						{#if isChecking}
+							<Spinner size="4" color="white" />
+							<span class="text-white drop-shadow-sm">Validating Access...</span>
+
+/media/piksel/Piksel M.2/v1/univote/frontend/src/routes/super-admin/setup/+page.svelte:78:5
+Error: Object literal may only specify known properties, and 'first_name' does not exist in type '{ id_number: string; full_name: string; password: string; }'. (js)
+				id_number: idNumber,
+				first_name: firstName,
+				last_name: lastName,
+
+====================================
+svelte-check found 145 errors and 23 warnings in 34 files

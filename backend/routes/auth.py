@@ -311,6 +311,12 @@ async def super_admin_setup(request: Request, body: SuperAdminSetup):
             detail="Super Admin is already configured. Please log in instead.",
         )
 
+    if len(body.password) < 8:
+        raise HTTPException(
+            status_code=400,
+            detail="Super Admin password must be at least 8 characters long."
+        )
+
     hashed = argon2.hash(body.password)
     insert_payload = {
         "id_number": body.id_number,

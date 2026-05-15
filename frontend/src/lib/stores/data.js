@@ -18,13 +18,17 @@ const initialState = {
 };
 
 function createDataStore() {
-	const { subscribe, set, update } = writable(initialState);
+	const { subscribe, set, update } = writable(/** @type {DataCache} */ (initialState));
 
 	return {
 		subscribe,
+		/** @param {Array<any>} data */
 		setElections: (data) => update(s => ({ ...s, elections: data, lastUpdated: new Date() })),
+		/** @param {Array<any>} data */
 		setDepartments: (data) => update(s => ({ ...s, departments: data, lastUpdated: new Date() })),
+		/** @param {Array<any>} data */
 		setAdvisers: (data) => update(s => ({ ...s, advisers: data, lastUpdated: new Date() })),
+		/** @param {Array<any>} data */
 		setVoters: (data) => update(s => ({ ...s, voters: data, lastUpdated: new Date() })),
 		clear: () => set(initialState)
 	};

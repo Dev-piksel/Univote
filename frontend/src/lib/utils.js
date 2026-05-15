@@ -2,7 +2,7 @@
  * Consistently formats a student's full name from its components.
  * Handles missing middle initials gracefully.
  * 
- * @param {Object} student - Object containing first_name, last_name, and optional middle_initial
+ * @param {{first_name?: string, last_name?: string, middle_initial?: string}} student - Object containing first_name, last_name, and optional middle_initial
  * @returns {string} The formatted full name
  */
 export function formatFullName(student) {

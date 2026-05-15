@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException, Request, Depends
 from services import student_service, adviser_service, audit_service, election_service
+from datetime import datetime, timezone
 from dependencies.auth import require_student
 from models import StudentAuth, VoteSubmit, PasscodeVerify, StudentUser
 from limiter import limiter
@@ -190,12 +191,14 @@ async def verify_passcode(
     supabase = await get_async_supabase()
 
     # First check if it exists and is active for this election
+    now_iso = datetime.now(timezone.utc).isoformat()
     res = await (
         supabase.table("election_passcodes")
-        .select("id, adviser_id")
+        .select("id, adviser_id, expires_at")
         .eq("election_id", str(payload.election_id))
         .eq("entry_pin", payload.passcode.strip())
         .eq("is_active", True)
+        .gte("expires_at", now_iso)
         .execute()
     )
 

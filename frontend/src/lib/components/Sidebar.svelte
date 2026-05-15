@@ -92,10 +92,10 @@
 	function handleLogout() {
 		if (role === 'student') {
 			voterSession.logout();
-			goto('/student/validate');
+			goto('/student/validate', { replaceState: true });
 		} else {
 			authSession.logout();
-			goto('/login');
+			goto('/login', { replaceState: true });
 		}
 		mobileMenuOpen = false;
 	}
@@ -122,8 +122,9 @@
 
 	let isUploading = $state(false);
 
+	/** @param {Event & { target: HTMLInputElement }} e */
 	async function handlePhotoUpload(e) {
-		const file = e.target.files[0];
+		const file = e.target.files?.[0];
 		if (!file) return;
 
 		if (file.size > 2 * 1024 * 1024) {
@@ -135,13 +136,14 @@
 		try {
 			const reader = new FileReader();
 			reader.onload = async (event) => {
-				const base64 = event.target.result;
+				const base64 = /** @type {string} */ (event.target?.result);
+				if (!base64) return;
 				if (role === 'student') {
 					await studentApi.uploadProfilePhoto(base64);
-					voterSession.update(s => ({ ...s, student: { ...s.student, photo_url: base64 } }));
+					voterSession.update(s => s ? ({ ...s, student: { ...(s.student || {}), photo_url: base64 } }) : s);
 				} else {
 					await auth.updateProfile({ photo_url: base64 });
-					authSession.update(s => ({ ...s, photo_url: base64 }));
+					authSession.update(s => s ? ({ ...s, photo_url: base64 }) : s);
 				}
 			};
 			reader.readAsDataURL(file);
@@ -212,9 +214,8 @@
 					<div class="relative group/avatar">
 						<Avatar 
 							src={student_info?.photo_url} 
-							rounded 
 							size={collapsed ? "sm" : "md"} 
-							class="ring-2 ring-white/10 group-hover/avatar:ring-[var(--brand-primary)] transition-all duration-500 shadow-2xl"
+							class="ring-2 ring-white/10 group-hover/avatar:ring-[var(--brand-primary)] transition-all duration-500 shadow-2xl rounded-full"
 						>
 							{initials}
 						</Avatar>
@@ -222,7 +223,7 @@
 					</div>
 					{#if isUploading}
 						<div class="absolute inset-0 bg-black/60 rounded-full flex items-center justify-center backdrop-blur-sm">
-							<Spinner size="4" color="white" />
+							<Spinner size="4" color="blue" />
 						</div>
 					{/if}
 				</label>
@@ -349,7 +350,7 @@
 				{roleBadge[role]?.label}
 			</p>
 		</div>
-		<Avatar src={student_info?.photo_url} rounded size="sm" border class="border-white/10 shadow-2xl ring-1 ring-white/5">
+		<Avatar src={student_info?.photo_url} size="sm" border class="border-white/10 shadow-2xl ring-1 ring-white/5 rounded-full">
 			{initials}
 		</Avatar>
 	</div>

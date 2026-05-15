@@ -11,7 +11,6 @@
 		FloatingLabelInput,
 		Button,
 		Spinner,
-		Alert,
 		Hr,
 		Card
 	} from 'flowbite-svelte';
@@ -203,11 +202,11 @@
 					{#if errorMessage}
 						<div in:fly={{ y: 5, duration: 400 }} class="relative">
 							<div class="absolute inset-0 bg-red-500/20 blur-xl rounded-2xl"></div>
-							<Alert color="red" class="relative rounded-2xl border border-red-500/20 bg-red-500/10 text-red-400 py-4 shadow-2xl overflow-hidden group">
+							<div class="relative rounded-2xl border border-red-500/20 bg-red-500/10 text-red-400 py-4 px-4 shadow-2xl overflow-hidden flex items-center gap-3">
 								<div class="absolute left-0 top-0 w-1 h-full bg-red-500"></div>
-								<ExclamationCircleOutline slot="icon" size="sm" class="animate-pulse" />
+								<ExclamationCircleOutline size="sm" class="animate-pulse flex-shrink-0" />
 								<span class="text-[10px] font-black tracking-tight uppercase">{errorMessage}</span>
-							</Alert>
+							</div>
 						</div>
 					{/if}
 

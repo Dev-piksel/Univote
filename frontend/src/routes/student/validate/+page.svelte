@@ -10,7 +10,6 @@
 		Button,
 		FloatingLabelInput,
 		Spinner,
-		Alert,
 		Badge
 	} from 'flowbite-svelte';
 	import {
@@ -52,7 +51,7 @@
 		} finally { isChecking = false; }
 	}
 
-	import { onMount, onDestroy } from 'svelte';
+	import { onDestroy } from 'svelte';
 	/** @type {any} */ let timer;
 	$effect(() => {
 		if (retrySeconds > 0) {
@@ -73,7 +72,7 @@
 		<div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_20%,#000_60%,transparent_100%)]"></div>
 	</div>
 
-	<Card size="none" class="w-full max-w-5xl bg-white/[0.03] backdrop-blur-3xl border border-white/10 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden grid grid-cols-1 lg:grid-cols-[42%_1fr] relative z-10">
+	<Card size="md" class="w-full max-w-5xl bg-white/[0.03] backdrop-blur-3xl border border-white/10 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden grid grid-cols-1 lg:grid-cols-[42%_1fr] relative z-10">
 		
 		<!-- Left: Voter Panel (hidden on mobile, visible on desktop) -->
 		<div class="hidden lg:flex bg-white/[0.02] backdrop-blur-2xl p-8 md:p-12 flex-col justify-between relative overflow-hidden group border-r border-white/5">
@@ -170,16 +169,16 @@
 					{#if errorMessage}
 						<div in:fly={{ y: 5, duration: 400 }} class="relative">
 							<div class="absolute inset-0 bg-red-500/20 blur-xl rounded-2xl"></div>
-							<Alert color="red" class="relative rounded-2xl border border-red-500/20 bg-red-500/10 text-red-400 py-4 shadow-2xl overflow-hidden group">
+							<div class="relative rounded-2xl border border-red-500/20 bg-red-500/10 text-red-400 py-4 px-4 shadow-2xl overflow-hidden flex items-start gap-3">
 								<div class="absolute left-0 top-0 w-1 h-full bg-red-500"></div>
-								<ExclamationCircleOutline slot="icon" size="sm" class="animate-pulse" />
+								<ExclamationCircleOutline size="sm" class="animate-pulse flex-shrink-0 mt-0.5" />
 								<div class="flex items-center justify-between w-full">
 									<span class="text-xs font-black tracking-tight uppercase">{errorMessage}</span>
 									{#if retrySeconds > 0}
 										<Badge color="red" class="ml-2 font-black bg-red-500 text-white border-none">{retrySeconds}S</Badge>
 									{/if}
 								</div>
-							</Alert>
+							</div>
 						</div>
 					{/if}
 
@@ -190,7 +189,7 @@
 						class="login-btn w-full py-4 md:py-5 rounded-[1.25rem] font-black text-[10px] md:text-[11px] tracking-[0.3em] uppercase active:scale-[0.98] group flex items-center justify-center gap-3 shadow-[0_15px_40px_-10px_var(--brand-glow)] border border-white/20 hover:border-[var(--brand-primary)] transition-all duration-300"
 					>
 						{#if isChecking}
-							<Spinner size="4" color="white" />
+							<Spinner size="4" color="blue" />
 							<span class="text-white drop-shadow-sm">Validating Access...</span>
 						{:else}
 							<span class="text-white drop-shadow-sm">Authenticate & Vote</span>

@@ -146,9 +146,9 @@
 
 			<!-- Premium Refresh Button -->
 			<Button 
-				color="alternative" 
-				class="w-full md:w-auto group relative overflow-hidden text-white px-6 py-3 rounded-2xl transition-all duration-300 font-black text-[9px] tracking-[0.3em] uppercase flex items-center justify-center gap-3" 
-				style="background: var(--brand-gradient); box-shadow: 0 10px 30px -10px var(--brand-glow); --hover-shadow: 0 15px 40px -10px var(--brand-glow);"
+				color="primary" 
+				class="w-full md:w-auto group relative overflow-hidden text-white px-6 py-3 rounded-2xl transition-all duration-300 font-black text-[9px] tracking-[0.3em] uppercase flex items-center justify-center gap-3 shadow-xl" 
+				style="background: var(--brand-gradient); box-shadow: 0 10px 30px -10px var(--brand-glow);"
 				onclick={() => { loadResults(electionId); }}
 				disabled={isLoading}
 			>
@@ -207,7 +207,7 @@
 										</div>
 									</div>
 									{#if entries.length === 1}
-										<Badge color="amber" class="bg-amber-500/10 text-amber-600 border border-amber-500/20 font-black px-2 md:px-4 py-0.5 md:py-1 uppercase tracking-widest text-[8px] md:text-[9px] rounded-lg">Unopposed</Badge>
+										<Badge color="yellow" class="bg-amber-500/10 text-amber-600 border border-amber-500/20 font-black px-2 md:px-4 py-0.5 md:py-1 uppercase tracking-widest text-[8px] md:text-[9px] rounded-lg">Unopposed</Badge>
 									{/if}
 								</header>
 
@@ -271,7 +271,7 @@
 			</div>
 		{:else if electionId && (positions.length === 0 || statusMessage)}
 			<div class="flex-1 flex items-start justify-center pt-4" in:scale>
-				<Card size="xl" class="w-full max-w-2xl bg-[var(--bg-card)]/20 backdrop-blur-3xl border-[var(--border-main)] p-16 rounded-[4rem] text-center shadow-2xl relative overflow-hidden border-t-4" style="border-top-color: var(--brand-primary);">
+				<Card size="md" class="w-full max-w-2xl bg-[var(--bg-card)]/20 backdrop-blur-3xl border-[var(--border-main)] p-16 rounded-[4rem] text-center shadow-2xl relative overflow-hidden border-t-4" style="border-top-color: var(--brand-primary);">
 					<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[var(--brand-primary)] to-transparent opacity-50"></div>
 					
 					{#if statusMessage}

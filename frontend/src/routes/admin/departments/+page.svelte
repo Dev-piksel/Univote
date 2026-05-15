@@ -30,14 +30,18 @@
 		CheckCircleOutline
 	} from 'flowbite-svelte-icons';
 
+	/** @typedef {object} Department @property {string} id @property {string} name @property {string} [code] @property {string} [description] @property {string} [created_at] */
+
+	/** @type {Department[]} */
 	let departments = $state([]);
 	let isLoading = $state(true);
 	let isSaving = $state(false);
 	let showForm = $state(false);
+	/** @type {Department|null} */
 	let editingDept = $state(null);
 	let newDept = $state({ name: '', code: '', description: '' });
 
-	/** @type {{ text: string, type: 'info' | 'success' | 'error' }} */
+	/** @type {{ text: string, type: 'info' | 'success' | 'error' | 'warning' }} */
 	let notification = $state({ text: '', type: 'info' });
 
 	let confirmState = $state({
@@ -64,11 +68,13 @@
 		}
 	}
 
+	/** @param {string} text @param {'info' | 'success' | 'error' | 'warning'} type */
 	function notify(text = '', type = 'info') {
 		notification = { text, type };
 		setTimeout(() => (notification = { text: '', type: 'info' }), 3500);
 	}
 
+	/** @param {SubmitEvent} e */
 	async function handleSubmit(e) {
 		e.preventDefault();
 		if (!newDept.name) { notify('Department name is required.', 'error'); return; }
@@ -83,13 +89,14 @@
 			}
 			resetForm();
 			await loadDepartments();
-		} catch (err) {
+		} catch (/** @type {any} */ err) {
 			notify(err.message ?? 'Failed to save department', 'error');
 		} finally {
 			isSaving = false;
 		}
 	}
 
+	/** @param {Department} dept */
 	function startEdit(dept) {
 		editingDept = dept;
 		newDept = { name: dept.name, code: dept.code || '', description: dept.description || '' };
@@ -102,6 +109,7 @@
 		showForm = false;
 	}
 
+	/** @param {Department} dept */
 	function promptDelete(dept) {
 		confirmState = {
 			show: true,
@@ -115,7 +123,7 @@
 				try {
 					await adminApi.deleteDepartment(targetId);
 					notify('Department removed', 'success');
-				} catch (err) {
+				} catch (/** @type {any} */ err) {
 					departments = originalDepts;
 					notify(err.message ?? 'Failed to delete department', 'error');
 				} finally {
@@ -139,7 +147,7 @@
 		</div>
 		
 		<div class="flex items-center gap-3">
-			<Button color="none" class="bg-indigo-50/50 dark:bg-white/5 border border-indigo-200 dark:border-white/10 text-indigo-900/80 dark:text-white/60 hover:text-indigo-950 dark:text-white hover:bg-indigo-100/50 dark:bg-white/10 px-4 py-2 rounded-xl transition-all font-bold text-[10px] tracking-widest uppercase" onclick={loadDepartments}>
+			<Button color="light" class="bg-indigo-50/50 dark:bg-white/5 border border-indigo-200 dark:border-white/10 text-indigo-900/80 dark:text-white/60 hover:text-indigo-950 dark:text-white hover:bg-indigo-100/50 dark:bg-white/10 px-4 py-2 rounded-xl transition-all font-bold text-[10px] tracking-widest uppercase" onclick={loadDepartments}>
 				<RefreshOutline size="xs" class="mr-2" />
 				Sync Registry
 			</Button>
@@ -158,7 +166,7 @@
 	<!-- Registration / Edit Form -->
 	{#if showForm}
 		<div transition:slide={{ duration: 400 }}>
-			<Card size="none" class="w-full max-w-full bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 p-8 rounded-[2rem] border relative overflow-hidden shadow-2xl">
+			<Card size="md" class="w-full max-w-full bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 p-8 rounded-[2rem] border relative overflow-hidden shadow-2xl">
 				<div class="absolute top-0 right-0 p-6 opacity-5">
 					<BuildingOutline size="xl" />
 				</div>
@@ -231,7 +239,7 @@
 						
 						<Button type="submit" disabled={isSaving} class="px-8 py-3 rounded-xl font-black text-[10px] tracking-widest uppercase bg-white text-indigo-950 hover:bg-primary-500 hover:text-white dark:bg-primary-600 dark:text-white dark:hover:bg-primary-500 dark:border-none transition-all shadow-2xl flex items-center gap-3">
 							{#if isSaving}
-								<Spinner size="4" color="current" />
+								<Spinner size="4" color="blue" />
 								PROCESS...
 							{:else}
 								{editingDept ? 'Update Account' : 'EXECUTE REGISTRATION'}
@@ -245,7 +253,7 @@
 	{/if}
 
 	<!-- Data Registry Table -->
-	<Card size="none" class="w-full max-w-full bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 rounded-[2rem] border overflow-hidden shadow-2xl relative">
+	<Card size="md" class="w-full max-w-full bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 rounded-[2rem] border overflow-hidden shadow-2xl relative">
 		<header class="p-8 border-b border-indigo-100 dark:border-white/5 flex items-center justify-between bg-indigo-50/30 dark:bg-white/[0.02]">
 			<div>
 				<h3 class="text-sm font-black text-indigo-950 dark:text-white tracking-[0.2em] uppercase">Structural Registry</h3>
@@ -256,7 +264,7 @@
 					<SearchOutline size="xs" class="absolute left-3 top-1/2 -translate-y-1/2 text-indigo-900/40 dark:text-white/20" />
 					<input type="text" placeholder="FILTER NODES..." class="bg-indigo-50/50 dark:bg-white/5 border-indigo-200 dark:border-white/10 text-[10px] font-bold text-indigo-950 dark:text-white placeholder:text-indigo-900/30 dark:text-white/10 rounded-xl pl-9 pr-4 py-2 w-48 focus:ring-0 focus:border-primary-400 transition-all" />
 				</div>
-				<Button color="none" class="p-2 bg-indigo-50/50 dark:bg-white/5 border border-indigo-200 dark:border-white/10 text-indigo-900/60 dark:text-white/40 hover:text-indigo-950 dark:text-white rounded-xl transition-all">
+				<Button color="light" class="p-2 bg-indigo-50/50 dark:bg-white/5 border border-indigo-200 dark:border-white/10 text-indigo-900/60 dark:text-white/40 hover:text-indigo-950 dark:text-white rounded-xl transition-all">
 					<FilterOutline size="xs" />
 				</Button>
 			</div>

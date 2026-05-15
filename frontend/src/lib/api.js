@@ -123,7 +123,7 @@ export const superAdmin = {
 
 	/**
 	 * Create the first super admin (one-time setup)
-	 * @param {{ id_number: string, full_name: string, password: string }} payload
+	 * @param {{ id_number: string, first_name: string, last_name: string, middle_initial?: string, password: string }} payload
 	 */
 	setup: (payload) => request('/api/auth/super-admin/setup', json(payload))
 };
@@ -144,9 +144,9 @@ export const student = {
 	 * @param {string} voting_pin
 	 * @param {string} session_passcode
 	 */
-	vote: (student_id, election_id, passcode_id, adviser_id, votes, session_passcode) =>
+	vote: (student_id, election_id, passcode_id, adviser_id, votes, voting_pin, session_passcode) =>
 		request('/api/student/vote', {
-			...json({ student_id, election_id, passcode_id, adviser_id, votes, session_passcode }),
+			...json({ student_id, election_id, passcode_id, adviser_id, votes, voting_pin, session_passcode }),
 			method: 'POST'
 		}),
 
@@ -232,7 +232,11 @@ export const admin = {
 	/**
 	 * @param {object} payload
 	 * @param {string} payload.student_id
-	 * @param {string} payload.full_name
+	 * @param {string} [payload.first_name]
+	 * @param {string} [payload.last_name]
+	 * @param {string} [payload.middle_initial]
+	 * @param {string} [payload.full_name]
+	 * @param {string} [payload.email]
 	 * @param {string} [payload.program]
 	 * @param {number} [payload.year_level]
 	 */
@@ -284,6 +288,7 @@ export const admin = {
 
 	/** @param {object} payload */
 	createAdviser: (payload) => request('/api/admin/advisers', json(payload)),
+	/** @param {string} id @param {object} payload */
 	updateAdviser: (id, payload) => request(`/api/admin/advisers/${id}`, { ...json(payload), method: 'PUT' }),
 
 	/** @param {string} adviser_id */
@@ -308,9 +313,13 @@ export const admin = {
 
 	// --- Departments (Super Admin Only) ---
 	getDepartments: () => request('/api/admin/departments'),
+	/** @param {object} payload */
 	createDepartment: (payload) => request('/api/admin/departments', json(payload)),
+	/** @param {string} id @param {object} payload */
 	updateDepartment: (id, payload) => request(`/api/admin/departments/${id}`, { ...json(payload), method: 'PUT' }),
+	/** @param {string} id */
 	deleteDepartment: (id) => request(`/api/admin/departments/${id}`, { method: 'DELETE' }),
+	/** @param {string} userId */
 	resetStaffPassword: (userId) => request(`/api/admin/staff/${userId}/reset-password`, { method: 'POST' }),
 
 	// --- Dept Admin Management (Super Admin Only) ---
@@ -319,9 +328,13 @@ export const admin = {
 		if (page_token) params.set('page_token', page_token);
 		return request(`/api/admin/dept-admins?${params}`);
 	},
+	/** @param {object} payload */
 	createDeptAdmin: (payload) => request('/api/admin/dept-admins', json(payload)),
+	/** @param {string} id @param {object} payload */
 	updateDeptAdmin: (id, payload) => request(`/api/admin/dept-admins/${id}`, { ...json(payload), method: 'PUT' }),
+	/** @param {string} id */
 	deleteDeptAdmin: (id) => request(`/api/admin/dept-admins/${id}`, { method: 'DELETE' }),
+	/** @param {FormData} formData */
 	importDeptAdmins: (formData) => request('/api/admin/dept-admins/import', { method: 'POST', body: formData }),
 	downloadDeptAdminTemplate: () => `${BASE}/api/admin/dept-admins/import-template`
 };
@@ -342,7 +355,7 @@ export const adviser = {
 	 * @param {string} name
 	 * @param {string} [logo_url]
 	 */
-	createPartylist: (election_id, name, logo_url = null) =>
+	createPartylist: (election_id, name, logo_url = undefined) =>
 		request(`/api/adviser/partylists?election_id=${election_id}`, json({ name, logo_url })),
 
 	/**
@@ -350,9 +363,13 @@ export const adviser = {
 	 * @param {string} name
 	 * @param {string} [logo_url]
 	 */
-	updatePartylist: (partylist_id, name, logo_url = null) =>
+	updatePartylist: (partylist_id, name, logo_url = undefined) =>
 		request(`/api/adviser/partylists/${partylist_id}`, { ...json({ name, logo_url }), method: 'PUT' }),
 
+	/**
+	 * @param {string} partylist_id
+	 * @param {string} logo_url
+	 */
 	updatePartylistLogo: (partylist_id, logo_url) =>
 		request(`/api/adviser/partylists/${partylist_id}/logo`, { ...json({ logo_url }), method: 'PUT' }),
 
@@ -373,6 +390,10 @@ export const adviser = {
 	createCandidate: (election_id, payload) =>
 		request(`/api/adviser/candidates?election_id=${election_id}`, json(payload)),
 
+	/**
+	 * @param {string} candidate_id
+	 * @param {object} payload
+	 */
 	updateCandidate: (candidate_id, payload) =>
 		request(`/api/adviser/candidates/${candidate_id}`, { ...json(payload), method: 'PUT' }),
 

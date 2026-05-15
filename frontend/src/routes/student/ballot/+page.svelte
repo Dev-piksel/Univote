@@ -273,7 +273,7 @@
 								<ShieldOutline size="xs" class="text-emerald-500" />
 								<span class="text-[9px] font-black text-[var(--text-subtle)] uppercase tracking-widest">Receipt ID</span>
 							</div>
-							<Badge color="emerald" class="bg-emerald-500/10 text-emerald-500 border-none text-[8px] font-black">Official</Badge>
+							<Badge color="green" class="bg-emerald-500/10 text-emerald-400 border-none text-[8px] font-black rounded-full">Official</Badge>
 						</div>
 						<code class="text-[11px] font-mono text-[var(--text-main)] break-all opacity-80 leading-relaxed">
 							{receiptId || "NODES_SYNCHRONIZING_HASH_..._44x92"}
@@ -281,7 +281,7 @@
 					</div>
 
 					<div class="grid grid-cols-2 gap-6">
-						<Button color="alternative" class="py-6 rounded-3xl font-black text-[11px] tracking-widest uppercase bg-[var(--bg-elevated)] border border-[var(--border-main)] text-[var(--text-main)] hover:bg-[var(--bg-hover)] transition-all shadow-xl" onclick={async () => { await goto('/student'); await invalidateAll(); }}>
+						<Button color="light" class="py-6 rounded-3xl font-black text-[11px] tracking-widest uppercase bg-[var(--bg-elevated)] border border-[var(--border-main)] text-[var(--text-main)] hover:bg-[var(--bg-hover)] transition-all shadow-xl" onclick={async () => { await goto('/student'); await invalidateAll(); }}>
 							Dashboard
 						</Button>
 						<Button color="primary" class="py-6 rounded-3xl font-black text-[11px] tracking-widest uppercase shadow-2xl" style="background: var(--brand-gradient); box-shadow: 0 10px 30px -10px var(--brand-glow);" onclick={async () => { await goto(`/student/results?election=${electionId}`); await invalidateAll(); }}>
@@ -373,7 +373,7 @@
 										<div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-1000 skew-x-12"></div>
 										<div class="relative z-10 flex items-center justify-center gap-4">
 											{#if isVerifyingPasscode}
-												<Spinner size="4" color="white" />
+												<Spinner size="4" color="blue" />
 												<span>Authenticating...</span>
 											{:else}
 												<span>Enter Secure Ballot</span>
@@ -505,7 +505,7 @@
 							</div>
 						</div>
 						<Button
-							color="blue"
+							color="primary"
 							class="px-4 md:px-6 py-2.5 rounded-xl font-black text-[10px] tracking-[0.15em] uppercase transition-all active:scale-95 flex items-center gap-2 text-white disabled:opacity-30 disabled:grayscale shrink-0"
 							style="background: var(--brand-gradient); box-shadow: 0 8px 20px -5px var(--brand-glow);"
 							disabled={!allSelected}
@@ -523,7 +523,7 @@
 	{#if showConfirm}
 		<div class="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-[var(--bg-main)]/95 backdrop-blur-3xl animate-in fade-in duration-500">
 			<div in:scale={{ duration: 600, start: 0.9 }} class="w-full max-w-2xl">
-				<Card size="none" class="w-full bg-[var(--bg-card)]/50 border-2 border-[var(--border-main)] p-6 md:p-16 rounded-[2rem] md:rounded-[5rem] shadow-[0_100px_150px_-30px_rgba(0,0,0,0.7)] relative overflow-hidden group">
+				<Card size="md" class="w-full bg-[var(--bg-card)]/50 border-2 border-[var(--border-main)] p-6 md:p-16 rounded-[2rem] md:rounded-[5rem] shadow-[0_100px_150px_-30px_rgba(0,0,0,0.7)] relative overflow-hidden group">
 					
 					<!-- Security Texture -->
 					<div class="absolute inset-0 opacity-[0.03] pointer-events-none group-hover:opacity-[0.05] transition-opacity">
@@ -584,7 +584,7 @@
 								onclick={submitVote}
 							>
 								{#if isSubmitting}
-									<Spinner size="3" color="current" /> Processing...
+									<Spinner size="3" color="blue" /> Processing...
 								{:else}
 									Cast <FingerprintOutline size="xs" class="group-hover/btn:scale-125 transition-transform duration-500" />
 								{/if}

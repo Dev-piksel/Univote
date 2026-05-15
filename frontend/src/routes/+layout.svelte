@@ -14,13 +14,34 @@
 
 	let { children } = $props();
 
+	// --- Reactive Auth Guards ---
+	// This runs whenever the URL changes or the session stores are updated.
+	// It handles redirects for protected routes and ensures that hitting 
+	// the "Back" button after logout correctly redirects to the login page.
+	$effect(() => {
+		const adminSession = $authSession;
+		const studentSession = $voterSession;
+		const path = page.url.pathname;
+
+		if (!adminSession && (path.startsWith('/admin') || path.startsWith('/adviser'))) {
+			console.log('Access denied to admin/adviser area. Redirecting...');
+			invalidateAll(); // Clear internal cache
+			goto('/login', { replaceState: true });
+		}
+
+		if (!studentSession && path.startsWith('/student') && path !== '/student/validate') {
+			console.log('Access denied to student area. Redirecting...');
+			goto('/student/validate', { replaceState: true });
+		}
+	});
+
 	onMount(() => {
 		// Apply custom branding (colors + logo) from API on every page load
 		loadBranding();
 
 		// --- Eagerly prefetch all route JS bundles after first paint ---
 		// This makes every subsequent navigation feel instant.
-		preloadCode(
+		[
 			'/admin',
 			'/admin/elections',
 			'/admin/voters',
@@ -45,13 +66,13 @@
 			'/student/validate',
 			'/login',
 			'/super-admin/setup'
-		);
+		].forEach(path => preloadCode(path));
 
 		// --- Setup guard: redirect to initialization if no super admin exists yet ---
 		const SETUP_PATH = '/super-admin/setup';
 		if (page.url.pathname !== SETUP_PATH) {
 			superAdminApi.getSetupStatus().then((status) => {
-				if (!status.configured) goto(SETUP_PATH);
+				if (!status.configured) goto(SETUP_PATH, { replaceState: true });
 			}).catch(() => {
 				// If the endpoint is unreachable, don't block the app
 			});
@@ -65,7 +86,6 @@
 					const { auth: authApi } = await import('$lib/api.js');
 					const me = await authApi.getMe();
 					if (me) {
-						console.log('Syncing profile:', me);
 						authSession.update(old => ({ ...old, ...me }));
 						// Update sessionStorage too
 						const updated = { ...session, ...me };
@@ -86,25 +106,8 @@
 			}
 		});
 
-		// Global session check for protected routes
-		const unsubAuth = authSession.subscribe(session => {
-			const path = page.url.pathname;
-			if (!session && (page.url.pathname.startsWith('/admin') || page.url.pathname.startsWith('/adviser'))) {
-				invalidateAll(); // clear cache on logout
-				goto('/login');
-			}
-		});
-
-		const unsubVoter = voterSession.subscribe(session => {
-			if (!session && page.url.pathname.startsWith('/student') && page.url.pathname !== '/student/validate') {
-				goto('/student/validate');
-			}
-		});
-
 		return () => {
 			unsubTheme();
-			unsubAuth();
-			unsubVoter();
 		};
 	});
 </script>

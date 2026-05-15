@@ -72,7 +72,7 @@
 	async function loadDepartments() {
 		try {
 			const res = await adminApi.getDepartments();
-			departments = res ?? [];
+			departments = res.data ?? [];
 		} catch (err) {
 			console.error('Failed to load departments:', err);
 			notify('Failed to load departments', 'error');
@@ -458,7 +458,7 @@
 								<td style="font-weight:500;color:var(--text-main);">{student.full_name || formatFullName(student)}</td>
 								<td style="color:var(--text-muted);">{student.program || '—'}</td>
 								<td style="color:var(--text-muted);">{student.email || '—'}</td>
-								<td style="color:var(--text-muted);">{student.department_id || '—'}</td>
+								<td style="color:var(--text-muted);">{departments.find((d) => d.id === student.department_id)?.name || student.department_id || '—'}</td>
 								<td>
 									{#if student.year_level}
 										<span class="pill pill-neutral">Yr {student.year_level}</span>

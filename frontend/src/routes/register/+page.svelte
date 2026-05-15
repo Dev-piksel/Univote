@@ -11,7 +11,6 @@
 		FloatingLabelInput,
 		Button,
 		Spinner,
-		Alert,
 		Hr,
 		Card,
 		Badge
@@ -170,19 +169,19 @@
 
 					{#if errorMessage}
 						<div in:fly={{ y: 5, duration: 200 }}>
-							<Alert color="red" class="rounded-2xl border-none bg-red-50 dark:bg-red-900/20 py-4">
-								<ExclamationCircleOutline slot="icon" size="sm" />
-								<span class="text-xs font-bold tracking-tight">{errorMessage}</span>
-							</Alert>
+							<div class="rounded-2xl border border-red-200 bg-red-50 dark:bg-red-900/20 dark:border-red-800/40 py-4 px-4 flex items-center gap-3">
+								<ExclamationCircleOutline size="sm" class="text-red-500 flex-shrink-0" />
+								<span class="text-xs font-bold tracking-tight text-red-700 dark:text-red-400">{errorMessage}</span>
+							</div>
 						</div>
 					{/if}
 
 					{#if successMessage}
 						<div in:fade>
-							<Alert color="green" class="rounded-2xl border-none bg-green-50 dark:bg-green-900/20 py-4">
-								<CheckCircleOutline slot="icon" size="sm" />
-								<span class="text-xs font-bold tracking-tight">{successMessage}</span>
-							</Alert>
+							<div class="rounded-2xl border border-green-200 bg-green-50 dark:bg-green-900/20 dark:border-green-800/40 py-4 px-4 flex items-center gap-3">
+								<CheckCircleOutline size="sm" class="text-green-500 flex-shrink-0" />
+								<span class="text-xs font-bold tracking-tight text-green-700 dark:text-green-400">{successMessage}</span>
+							</div>
 						</div>
 					{/if}
 

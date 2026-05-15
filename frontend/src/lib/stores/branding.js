@@ -50,10 +50,20 @@ function loadFromStorage() {
 }
 
 /**
+ * @typedef {object} BrandingState
+ * @property {string} appName
+ * @property {string} primaryColor
+ * @property {string} accentColor
+ * @property {string|null} logoUrl
+ * @property {boolean} showBgAnims
+ * @property {string} theme
+ */
+
+/**
  * Apply branding CSS variables to :root immediately. This is the single source of truth
  * for all portals. Targeting :root only — dark mode is a CSS class on <html>, not
  * a separate element that needs separate variable injection.
- * @param {{appName: string, primaryColor: string, accentColor: string, logoUrl: string|null}} val
+ * @param {BrandingState} val
  */
 export function applyBrandingCSS(val) {
 	if (!browser) return;
@@ -100,7 +110,7 @@ export function applyBrandingCSS(val) {
 // Initialise with cached data immediately (no flash on load)
 const initial = loadFromStorage();
 
-/** @type {import('svelte/store').Writable<{appName: string, primaryColor: string, accentColor: string, logoUrl: string|null}>} */
+/** @type {import('svelte/store').Writable<BrandingState>} */
 export const branding = writable(initial);
 
 // Apply CSS and persist on every store change

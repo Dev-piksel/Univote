@@ -34,7 +34,7 @@
 		id: ''
 	});
 
-	/** @type {{ text: string, type: 'info' | 'success' | 'error' }} */
+	/** @type {{ text: string, type: 'info' | 'success' | 'error' | 'warning' }} */
 	let notification = $state({ text: '', type: 'info' });
 
 	onMount(async () => {
@@ -72,7 +72,7 @@
 	const filteredAdvisers = $derived(
 		adviserSearch
 			? advisers.filter(
-					(a) =>
+					(/** @param {any} a */ a) =>
 						a.full_name.toLowerCase().includes(adviserSearch.toLowerCase()) ||
 						a.email.toLowerCase().includes(adviserSearch.toLowerCase()) ||
 						a.id_number?.toLowerCase().includes(adviserSearch.toLowerCase())
@@ -80,7 +80,8 @@
 			: advisers
 	);
 
-	function notify(text = '', type = /** @type {'info' | 'success' | 'error'} */ ('info')) {
+	/** @param {string} text @param {'info' | 'success' | 'error' | 'warning'} type */
+	function notify(text = '', type = 'info') {
 		notification = { text, type };
 		setTimeout(() => (notification = { text: '', type: 'info' }), 3500);
 	}

@@ -10,7 +10,7 @@
 
 	function handleLogout() {
 		voterSession.logout();
-		goto('/student/validate');
+		goto('/student/validate', { replaceState: true });
 	}
 </script>
 

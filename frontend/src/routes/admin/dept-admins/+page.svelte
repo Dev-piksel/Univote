@@ -38,9 +38,12 @@
 		CameraPhotoOutline
 	} from 'flowbite-svelte-icons';
 
-	/** @type {any[]} */
+	/** @typedef {object} DeptAdmin @property {string} id @property {string} id_number @property {string} first_name @property {string} last_name @property {string} [middle_initial] @property {string} [email] @property {string} [photo_url] @property {string} [department_id] @property {string} [full_name] */
+	/** @typedef {object} Department @property {string} id @property {string} name */
+
+	/** @type {DeptAdmin[]} */
 	let deptAdmins = $state([]);
-	/** @type {any[]} */
+	/** @type {Department[]} */
 	let departments = $state([]);
 	let isLoading = $state(true);
 	let isSaving = $state(false);
@@ -50,9 +53,11 @@
 	let searchQuery = $state('');
 
 	let newAdmin = $state({ id_number: '', first_name: '', last_name: '', middle_initial: '', email: '', password: '', department_id: '', photo_url: '' });
+	/** @type {Set<string>} */
 	let visibleIds = $state(new Set());
 	let showPassword = $state(false);
-	let editingAdmin = $state(/** @type {any} */ (null));
+	/** @type {DeptAdmin | null} */
+	let editingAdmin = $state(null);
 	/** @type {string | null} */
 	let photoPreview = $state(null);
 
@@ -267,7 +272,7 @@
 
 {#if $authSession?.role !== 'super_admin'}
 	<div class="dash flex items-center justify-center min-h-[60vh]">
-		<Card size="none" class="w-full max-w-full bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 p-12 rounded-[2.5rem] text-center border max-w-md">
+		<Card size="md" class="w-full max-w-full bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 p-12 rounded-[2.5rem] text-center border max-w-md">
 			<div class="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 mx-auto mb-6">
 				<ExclamationCircleOutline size="lg" />
 			</div>
@@ -291,11 +296,11 @@
 				<SearchOutline size="xs" class="absolute left-3 top-1/2 -translate-y-1/2 text-indigo-900/40 dark:text-white/20 group-focus-within:text-primary-400 transition-colors" />
 				<input bind:value={searchQuery} placeholder="FIND ADMINS..." class="bg-indigo-50/50 dark:bg-white/5 border-indigo-200 dark:border-white/10 text-[10px] font-bold text-indigo-950 dark:text-white placeholder:text-indigo-900/30 dark:text-white/10 rounded-xl pl-9 pr-4 py-2 w-48 focus:ring-0 focus:border-primary-400 transition-all shadow-xl" />
 			</div>
-			<Button color="none" class="bg-indigo-50/50 dark:bg-white/5 border border-indigo-200 dark:border-white/10 text-indigo-900/80 dark:text-white/60 hover:text-indigo-950 dark:text-white hover:bg-indigo-100/50 dark:bg-white/10 px-4 py-2 rounded-xl transition-all font-bold text-[10px] tracking-widest uppercase shadow-xl" onclick={() => loadDeptAdmins()}>
+			<Button color="light" class="bg-indigo-50/50 dark:bg-white/5 border border-indigo-200 dark:border-white/10 text-indigo-900/80 dark:text-white/60 hover:text-indigo-950 dark:text-white hover:bg-indigo-100/50 dark:bg-white/10 px-4 py-2 rounded-xl transition-all font-bold text-[10px] tracking-widest uppercase shadow-xl" onclick={() => loadDeptAdmins()}>
 				<RefreshOutline size="xs" class="mr-2" />
 				Sync
 			</Button>
-			<Button color="none" class="bg-indigo-50/50 dark:bg-white/5 border border-indigo-200 dark:border-white/10 text-indigo-900/80 dark:text-white/60 hover:text-indigo-950 dark:text-white hover:bg-indigo-100/50 dark:bg-white/10 px-4 py-2 rounded-xl transition-all font-bold text-[10px] tracking-widest uppercase shadow-xl" onclick={() => { showImport = !showImport; resetForm(); }}>
+			<Button color="light" class="bg-indigo-50/50 dark:bg-white/5 border border-indigo-200 dark:border-white/10 text-indigo-900/80 dark:text-white/60 hover:text-indigo-950 dark:text-white hover:bg-indigo-100/50 dark:bg-white/10 px-4 py-2 rounded-xl transition-all font-bold text-[10px] tracking-widest uppercase shadow-xl" onclick={() => { showImport = !showImport; resetForm(); }}>
 				<CloudArrowUpOutline size="xs" class="mr-2" />
 				Bulk Import
 			</Button>
@@ -314,7 +319,7 @@
 	<!-- Import Panel -->
 	{#if showImport}
 		<div transition:slide={{ duration: 400 }}>
-			<Card size="none" class="w-full max-w-full bg-indigo-500/5 backdrop-blur-3xl border-indigo-500/10 p-8 rounded-[2rem] border relative overflow-hidden shadow-2xl">
+			<Card size="md" class="w-full max-w-full bg-indigo-500/5 backdrop-blur-3xl border-indigo-500/10 p-8 rounded-[2rem] border relative overflow-hidden shadow-2xl">
 				<div class="absolute top-0 right-0 p-6 opacity-5 text-indigo-400">
 					<CloudArrowUpOutline size="xl" />
 				</div>
@@ -331,7 +336,7 @@
 					<label class="cursor-pointer">
 						<div class="px-8 py-3 rounded-xl font-black text-[10px] tracking-widest uppercase bg-indigo-500 text-indigo-950 dark:text-white hover:bg-indigo-400 transition-all shadow-2xl flex items-center gap-3">
 							{#if isImporting}
-								<Spinner size="4" color="current" />
+								<Spinner size="4" color="blue" />
 								INGESTING...
 							{:else}
 								<CloudArrowUpOutline size="xs" />
@@ -350,10 +355,10 @@
 				{#if importResults.length > 0}
 					<div class="mt-8 pt-8 border-t border-indigo-100 dark:border-white/5" in:fade>
 						<div class="flex items-center justify-between mb-4">
-							<Badge color="green" rounded class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-black px-4 py-1.5 uppercase tracking-widest">
+							<Badge color="green" class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-black px-4 py-1.5 uppercase tracking-widest rounded-full">
 								{importResults.length} NODES DEPLOYED
 							</Badge>
-							<Button color="none" class="text-[10px] font-black text-primary-400 hover:text-primary-300 uppercase tracking-widest" onclick={() => {
+							<Button color="light" class="text-[10px] font-black text-primary-400 hover:text-primary-300 uppercase tracking-widest" onclick={() => {
 								const list = importResults.map(r => `Name: ${r.full_name}\nID: ${r.employee_id}\nPassword: ${r.default_password}\nDept: ${r.department}`).join('\n\n---\n\n');
 								copyToClipboard(list);
 							}}>Copy All Credentials</Button>
@@ -392,7 +397,7 @@
 	<!-- Registration / Edit Form -->
 	{#if showForm}
 		<div transition:slide={{ duration: 400 }}>
-			<Card size="none" class="w-full max-w-full bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 p-10 rounded-[2.5rem] border relative overflow-hidden shadow-2xl">
+			<Card size="md" class="w-full max-w-full bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 p-10 rounded-[2.5rem] border relative overflow-hidden shadow-2xl">
 				<div class="absolute top-0 right-0 p-8 opacity-5">
 					<UserOutline size="xl" />
 				</div>
@@ -514,7 +519,7 @@
 						
 						<Button type="submit" disabled={isSaving} class="px-10 py-4 rounded-2xl font-black text-[10px] tracking-widest uppercase bg-white text-indigo-950 hover:bg-primary-500 hover:text-white dark:bg-primary-600 dark:text-white dark:hover:bg-primary-500 dark:border-none transition-all shadow-2xl flex items-center gap-3">
 							{#if isSaving}
-								<Spinner size="4" color="current" />
+								<Spinner size="4" color="blue" />
 								SYNCING...
 							{:else}
 								{editingAdmin ? 'Update Account' : 'Save Account'}
@@ -528,14 +533,14 @@
 	{/if}
 
 	<!-- Data Registry Table -->
-	<Card size="none" class="w-full max-w-full bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 rounded-[2.5rem] border overflow-hidden shadow-2xl relative">
+	<Card size="md" class="w-full max-w-full bg-indigo-50/50 dark:bg-white/5 backdrop-blur-3xl border-indigo-200 dark:border-white/10 rounded-[2.5rem] border overflow-hidden shadow-2xl relative">
 		<header class="p-8 border-b border-indigo-100 dark:border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 bg-indigo-50/30 dark:bg-white/[0.02]">
 			<div>
 				<h3 class="text-sm font-black text-indigo-950 dark:text-white tracking-[0.2em] uppercase">Administrative Directory</h3>
 				<p class="text-[9px] font-bold text-indigo-900/40 dark:text-white/20 uppercase tracking-widest mt-1">Verified Structural Node Operators</p>
 			</div>
 			<div class="flex items-center gap-2">
-				<Badge color="blue" rounded class="bg-primary-500/10 text-primary-400 border border-primary-500/20 font-black px-4 py-1 uppercase tracking-widest text-[9px]">
+				<Badge color="blue" class="bg-primary-500/10 text-primary-400 border border-primary-500/20 font-black px-4 py-1 uppercase tracking-widest text-[9px] rounded-full">
 					{deptAdmins.length} REGISTRY NODES
 				</Badge>
 			</div>
@@ -566,7 +571,7 @@
 							<TableBodyRow class="border-b border-white/[0.03] hover:bg-indigo-50/30 dark:bg-white/[0.02] transition-colors group">
 								<TableBodyCell class="px-8 py-6 border-none">
 									<div class="flex items-center gap-4">
-										<Avatar src={admin.photo_url} alt={admin.full_name} border class="bg-primary-500/10 border-indigo-200 dark:border-white/10" size="sm" rounded />
+										<Avatar src={admin.photo_url} alt={admin.full_name} border class="bg-primary-500/10 border-indigo-200 dark:border-white/10 rounded-full" size="sm" />
 										<div class="flex flex-col">
 											<span class="text-sm font-bold text-indigo-950 dark:text-white tracking-tight leading-tight">{admin.full_name}</span>
 											<span class="text-[9px] font-black text-indigo-900/40 dark:text-white/20 uppercase tracking-widest mt-1">{admin.email || 'NO_EMAIL_REGISTRY'}</span>
@@ -585,7 +590,7 @@
 								</TableBodyCell>
 								<TableBodyCell class="px-8 py-6 border-none">
 									{#if getDeptName(admin.department_id)}
-										<Badge color="blue" rounded class="bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-black px-3 py-1 uppercase tracking-widest text-[8px]">
+										<Badge color="blue" class="bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-black px-3 py-1 uppercase tracking-widest text-[8px] rounded-full">
 											{getDeptName(admin.department_id)}
 										</Badge>
 									{:else}
