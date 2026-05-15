@@ -144,6 +144,10 @@
 						<span class="field-label">Email Address</span>
 						<p class="info-val" style="font-size:0.9rem;">{session?.email || 'Not configured'}</p>
 					</div>
+					<div class="info-group">
+						<span class="field-label">Program</span>
+						<p class="info-val">{session?.program || '—'}</p>
+					</div>
 				</div>
 			</div>
 

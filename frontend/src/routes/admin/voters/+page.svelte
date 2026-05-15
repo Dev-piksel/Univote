@@ -418,6 +418,15 @@
 				<button type="submit" disabled={!csvFile || isUploading} class="btn-secondary btn-sm">
 					{isUploading ? 'Uploading…' : 'Import'}
 				</button>
+				<a 
+					href={adminApi.downloadStudentTemplate()} 
+					download="voter_template.csv"
+					class="btn-secondary btn-sm"
+					style="text-decoration:none;display:flex;align-items:center;gap:0.375rem;"
+				>
+					<svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+					Download Template
+				</a>
 			</form>
 		</div>
 	</div>

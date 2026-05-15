@@ -182,6 +182,7 @@ async def download_student_template():
     )
 
 
+
 @router.put("/students/{student_id}")
 async def update_student(
     student_id: str,

@@ -117,6 +117,10 @@
 					<span class="text-sm font-bold text-indigo-950 dark:text-white tracking-tight">{session?.user_id}</span>
 				</div>
 				<div class="flex flex-col gap-1">
+					<span class="text-[9px] font-black text-indigo-900/40 dark:text-white/20 uppercase tracking-widest">Program</span>
+					<span class="text-sm font-bold text-indigo-950 dark:text-white tracking-tight">{session?.program || '—'}</span>
+				</div>
+				<div class="flex flex-col gap-1">
 					<span class="text-[9px] font-black text-indigo-900/40 dark:text-white/20 uppercase tracking-widest">Departmental Link</span>
 					<span class="text-sm font-bold text-indigo-950 dark:text-white tracking-tight">{session?.department_name || 'Assigned Department'}</span>
 				</div>

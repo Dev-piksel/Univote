@@ -15,6 +15,7 @@ import { browser } from '$app/environment';
  * @property {string} [photo_url]
  * @property {string} [department_id]
  * @property {string} [department_name]
+ * @property {string} [program]
  * @property {boolean} [must_change_password]
  */
 

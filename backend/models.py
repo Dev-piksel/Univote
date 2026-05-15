@@ -196,6 +196,7 @@ class DeptAdminCreate(BaseModel):
     email: str
     password: str
     department_id: Optional[str] = None
+    program: Optional[str] = None
     photo_url: Optional[str] = None
 
 
@@ -205,6 +206,7 @@ class DeptAdminUpdate(BaseModel):
     middle_initial: Optional[str] = None
     email: Optional[str] = None
     department_id: Optional[str] = None
+    program: Optional[str] = None
     photo_url: Optional[str] = None
 
 
