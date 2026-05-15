@@ -78,7 +78,14 @@
 	}
 
 	onMount(() => { 
-		if (!$voterSession) goto('/student/validate'); 
+		if (!$voterSession) {
+			goto('/student/validate'); 
+			return;
+		}
+		const id = page.url.searchParams.get('election');
+		if (!id) {
+			goto('/student');
+		}
 	});
 
 	$effect(() => {

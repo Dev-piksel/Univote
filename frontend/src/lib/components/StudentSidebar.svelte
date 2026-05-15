@@ -125,7 +125,12 @@
 			
 			<div class="nav-list">
 				{#each navItems as item}
-					<a href={item.path} class="nav-link" class:active={page.url.pathname === item.path} id={item.id} data-sveltekit-preload-data="hover">
+					{@const activeElections = $voterSession?.elections?.filter(e => e.status === 'active' && !e.has_voted) || []}
+					{@const href = (item.name === 'Cast Vote' && activeElections.length === 0) ? '/student' : 
+								  (item.name === 'Cast Vote' && activeElections.length === 1) ? `${item.path}?election=${activeElections[0].id}` : 
+								  item.path}
+					
+					<a {href} class="nav-link" class:active={page.url.pathname === item.path} id={item.id} data-sveltekit-preload-data="hover">
 						<div class="icon-box">
 							<item.icon size="sm" />
 						</div>
