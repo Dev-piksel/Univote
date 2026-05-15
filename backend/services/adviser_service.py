@@ -273,10 +273,10 @@ async def get_live_results(election_id: str) -> dict:
 
 async def refresh_adviser_passcode(election_id: str, adviser_id: str) -> dict:
     """Generate a new 16-digit alphanumeric passcode for an election and adviser."""
-    # Format: XXXX-XXXX-XXXX-XXXX
+    # Format: XXXX-XXXX (8 characters + 1 dash = 9 total, or just 8 alphanumeric)
     alphabet = string.ascii_uppercase + string.digits
     blocks = []
-    for _ in range(4):
+    for _ in range(2):
         blocks.append("".join(secrets.choice(alphabet) for _ in range(4)))
 
     new_passcode = "-".join(blocks)
