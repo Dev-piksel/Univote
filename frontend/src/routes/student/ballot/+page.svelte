@@ -104,7 +104,7 @@
 
 		electionId = id;
 		if (!id) { 
-			isLoading = false; 
+			goto('/student'); 
 			return; 
 		}
 

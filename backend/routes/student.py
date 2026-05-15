@@ -185,6 +185,9 @@ async def verify_passcode(
     payload: PasscodeVerify, 
     student: StudentUser = Depends(require_student)
 ):
+    if not payload.election_id or len(payload.election_id) < 32:
+        raise HTTPException(status_code=400, detail="Invalid election context.")
+
     # Security Layer: Ensure the election actually exists and matches the student's jurisdiction
     await election_service.get_election_secure(payload.election_id, student)
     
