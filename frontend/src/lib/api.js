@@ -141,12 +141,11 @@ export const student = {
 	 * @param {string} passcode_id
 	 * @param {string} adviser_id
 	 * @param {Array<{candidate_id: string, position: string}>} votes
-	 * @param {string} voting_pin
 	 * @param {string} session_passcode
 	 */
-	vote: (student_id, election_id, passcode_id, adviser_id, votes, voting_pin, session_passcode) =>
+	vote: (student_id, election_id, passcode_id, adviser_id, votes, session_passcode) =>
 		request('/api/student/vote', {
-			...json({ student_id, election_id, passcode_id, adviser_id, votes, voting_pin, session_passcode }),
+			...json({ student_id, election_id, passcode_id, adviser_id, votes, session_passcode }),
 			method: 'POST'
 		}),
 

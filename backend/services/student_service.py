@@ -209,10 +209,14 @@ async def cast_votes(
     passcode_record = passcode_check.data[0]
     
     # Check if the provided session_passcode matches the latest record
-    if passcode_record["passcode"].upper() != session_passcode.strip().upper():
+    # Normalize by removing dashes and converting to upper
+    db_passcode = passcode_record["passcode"].replace("-", "").upper()
+    provided_passcode = session_passcode.replace("-", "").strip().upper()
+
+    if db_passcode != provided_passcode:
         raise HTTPException(
             status_code=403,
-            detail="Invalid Adviser Session Passcode. Please ensure you are using the current 8-character code shown on your adviser's screen.",
+            detail="Invalid Adviser Session Passcode. Please ensure you are using the current 8-character code shown on your adviser's screen (e.g., XXXX-XXXX).",
         )
 
     # Check expiration (This applies to the 8-char passcode)

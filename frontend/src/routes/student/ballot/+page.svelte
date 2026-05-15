@@ -13,7 +13,8 @@
 		Button,
 		Badge,
 		Spinner,
-		Label
+		Label,
+		Card
 	} from 'flowbite-svelte';
 	import {
 		ShieldCheckOutline,
@@ -56,6 +57,8 @@
 	let candidatesGrouped = $state({});
 	/** @type {Record<string, string | null>} */
 	let selectedVotes = $state({});
+	/** @type {Record<string, boolean>} */
+	let expandedPositions = $state({});
 	let electionName = $state('');
 
 	// Derived State
@@ -68,6 +71,12 @@
 
 	function selectCandidate(position, candidateId) {
 		selectedVotes[position] = candidateId;
+		// Auto-collapse after selection
+		expandedPositions[position] = false;
+	}
+
+	function togglePosition(position) {
+		expandedPositions[position] = !expandedPositions[position];
 	}
 
 	function getReviewList() {
@@ -145,10 +154,13 @@
 			});
 			candidatesGrouped = grouped;
 			const initialVotes = {};
+			const initialExpanded = {};
 			Object.keys(grouped).forEach((pos) => { 
 				initialVotes[pos] = null; 
+				initialExpanded[pos] = true;
 			});
 			selectedVotes = initialVotes;
+			expandedPositions = initialExpanded;
 		}).catch((err) => { 
 			errorMessage = err.message || 'Unable to access candidate registry.'; 
 		}).finally(() => { 
@@ -173,7 +185,7 @@
 	}
 
 	async function submitVote() {
-		if (isSubmitting || !allSelected || sessionPasscode.length < 8) return;
+		if (isSubmitting || !allSelected || sessionPasscode.trim().length < 8) return;
 		
 		const session = $voterSession;
 		if (!session) return;
@@ -195,15 +207,22 @@
 				sessionPasscode.trim()
 			);
 			
-			if (resp?.receipt_id) receiptId = resp.receipt_id;
+			if (resp?.receipt_id) {
+				receiptId = resp.receipt_id;
+			}
+			
+			// Mark as voted in the local session store
 			voterSession.markVoted(electionId);
 			
+			// Success state
+			hasSubmitted = true;
+			showConfirm = false; 
+
 			// Clear sensitive keys from memory immediately
 			sessionPasscode = '';
 			adviserPin = '';
+			errorMessage = '';
 			
-			showConfirm = false; 
-			hasSubmitted = true;
 		} catch (err) { 
 			errorMessage = err.message || 'Voting failure. Please retry.'; 
 		} finally { 
@@ -461,40 +480,71 @@
 									<h4 class="text-xl md:text-2xl font-black tracking-tighter uppercase italic leading-none mb-1">{position}</h4>
 									<div class="flex items-center gap-2">
 										<div class="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-[var(--brand-primary)] animate-pulse"></div>
-										<p class="text-[8px] md:text-[9px] font-black text-[var(--text-subtle)] uppercase tracking-[0.15em] opacity-60">Select one candidate</p>
+										<p class="text-[8px] md:text-[9px] font-black text-[var(--text-subtle)] uppercase tracking-[0.15em] opacity-60">
+											{#if selectedVotes[position]}
+												Selection Locked — <button class="text-[var(--brand-primary)] underline hover:text-[var(--brand-primary)] transition-colors" onclick={() => togglePosition(position)}>{expandedPositions[position] ? 'Collapse' : 'Change Selection'}</button>
+											{:else}
+												Select one candidate
+											{/if}
+										</p>
 									</div>
 								</div>
 							</div>
 
-							<div class="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
-								{#each candidatesGrouped[position] as cand}
-								<button
-										class="relative flex flex-col items-center p-3 md:p-4 transition-all duration-300 border-2 cursor-pointer rounded-2xl md:rounded-3xl active:scale-95 text-center {selectedVotes[position] === cand.id ? 'border-[var(--brand-primary)] shadow-[0_0_15px_var(--brand-glow)]' : 'border-[var(--border-main)] hover:border-[var(--text-subtle)]'}"
-										style={selectedVotes[position] === cand.id ? 'background-color: var(--brand-primary-alpha-5); backdrop-filter: blur(16px);' : 'background-color: var(--bg-card); opacity: 0.9; backdrop-filter: blur(16px);'}
-										onclick={() => selectCandidate(position, cand.id)}
-									>
-										<!-- Avatar -->
-										<div class="relative mb-2 md:mb-3 shrink-0">
-											<div class="w-14 h-14 md:w-20 md:h-20 rounded-full border-2 overflow-hidden {selectedVotes[position] === cand.id ? 'border-[var(--brand-primary)]' : 'border-[var(--border-main)]'} bg-[var(--bg-elevated)] relative">
-												<img
-													src={studentApi.getCandidatePhotoUrl ? studentApi.getCandidatePhotoUrl(cand.id) : `/api/common/candidates/${cand.id}/photo`}
-													alt={cand.name}
-													class="w-full h-full object-cover {selectedVotes[position] === cand.id ? '' : 'grayscale-[0.4]'} transition-all duration-500"
-													onerror={(e) => { e.currentTarget.style.display='none'; e.currentTarget.nextElementSibling.style.display='flex'; }}
-												/>
-												<div class="w-full h-full bg-[var(--brand-primary)]/10 items-center justify-center font-black text-xl text-[var(--brand-primary)]" style="display:none;">{cand.name[0]}</div>
-											</div>
-											{#if selectedVotes[position] === cand.id}
-												<div class="absolute -top-1 -right-1 w-5 h-5 bg-[var(--brand-primary)] rounded-full flex items-center justify-center shadow-lg ring-2 ring-[var(--bg-card)]" in:scale>
-													<CheckCircleOutline size="xs" class="text-white" />
+							{#if expandedPositions[position]}
+								<div class="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4" in:slide out:slide>
+									{#each candidatesGrouped[position] as cand}
+									<button
+											class="relative flex flex-col items-center p-3 md:p-4 transition-all duration-300 border-2 cursor-pointer rounded-2xl md:rounded-3xl active:scale-95 text-center {selectedVotes[position] === cand.id ? 'border-[var(--brand-primary)] shadow-[0_0_15px_var(--brand-glow)]' : 'border-[var(--border-main)] hover:border-[var(--text-subtle)]'}"
+											style={selectedVotes[position] === cand.id ? 'background-color: var(--brand-primary-alpha-5); backdrop-filter: blur(16px);' : 'background-color: var(--bg-card); opacity: 0.9; backdrop-filter: blur(16px);'}
+											onclick={() => selectCandidate(position, cand.id)}
+										>
+											<!-- Avatar -->
+											<div class="relative mb-2 md:mb-3 shrink-0">
+												<div class="w-14 h-14 md:w-20 md:h-20 rounded-full border-2 overflow-hidden {selectedVotes[position] === cand.id ? 'border-[var(--brand-primary)]' : 'border-[var(--border-main)]'} bg-[var(--bg-elevated)] relative">
+													<img
+														src={studentApi.getCandidatePhotoUrl ? studentApi.getCandidatePhotoUrl(cand.id) : `/api/common/candidates/${cand.id}/photo`}
+														alt={cand.name}
+														class="w-full h-full object-cover {selectedVotes[position] === cand.id ? '' : 'grayscale-[0.4]'} transition-all duration-500"
+														onerror={(e) => { e.currentTarget.style.display='none'; e.currentTarget.nextElementSibling.style.display='flex'; }}
+													/>
+													<div class="w-full h-full bg-[var(--brand-primary)]/10 items-center justify-center font-black text-xl text-[var(--brand-primary)]" style="display:none;">{cand.name[0]}</div>
 												</div>
-											{/if}
+												{#if selectedVotes[position] === cand.id}
+													<div class="absolute -top-1 -right-1 w-5 h-5 bg-[var(--brand-primary)] rounded-full flex items-center justify-center shadow-lg ring-2 ring-[var(--bg-card)]" in:scale>
+														<CheckCircleOutline size="xs" class="text-white" />
+													</div>
+												{/if}
+											</div>
+											<span class="text-xs md:text-sm font-bold leading-tight mb-1 line-clamp-2 {selectedVotes[position] === cand.id ? 'text-[var(--brand-primary)]' : 'text-[var(--text-main)]'}">{cand.name}</span>
+											<span class="text-[8px] md:text-[9px] uppercase tracking-wider text-[var(--text-subtle)] line-clamp-1">{cand.party}</span>
+										</button>
+									{/each}
+								</div>
+							{:else}
+								{@const selectedCand = candidatesGrouped[position].find(c => c.id === selectedVotes[position])}
+								<div class="p-6 bg-[var(--bg-card)]/40 backdrop-blur-3xl border-2 border-[var(--brand-primary)]/30 rounded-3xl flex items-center justify-between group/sel" in:fade>
+									<div class="flex items-center gap-6">
+										<div class="w-16 h-16 rounded-full border-2 border-[var(--brand-primary)] overflow-hidden shadow-2xl">
+											<img
+												src={studentApi.getCandidatePhotoUrl ? studentApi.getCandidatePhotoUrl(selectedCand.id) : `/api/common/candidates/${selectedCand.id}/photo`}
+												alt={selectedCand.name}
+												class="w-full h-full object-cover"
+												onerror={(e) => { e.currentTarget.style.display='none'; e.currentTarget.nextElementSibling.style.display='flex'; }}
+											/>
+											<div class="w-full h-full bg-[var(--brand-primary)]/10 items-center justify-center font-black text-xl text-[var(--brand-primary)]" style="display:none;">{selectedCand.name[0]}</div>
 										</div>
-										<span class="text-xs md:text-sm font-bold leading-tight mb-1 line-clamp-2 {selectedVotes[position] === cand.id ? 'text-[var(--brand-primary)]' : 'text-[var(--text-main)]'}">{cand.name}</span>
-										<span class="text-[8px] md:text-[9px] uppercase tracking-wider text-[var(--text-subtle)] line-clamp-1">{cand.party}</span>
-									</button>
-								{/each}
-							</div>
+										<div>
+											<p class="text-[9px] font-black text-[var(--brand-primary)] uppercase tracking-widest mb-1">Selected Candidate</p>
+											<h5 class="text-xl font-black text-[var(--text-main)] uppercase italic">{selectedCand.name}</h5>
+											<p class="text-[10px] font-bold text-[var(--text-subtle)] uppercase tracking-widest opacity-60">{selectedCand.party}</p>
+										</div>
+									</div>
+									<Button color="light" class="rounded-xl font-black text-[9px] uppercase tracking-widest px-6" onclick={() => togglePosition(position)}>
+										Change
+									</Button>
+								</div>
+							{/if}
 						</section>
 					{/each}
 				</div>
@@ -573,7 +623,7 @@
 							</div>
 							<input 
 								type="text" 
-								maxlength="8" 
+								maxlength="12" 
 								bind:value={sessionPasscode} 
 								placeholder="SESSION_KEY" 
 								class="w-full bg-[var(--bg-elevated)]/60 border-2 border-[var(--border-main)] text-[var(--text-main)] rounded-[1.5rem] px-4 md:px-6 py-4 md:py-5 text-xl md:text-2xl font-black tracking-widest md:tracking-[0.4em] focus:border-[var(--brand-primary)] focus:ring-0 transition-all uppercase placeholder:opacity-5 text-center font-mono shadow-xl" 
@@ -587,7 +637,7 @@
 							<Button 
 								color="primary" 
 								class="py-4 rounded-[1.5rem] font-black text-[12px] tracking-[0.2em] uppercase shadow-xl bg-white text-black hover:bg-emerald-500 hover:text-white transition-all flex items-center justify-center gap-3 relative overflow-hidden group/btn border-b-6 border-gray-200 hover:border-emerald-700" 
-								disabled={isSubmitting || sessionPasscode.length < 8} 
+								disabled={isSubmitting || (sessionPasscode || '').trim().length < 8} 
 								onclick={submitVote}
 							>
 								{#if isSubmitting}
