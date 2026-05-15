@@ -54,6 +54,8 @@
 		return match?.name ?? '';
 	});
 
+	const isSuperAdmin = $derived($authSession?.role === 'super_admin');
+
 	/** @param {string | null} token */
 	async function loadStudents(token = null) {
 		try {
@@ -244,6 +246,7 @@
 					style="padding-left:2.5rem;width:240px;height:2rem;font-size:0.75rem;font-family:sans-serif;"
 				/>
 			</div>
+			{#if !isSuperAdmin}
 			<button
 				onclick={() => {
 					cancelEdit();
@@ -261,6 +264,7 @@
 				>
 				Add Student
 			</button>
+			{/if}
 		</div>
 	</div>
 
@@ -379,6 +383,7 @@
 	{/if}
 
 	<!-- CSV Upload -->
+	{#if !isSuperAdmin}
 	<div class="bento-card" style="padding:1.5rem; border-radius: 16px; margin-bottom: 1.5rem;">
 		<div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
 			<p style="font-size:0.8125rem;font-weight:600;color:var(--text-main);flex-shrink:0;">
@@ -416,6 +421,7 @@
 			</form>
 		</div>
 	</div>
+	{/if}
 
 	<!-- Voter Table -->
 	<div class="bento-card" style="overflow:hidden; border-radius: 16px;">

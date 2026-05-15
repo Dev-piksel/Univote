@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { admin as adminApi } from '$lib/api.js';
 	import { branding } from '$lib/stores/branding.js';
+	import { authSession } from '$lib/stores/auth.js';
 	import Notification from '$lib/components/Notification.svelte';
 	import ConfirmModal from '$lib/components/ConfirmModal.svelte';
 	import { formatFullName } from '$lib/utils.js';
@@ -11,7 +12,8 @@
 	let advisers = $state([]);
 	let isLoading = $state(true);
 	let adviserSearch = $state('');
-	let newAdviser = $state({ full_name: '', email: '', id_number: '', password: '', department: '' });
+	let newAdviser = $state({ full_name: '', email: '', id_number: '', password: '', department: '', program: '' });
+	let departments = $state([]);
 	let isAdding = $state(false);
 	let showForm = $state(false);
 	let showImport = $state(false);
@@ -38,8 +40,25 @@
 	let notification = $state({ text: '', type: 'info' });
 
 	onMount(async () => {
-		await loadAdvisers();
+		await Promise.all([loadAdvisers(), loadDepartments()]);
 	});
+
+	// Resolve the dept_admin's own department name for display in the form.
+	const adminDeptName = $derived.by(() => {
+		const session = $authSession;
+		if (!session?.department_id) return '';
+		const match = departments.find(/** @param {any} d */ (d) => d.id === session.department_id);
+		return match?.name ?? '';
+	});
+
+	async function loadDepartments() {
+		try {
+			const res = await adminApi.getDepartments();
+			departments = res.data ?? [];
+		} catch (err) {
+			console.error('Failed to load departments:', err);
+		}
+	}
 
 	async function loadAdvisers(/** @type {string | null} */ token = null) {
 		try {
@@ -94,8 +113,11 @@
 		}
 		isAdding = true;
 		try {
-			const res = await adminApi.createAdviser(newAdviser);
-			newAdviser = { email: '', id_number: '', password: '', full_name: '', department: '' };
+			const payload = { ...newAdviser };
+			if (adminDeptName) payload.program = adminDeptName;
+
+			const res = await adminApi.createAdviser(payload);
+			newAdviser = { email: '', id_number: '', password: '', full_name: '', department: '', program: '' };
 			showForm = false;
 			notify('Adviser account created', 'success');
 			await loadAdvisers();
@@ -228,7 +250,7 @@
 
 			<div style="display:flex;flex-direction:column;gap:0.75rem;">
 				<p style="font-size:0.8125rem;color:var(--text-subtle);">
-					Upload a CSV file with columns: <code style="background:var(--bg-elevated);padding:1px 5px;border-radius:4px;">full_name, email, employee_id, department</code>.
+					Upload a CSV file with columns: <code style="background:var(--bg-elevated);padding:1px 5px;border-radius:4px;">full_name, email, employee_id, department, program</code>.
 					<strong>employee_id</strong> is required and becomes the login ID. Each adviser must change their password on first login.
 				</p>
 				<div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
@@ -363,11 +385,30 @@
 						</div>
 
 						<!-- Department -->
-						<div class="relative group md:col-span-2">
+						<div class="relative group">
 							<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none"></div>
 							<div class="relative bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group-focus-within:border-primary-400 transition-all duration-300">
 								<input id="adviser-dept" type="text" bind:value={newAdviser.department} placeholder=" " class="peer w-full px-4 pt-6 pb-2 bg-transparent text-white placeholder-transparent outline-none font-semibold text-sm tracking-wide focus:ring-0" />
 								<label for="adviser-dept" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-black text-[9px] uppercase tracking-[0.3em] pointer-events-none transition-all duration-300 peer-focus:-translate-y-[1.1rem] peer-focus:scale-90 peer-[:not(:placeholder-shown)]:-translate-y-[1.1rem] peer-[:not(:placeholder-shown)]:scale-90 origin-left">Department (Optional)</label>
+							</div>
+						</div>
+
+						<!-- Program -->
+						<div class="relative group">
+							<div class="absolute -inset-px bg-primary-500/20 rounded-2xl blur-md opacity-0 group-focus-within:opacity-100 transition-all duration-500 pointer-events-none"></div>
+							<div class="relative bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden group-focus-within:border-primary-400 transition-all duration-300 {adminDeptName ? 'opacity-60 grayscale-[0.5]' : ''}">
+								<input 
+									id="adviser-program" 
+									type="text" 
+									value={adminDeptName || newAdviser.program} 
+									oninput={e => newAdviser.program = e.currentTarget.value}
+									disabled={!!adminDeptName}
+									placeholder=" " 
+									class="peer w-full px-4 pt-6 pb-2 bg-transparent text-white placeholder-transparent outline-none font-semibold text-sm tracking-wide focus:ring-0 {adminDeptName ? 'cursor-not-allowed' : ''}" 
+								/>
+								<label for="adviser-program" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-black text-[9px] uppercase tracking-[0.3em] pointer-events-none transition-all duration-300 peer-focus:-translate-y-[1.1rem] peer-focus:scale-90 peer-[:not(:placeholder-shown)]:-translate-y-[1.1rem] peer-[:not(:placeholder-shown)]:scale-90 origin-left">
+									Program {adminDeptName ? '(Auto-assigned)' : ''}
+								</label>
 							</div>
 						</div>
 					</div>
@@ -414,6 +455,7 @@
 							<th style="width:1%;">Avatar</th>
 							<th>Full Name</th>
 							<th>Employee ID</th>
+							<th>Program</th>
 							<th>Department</th>
 							<th style="text-align:right;">Actions</th>
 						</tr>
@@ -428,6 +470,7 @@
 								</td>
 								<td style="font-weight:600;color:var(--text-main);">{adviser.full_name || formatFullName(adviser)}</td>
 								<td style="color:var(--text-muted);">{adviser.id_number}</td>
+								<td style="color:var(--text-muted);">{adviser.program || '—'}</td>
 								<td>
 									{#if adviser.department}
 										<span class="pill pill-neutral">{adviser.department}</span>

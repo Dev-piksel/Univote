@@ -261,7 +261,7 @@ async def get_advisers(
 
     result = await paginate(
         table="advisers",
-        select="id, first_name, last_name, middle_initial, email, id_number, department_id, created_at, photo_url, departments(name)",
+        select="id, first_name, last_name, middle_initial, email, id_number, department_id, program, created_at, photo_url, departments(name)",
         order_column="id",
         page_size=page_size,
         page_token=page_token,
@@ -314,6 +314,7 @@ async def create_adviser(
                 "middle_initial": mi[0].upper() if mi else None,
                 "password_hash": hashed,
                 "department_id": dept_id,
+                "program": adviser.program or None,
                 "photo_url": adviser.photo_url or None,
             }
         )
@@ -345,6 +346,15 @@ async def update_adviser(
     
     if "middle_initial" in update_data and update_data["middle_initial"]:
         update_data["middle_initial"] = update_data["middle_initial"][0].upper()
+
+    # Security: If not super_admin, force scoping and prevent department changes
+    if user.role != "super_admin":
+        update_data.pop("department_id", None)  # Prevent changing department
+        
+        # Verify adviser belongs to this admin's department
+        check = await supabase.table("advisers").select("department_id").eq("id", adviser_id).execute()
+        if not check.data or str(check.data[0].get("department_id")) != str(user.department_id):
+            raise HTTPException(status_code=403, detail="You do not have permission to update this adviser.")
 
     res = await supabase.table("advisers").update(update_data).eq("id", adviser_id).execute()
     if not res.data:
@@ -437,9 +447,9 @@ async def reset_staff_password(
 async def download_adviser_template():
     """Return a role-specific CSV template for bulk adviser import."""
     csv_content = (
-        "employee_id,first_name,last_name,middle_initial,email,department\n"
-        "EMP-001,Jane,Doe,M,jane.doe@school.edu,CITE\n"
-        "EMP-002,John,Smith,,john.smith@school.edu,COE\n"
+        "employee_id,first_name,last_name,middle_initial,email,department,program\n"
+        "EMP-001,Jane,Doe,M,jane.doe@school.edu,CITE,BSIT\n"
+        "EMP-002,John,Smith,,john.smith@school.edu,COE,BSME\n"
     )
     return StreamingResponse(
         iter([csv_content]),
@@ -477,6 +487,7 @@ async def import_advisers(
         middle_initial = (row.get("middle_initial") or "").strip() or None
         email = (row.get("email") or "").strip().lower()
         department = (row.get("department") or row.get("department_name") or "").strip() or None
+        program = (row.get("program") or row.get("program_name") or "").strip() or None
         employee_id = (row.get("id_number") or row.get("employee_id") or "").strip()
         if not employee_id:
             employee_id = email.split("@")[0].replace(".", "")[:20] if email else ""
@@ -513,6 +524,7 @@ async def import_advisers(
             "password_hash": hashed,
             "must_change_password": True,
             "department_id": dept_id,
+            "program": program,
         }
         if middle_initial:
             payload["middle_initial"] = middle_initial[0].upper()

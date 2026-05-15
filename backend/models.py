@@ -129,6 +129,7 @@ class AdviserCreate(BaseModel):
     middle_initial: Optional[str] = None
     full_name: Optional[str] = None
     department_id: Optional[str] = None
+    program: Optional[str] = None
     photo_url: Optional[str] = None
 
 
@@ -139,6 +140,7 @@ class AdviserUpdate(BaseModel):
     full_name: Optional[str] = None
     email: Optional[str] = None
     department_id: Optional[str] = None
+    program: Optional[str] = None
     photo_url: Optional[str] = None
 
 
@@ -167,6 +169,7 @@ class AdviserImportRow(BaseModel):
     middle_initial: Optional[str] = None
     email: str
     department: Optional[str] = None
+    program: Optional[str] = None
 
 
 class AdviserChangePassword(BaseModel):
