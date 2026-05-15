@@ -13,6 +13,8 @@ import { browser } from '$app/environment';
  * @property {string} user_id
  * @property {string} id_number
  * @property {string} [photo_url]
+ * @property {string} [department_id]
+ * @property {string} [department_name]
  * @property {boolean} [must_change_password]
  */
 

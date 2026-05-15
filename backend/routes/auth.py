@@ -22,7 +22,7 @@ async def login(request: Request, body: LoginRequest):
     supabase = await get_async_supabase()
     admin_check = (
         await supabase.table("admins")
-        .select("id, id_number, first_name, last_name, middle_initial, email, photo_url, password_hash, role, department_id")
+        .select("id, id_number, first_name, last_name, middle_initial, email, photo_url, password_hash, role, department_id, departments(name)")
         .eq("id_number", body.username)
         .execute()
     )
@@ -37,7 +37,7 @@ async def login(request: Request, body: LoginRequest):
     else:
         adviser_check = (
             await supabase.table("advisers")
-            .select("id, id_number, first_name, last_name, middle_initial, email, photo_url, password_hash, must_change_password, department_id")
+            .select("id, id_number, first_name, last_name, middle_initial, email, photo_url, password_hash, must_change_password, department_id, departments(name)")
             .eq("id_number", body.username)
             .execute()
         )
@@ -98,6 +98,7 @@ async def login(request: Request, body: LoginRequest):
         "email": user.get("email"),
         "photo_url": user.get("photo_url"),
         "department_id": department_id,
+        "department_name": user.get("departments", {}).get("name") if user.get("departments") else None,
         "must_change_password": bool(user.get("must_change_password")) if role == "adviser" else False,
     }
 
@@ -192,7 +193,7 @@ async def get_me(user: AuthUser = Depends(get_current_user)):
     supabase = await get_async_supabase()
     admin = (
         await supabase.table("admins")
-        .select("id, id_number, first_name, last_name, middle_initial, email, role, photo_url")
+        .select("id, id_number, first_name, last_name, middle_initial, email, role, photo_url, department_id, departments(name)")
         .eq("id", user.id)
         .execute()
     )
@@ -207,11 +208,13 @@ async def get_me(user: AuthUser = Depends(get_current_user)):
             "email": row["email"],
             "id_number": row["id_number"],
             "photo_url": row.get("photo_url"),
+            "department_id": row.get("department_id"),
+            "department_name": row.get("departments", {}).get("name") if row.get("departments") else None,
         }
 
     adviser = (
         await supabase.table("advisers")
-        .select("id, id_number, first_name, last_name, middle_initial, email, department_id, photo_url")
+        .select("id, id_number, first_name, last_name, middle_initial, email, department_id, photo_url, departments(name)")
         .eq("id", user.id)
         .execute()
     )
@@ -220,6 +223,7 @@ async def get_me(user: AuthUser = Depends(get_current_user)):
         return {
             "role": "adviser",
             "full_name": build_full_name(row["first_name"], row["last_name"], row.get("middle_initial")),
+            "department_name": row.get("departments", {}).get("name") if row.get("departments") else None,
             **row,
         }
 

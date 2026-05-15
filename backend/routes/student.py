@@ -39,7 +39,7 @@ async def get_student_me(student: StudentUser = Depends(require_student)):
     supabase = await get_async_supabase()
     res = (
         await supabase.table("students")
-        .select("id, student_id, first_name, last_name, middle_initial, program, year_level, photo_url, email, department_id")
+        .select("id, student_id, first_name, last_name, middle_initial, program, year_level, photo_url, email, department_id, departments(name)")
         .eq("student_id", student.student_id)
         .single()
         .execute()

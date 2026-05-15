@@ -1,4 +1,5 @@
 <script>
+	import { onMount } from 'svelte';
 	import { authSession } from '$lib/stores/auth.js';
 	import { branding } from '$lib/stores/branding.js';
 	import { auth } from '$lib/api.js';
@@ -21,6 +22,17 @@
 		notification = { text: msg, type };
 		setTimeout(() => (notification = { text: '', type: 'info' }), 4000);
 	}
+
+	onMount(async () => {
+		try {
+			const data = await auth.getMe();
+			// Sync store with latest server data (includes department_name)
+			authSession.update(s => ({ ...s, ...data }));
+			session = $authSession;
+		} catch (err) {
+			console.error('Failed to sync profile:', err);
+		}
+	});
 
 	async function handlePhotoUpload(e) {
 		const file = e.target.files[0];

@@ -1,4 +1,5 @@
 <script>
+	import { onMount } from 'svelte';
 	import { authSession } from '$lib/stores/auth.js';
 	import { branding } from '$lib/stores/branding.js';
 	import { adviser as adviserApi } from '$lib/api.js';
@@ -32,6 +33,17 @@
 	let notification = $state({ text: '', type: 'info' });
 	let passwords = $state({ current: '', new: '', confirm: '' });
 	let isChanging = $state(false);
+
+	onMount(async () => {
+		try {
+			const data = await adviserApi.getMe();
+			// Sync store with latest server data (includes department_name)
+			authSession.update(s => ({ ...s, ...data }));
+			session = $authSession;
+		} catch (err) {
+			console.error('Failed to sync profile:', err);
+		}
+	});
 
 	async function handleChangePassword(e) {
 		e.preventDefault();

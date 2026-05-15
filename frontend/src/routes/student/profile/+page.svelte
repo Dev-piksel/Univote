@@ -137,13 +137,21 @@
 						<h3 class="text-xl md:text-2xl font-black text-content-main tracking-tighter uppercase italic">Academic <span class="text-brand-primary">Details</span></h3>
 					</div>
 
-					<div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+					<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
 						<div class="space-y-1 md:space-y-2">
 							<div class="flex items-center gap-2 mb-2 md:mb-3">
 								<BookOutline size="xs" class="text-brand-primary" />
-								<p class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-content-subtle">Course</p>
+								<p class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-content-subtle">Course / Program</p>
 							</div>
-							<p class="text-lg md:text-2xl font-black text-content-main uppercase tracking-tight leading-tight">{formatDepartment(student.program || 'BSIT')}</p>
+							<p class="text-lg md:text-2xl font-black text-content-main uppercase tracking-tight leading-tight">{student.program || '—'}</p>
+						</div>
+
+						<div class="space-y-1 md:space-y-2">
+							<div class="flex items-center gap-2 mb-2 md:mb-3">
+								<DatabaseOutline size="xs" class="text-brand-primary" />
+								<p class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-content-subtle">Department</p>
+							</div>
+							<p class="text-lg md:text-2xl font-black text-content-main uppercase tracking-tight leading-tight">{student.departments?.name || '—'}</p>
 						</div>
 
 						<div class="space-y-1 md:space-y-2">
