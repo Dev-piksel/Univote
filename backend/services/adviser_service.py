@@ -273,13 +273,9 @@ async def get_live_results(election_id: str) -> dict:
 
 async def refresh_adviser_passcode(election_id: str, adviser_id: str) -> dict:
     """Generate a new 16-digit alphanumeric passcode for an election and adviser."""
-    # Format: XXXX-XXXX (8 characters + 1 dash = 9 total, or just 8 alphanumeric)
-    alphabet = string.ascii_uppercase + string.digits
-    blocks = []
-    for _ in range(2):
-        blocks.append("".join(secrets.choice(alphabet) for _ in range(4)))
-
-    new_passcode = "-".join(blocks)
+    # Format: 12345678 (Exactly 8 numeric digits)
+    alphabet = string.digits
+    new_passcode = "".join(secrets.choice(alphabet) for _ in range(8))
     expires_at = (datetime.now(timezone.utc) + timedelta(minutes=30)).isoformat()
 
     supabase = await get_async_supabase()

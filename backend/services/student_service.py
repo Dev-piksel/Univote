@@ -216,7 +216,7 @@ async def cast_votes(
     if db_passcode != provided_passcode:
         raise HTTPException(
             status_code=403,
-            detail="Invalid Adviser Session Passcode. Please ensure you are using the current 8-character code shown on your adviser's screen (e.g., XXXX-XXXX).",
+            detail="Invalid Adviser Session Passcode. Please ensure you are using the current 8-digit code shown on your adviser's screen (e.g., 12345678).",
         )
 
     # Check expiration (This applies to the 8-char passcode)
