@@ -62,7 +62,7 @@
 	let electionName = $state('');
 
 	// Derived State
-	let voterName = $derived($voterSession?.full_name || 'Voter');
+	let voterName = $derived(formatFullName($voterSession) || 'Voter');
 	const positionOrder = $derived(sortPositions(Object.keys(candidatesGrouped)));
 	const selectedCount = $derived(Object.values(selectedVotes).filter((v) => v).length);
 	const totalPositions = $derived(positionOrder.length);

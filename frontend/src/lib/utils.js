@@ -20,13 +20,11 @@ export function formatFullName(student) {
 
 /**
  * Standardizes the department/program display format.
- * Ensures the 'CCS-' prefix is consistently applied.
  * 
  * @param {string} program - The program/course name (e.g., 'BSIT')
  * @returns {string} The standardized department-program string
  */
 export function formatDepartment(program) {
-    if (!program) return 'CCS-UNDEFINED';
-    if (program.startsWith('CCS-')) return program;
-    return `CCS-${program}`;
+    if (!program) return 'UNASSIGNED';
+    return program.trim();
 }

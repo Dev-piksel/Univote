@@ -4,6 +4,7 @@
 	import { selectedElectionId } from '$lib/stores/election.js';
 	import { branding } from '$lib/stores/branding.js';
 	import { sortPositions, calculateWinners } from '$lib/constants.js';
+	import { formatFullName } from '$lib/utils.js';
 	import { BASE } from '$lib/api.js';
 
 	const SSE_BASE = `${BASE}/api/results/adviser/stream`;
@@ -133,7 +134,7 @@
 	function getCandidateInfo(candidateId) {
 		const c = candidates.find(/** @param {any} c */ (c) => c.id === candidateId);
 		return {
-			name: c?.students?.full_name || 'Unknown',
+			name: formatFullName(c?.students),
 			party: c?.partylists?.name || 'Independent'
 		};
 	}
@@ -299,12 +300,12 @@
 											class="avatar-initial"
 											style="width:64px;height:64px;border-radius:12px;font-size:1.5rem;margin-bottom:0.75rem;color:#10B981;background:rgba(16,185,129,0.1);border-color:transparent;box-shadow: 0 0 12px rgba(16,185,129,0.2);"
 										>
-											{winner.students?.full_name?.charAt(0) || '?'}
+											{formatFullName(winner.students).charAt(0)}
 										</div>
 										<h3
 											style="font-size:1rem;font-weight:900;color:var(--text-main);drop-shadow(0 2px 4px rgba(0,0,0,0.5))"
 										>
-											{winner.students?.full_name || 'Unknown'}
+											{formatFullName(winner.students)}
 										</h3>
 										<p
 											style="font-size:0.6875rem;color:var(--text-muted);margin-top:0.25rem;font-weight:700;"
